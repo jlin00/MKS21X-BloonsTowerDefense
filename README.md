@@ -8,12 +8,10 @@ Today's Date: 1/3/19
 - [ ] Figure out lanterna.jar
 
 Notes:
-@TiffanyCao
-<write comments here>
+@TiffanyCao :+1:
   
-@jlin00
-<write comments here> 
-  
+@jlin00 <write comments here> 
+
 ## Instructions 
 
 ## Development Log
