@@ -21,11 +21,11 @@ This project aims to recreate a game known as Bloons Tower Defense. The program 
   <th>Log Date</th>
   <th>Description</th>
   <tr>
-    <td></td>
+    <td>1/3/19</td>
     <td></td>
   </tr>
 <tr>
-    <td></td>
+    <td>1/4/19</td>
     <td></td>
 </tr>
 </table>
