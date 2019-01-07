@@ -39,7 +39,7 @@ public class Game {
     }
     }
   */
-  
+
   public static void main(String[] args) throws FileNotFoundException {
     Terminal terminal = TerminalFacade.createTextTerminal();
     terminal.enterPrivateMode();
@@ -48,28 +48,21 @@ public class Game {
     terminal.setCursorVisible(false);
 
     boolean running = true;
-    boolean startingMode = true; //first mode, starting screen, will be filled with instructions
-
-    long tStart = System.currentTimeMillis(); //timer system
-    long lastSecond = 0;
+    int mode = 0; //game mode
+    long lastTime =  System.currentTimeMillis();
+    long currentTime = lastTime;
+    long timer = 0;
 
     while(running){
       Key key = terminal.readInput();
+      if (key == null){
+        putString(1,1,terminal,"This is the start screen. Press any key to begin.");
+      }
 
-      if (startingMode) putString(1,4,terminal,"Press up to start"); //default starting mode
       if (key != null){
-        if (key.getKind() == Key.Kind.Escape){
-          terminal.exitPrivateMode();
-          running = false;
-        }
-        if (startingMode && key.getKind() == Key.Kind.ArrowUp){ //exit starting mode into game mode
-          startingMode = false;
-          terminal.clearScreen();
-        }
-        if (!startingMode){ //enter game mode
-          //terminal.applyBackgroundColor(Terminal.Color.WHITE);
-    			//terminal.applyForegroundColor(Terminal.Color.BLACK);
-          putString(1,4,terminal,"Game Started");
+        terminal.clearScreen();
+        if (mode == 0){
+          putString(1,4,terminal,"Game Started"); //game mode
           File f = new File("map1.txt");
           Scanner in = new Scanner(f);
           while (in.hasNext()){
@@ -79,21 +72,41 @@ public class Game {
             int x = Integer.parseInt(line.substring(0, 1));
             int y = Integer.parseInt(line.substring(2));
 
-            terminal.moveCursor(x, y);
+            terminal.moveCursor(x,y);
             terminal.applyBackgroundColor(Terminal.Color.WHITE);
-            terminal.applyBackgroundColor(Terminal.Color.RED);
+            terminal.applyForegroundColor(Terminal.Color.RED);
+            terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
+            terminal.applyForegroundColor(Terminal.Color.DEFAULT);
+          }
+
+          if (key.getKind() == Key.Kind.ArrowUp){
+            mode++;
           }
         }
+
+        if (mode != 0){ //pause
+          putString(1,4,terminal,"Game Paused ");
+          lastTime = System.currentTimeMillis();
+          currentTime = System.currentTimeMillis();
+          if (key.getKind() == Key.Kind.ArrowDown){
+            mode--;
+          }
+        }
+
+        if (key.getKind() == Key.Kind.Escape) {
+          terminal.exitPrivateMode();
+          running = false;
+        }
       }
-      long tEnd = System.currentTimeMillis(); //returns timer, for debugging purposes
-      long millis = tEnd - tStart;
-      if(millis/1000 >= lastSecond){
-        lastSecond = millis / 1000;
-        //one second has passed.
-        putString(0,0,terminal,"Seconds since start of program: "+lastSecond);
+      if(mode == 0){
+        lastTime = currentTime;
+        currentTime = System.currentTimeMillis();
+        timer += (currentTime - lastTime);//add the amount of time since the last frame
+        putString(0,0,terminal,"Seconds since start of program: "+(timer / 1000));
+      }
+      if (mode == 1){
+        putString(0,0,terminal,"Seconds since start of program: " + (timer / 1000));
       }
     }
-
-
   }
 }
