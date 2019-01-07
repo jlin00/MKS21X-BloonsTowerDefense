@@ -12,6 +12,9 @@ import com.googlecode.lanterna.input.InputDecoder;
 import com.googlecode.lanterna.input.InputProvider;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.input.KeyMappingProfile;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Game {
   //puts down a string at the specified location
@@ -35,7 +38,7 @@ public class Game {
     }
     }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws FileNotFoundException {
     Terminal terminal = TerminalFacade.createTextTerminal();
     terminal.enterPrivateMode();
 
@@ -63,6 +66,12 @@ public class Game {
         }
         if (!startingMode){ //enter game mode
           putString(1,4,terminal,"Game Started");
+          File f = new File("map1.txt");
+          Scanner in = new Scanner(f);
+          while (in.hasNext()){
+            String line = in.nextLine();
+            System.out.println(line);
+          }
         }
       }
       long tEnd = System.currentTimeMillis(); //returns timer, for debugging purposes
