@@ -6,7 +6,7 @@ This project aims to recreate a game known as Bloons Tower Defense. The program 
 
 - [ ] Continue working on Game class
 - [ ] Figure out lanterna.jar
-- [ ] Continue working on Balloon and Tile classes 
+- [ ] Continue working on Balloon and Tile classes
 
 **Notes:**
 
@@ -40,7 +40,9 @@ This project aims to recreate a game known as Bloons Tower Defense. The program 
 </tr>
 <tr>
     <td>1/6/19</td>
-    <td>
+    <td>Today, we experimented with some graphics of the game. We read in coordinates from a map file, and tried to color
+    in the terminal accordingly. This task is still a work in progress. We will continue working on it tomorrow, and will
+    also continue working on the Tile class. 
     </td>
 </tr>
 </table>
