@@ -1,6 +1,9 @@
+import java.util.*;
+
 public class Tile{
   private int x, y;
   private boolean isRoad, isStart, isEnd, hasTower, hasBalloon;
+  private List<Balloon> onTile;
 
   /**A tile constructor
   *@param integers xCord and yCord are the x and y coordinates on the tile
@@ -98,5 +101,12 @@ public class Tile{
     }else{
       return false;
     }
+  }
+
+  /**A method to get the list of balloons on a tile
+  *@return List<Balloon>
+  */
+  public List<Balloon> getBalloons(){
+    return onTile;
   }
 }
