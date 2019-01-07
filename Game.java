@@ -28,13 +28,13 @@ public class Game {
   //erases an area of the terminal where there may have been characters
   public static void clear(Terminal t){
     t.moveCursor(1,2);
-    int x = t.getTerminalSize().getRows() - 1;
-    int y = t.getTerminalSize().getColumns() - 1;
+    int x = t.getTerminalSize().getRows() + 1;
+    int y = t.getTerminalSize().getColumns() + 1;
     //System.out.println(t.getTerminalSize()); //to check area for debugging purposes
     int area = x * y;
-    //System.out.println(area);
+    //System.out.println(area); //debugging purposes
     for (int i = 0; i < area; i++){
-      t.putCharacter(' ');
+      t.putCharacter(' '); //clears terminal
     }
     }
 
@@ -60,17 +60,25 @@ public class Game {
           terminal.exitPrivateMode();
           running = false;
         }
-        if (startingMode && key.getKind() == Key.Kind.ArrowUp){ //exit starting mode
+        if (startingMode && key.getKind() == Key.Kind.ArrowUp){ //exit starting mode into game mode
           startingMode = false;
           clear(terminal);
         }
         if (!startingMode){ //enter game mode
+          terminal.applyBackgroundColor(Terminal.Color.WHITE);
+    			terminal.applyForegroundColor(Terminal.Color.BLACK);
           putString(1,4,terminal,"Game Started");
           File f = new File("map1.txt");
           Scanner in = new Scanner(f);
           while (in.hasNext()){
             String line = in.nextLine();
-            System.out.println(line);
+            //System.out.println(line.substring(0, 1)); //debugging purposes
+            //System.out.println(line.substring(2));
+            int x = Integer.parseInt(line.substring(0, 1));
+            int y = Integer.parseInt(line.substring(2));
+
+            terminal.moveCursor(x, y);
+            terminal.applyBackgroundColor(Terminal.Color.RED);
           }
         }
       }
