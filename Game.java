@@ -26,6 +26,7 @@ public class Game {
   }
 
   //erases an area of the terminal where there may have been characters
+  /*
   public static void clear(Terminal t){
     t.moveCursor(1,2);
     int x = t.getTerminalSize().getRows() + 1;
@@ -37,7 +38,8 @@ public class Game {
       t.putCharacter(' '); //clears terminal
     }
     }
-
+  */
+  
   public static void main(String[] args) throws FileNotFoundException {
     Terminal terminal = TerminalFacade.createTextTerminal();
     terminal.enterPrivateMode();
@@ -62,11 +64,11 @@ public class Game {
         }
         if (startingMode && key.getKind() == Key.Kind.ArrowUp){ //exit starting mode into game mode
           startingMode = false;
-          clear(terminal);
+          terminal.clearScreen();
         }
         if (!startingMode){ //enter game mode
-          terminal.applyBackgroundColor(Terminal.Color.WHITE);
-    			terminal.applyForegroundColor(Terminal.Color.BLACK);
+          //terminal.applyBackgroundColor(Terminal.Color.WHITE);
+    			//terminal.applyForegroundColor(Terminal.Color.BLACK);
           putString(1,4,terminal,"Game Started");
           File f = new File("map1.txt");
           Scanner in = new Scanner(f);
@@ -78,6 +80,7 @@ public class Game {
             int y = Integer.parseInt(line.substring(2));
 
             terminal.moveCursor(x, y);
+            terminal.applyBackgroundColor(Terminal.Color.WHITE);
             terminal.applyBackgroundColor(Terminal.Color.RED);
           }
         }
