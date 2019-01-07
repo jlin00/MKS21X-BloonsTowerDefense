@@ -4,9 +4,9 @@ This project aims to recreate a game known as Bloons Tower Defense. The program 
 ## To-Do List
 **Today's Date: 1/4/19**
 
-- [ ] Finish formatting README.md
-- [ ] Start writing Map class
+- [ ] Continue working on Game class
 - [ ] Figure out lanterna.jar
+- [ ] Continue working on Balloon and Tile classes 
 
 **Notes:**
 
