@@ -17,6 +17,10 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Game {
+
+  //creates a tile 2D array with the dimensions of 20 by 20
+  public Tile[][] mapArray = new Tile[20][20];
+
   //puts down a string at the specified location
   public static void putString(int r, int c,Terminal t, String s){
     t.moveCursor(r,c);
