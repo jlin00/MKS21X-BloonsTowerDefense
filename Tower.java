@@ -4,7 +4,7 @@ public abstract class Tower{
   int x, y;
   int cost;
   int radius;
-  List<Tile> vicinity;
+  List<Tile> vicinity = new ArrayList<Tile>();
 
   /**A Tower constructor
   *@param int xCord is the x position of the tower, also its row in the array
@@ -54,7 +54,7 @@ public abstract class Tower{
   */
   abstract void attack();
 
-  /**A method to run through the map array and find the tiles of the map that will be in the radius of the tower
+  /**A method to run through the list of tiles and determines if it is within radius
   *this is done by taking the x and y coordinates of each tile (which is essentially their row and column)
   *and using the equation of a circle to determine whether the tile is within the radius of the tower
   *if the tile is within the radius, it will be added to the list of tiles
@@ -62,9 +62,8 @@ public abstract class Tower{
   public void findVicinity(){
     int xCord, yCord;
     Tile temp;
-    for(int i = 0; i < Game.mapArray.length; i++){
-      for(int y = 0; y < Game.mapArray[i].length; y++){
-        temp = Game.mapArray[i][y];
+    for(int i = 0; i < grass.size(); i++){
+        temp = grass.get(i);
         xCord = temp.getX();
         yCord = temp.getY();
         if(((Math.abs(this.getX() - xCord)) + (Math.abs(this.getY() - yCord))) <= (this.getRadii() * this.getRadii())){
