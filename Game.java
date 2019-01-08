@@ -110,8 +110,9 @@ public class Game {
             String line = in.nextLine();
             //System.out.println(line.substring(0, 1)); //debugging purposes
             //System.out.println(line.substring(2));
-            int x = Integer.parseInt(line.substring(0, 1));
-            int y = Integer.parseInt(line.substring(2));
+            String[] arr = line.split(" ");
+            int x = Integer.parseInt(arr[0]);
+            int y = Integer.parseInt(arr[1]);
 
             terminal.moveCursor(x,y);
             terminal.applyBackgroundColor(Terminal.Color.RED);
