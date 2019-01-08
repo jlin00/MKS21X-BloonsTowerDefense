@@ -62,9 +62,9 @@ public abstract class Tower{
   public void findVicinity(){
     int xCord, yCord;
     Tile temp;
-    for(int i = 0; i < mapArray.length; i++){
-      for(int y = 0; y < mapArray[i].length; y++){
-        temp = mapArray[i][y];
+    for(int i = 0; i < Game.mapArray.length; i++){
+      for(int y = 0; y < Game.mapArray[i].length; y++){
+        temp = Game.mapArray[i][y];
         xCord = temp.getX();
         yCord = temp.getY();
         if(((Math.abs(this.getX() - xCord)) + (Math.abs(this.getY() - yCord))) <= (this.getRadii() * this.getRadii())){
