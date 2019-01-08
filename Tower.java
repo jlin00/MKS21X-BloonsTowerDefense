@@ -1,10 +1,10 @@
 import java.util.*;
 
 public abstract class Tower{
-  private int x, y;
-  private int cost;
-  private int radius;
-  private List<Tile> vicinity;
+  int x, y;
+  int cost;
+  int radius;
+  List<Tile> vicinity;
 
   /**A Tower constructor
   *@param int xCord is the x position of the tower, also its row in the array
@@ -12,13 +12,14 @@ public abstract class Tower{
   *@param int money is the cost
   *@param int rad is the radius
   */
-  public Tower(int xCord, int yCord, int money, int rad){
+/*  abstract Tower(int xCord, int yCord, int money, int rad){
     x = xCord;
     y = yCord;
     cost = money;
     radius = rad;
     findVicinity();
   }
+*/
 
   /**A method to get the x value, or the row of the tower in the array
   *@return int
