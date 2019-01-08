@@ -77,5 +77,21 @@ public abstract class Tower{
   *the balloon target is the nearest balloon within the radius of the tower
   *@return Balloon
   */
-  abstract Balloon findTarget();
+  public Balloon findTarget(){
+    Balloon target;
+    int distance = (radius * radius) + 1;
+    Tile temp;
+    for(int i= 0; i < vicinity.size(); i++){ //going through the list of tiles within radius
+      temp = vicinity.get(i);
+      if(temp.getHasBalloon()){ //checking if that tile has a balloon
+        int distTemp = Math.abs(this.getX() - temp.getX()) + Math.abs(this.getY() - temp.getY());
+        if(distTemp < distance){ //trying to get to the tile that is closest to the tower
+          distance = distTemp;
+          List<Balloon> balloonList = temp.getBalloons();
+          target = balloonList.get(Math.abs(100 % balloonList.size())); //choosing a random balloon from the list of balloons on that tile
+        }
+      }
+    }
+    return target; //return the balloon target
+  }
 }
