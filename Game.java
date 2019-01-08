@@ -15,6 +15,7 @@ import com.googlecode.lanterna.input.KeyMappingProfile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.*;
 
 public class Game {
   //puts down a string at the specified location
@@ -65,7 +66,7 @@ public class Game {
     }
 
     for (int i = 0; i < length; i++){
-      t.moveCursor ((r + length - 1)*2 - 2, c + i);
+      t.moveCursor ((r + length - 1)*2, c + i);
       t.applyBackgroundColor(Terminal.Color.BLACK);
       t.putCharacter(' ');
       t.applyBackgroundColor(Terminal.Color.DEFAULT);
@@ -88,6 +89,7 @@ public class Game {
     long timer = 0;
 
     int toggle = 0; //one time check to see if user has started game
+    List<Tile> road = new ArrayList<Tile>();
 
     while(running){
       Key key = terminal.readInput();
@@ -100,11 +102,11 @@ public class Game {
         toggle++;
         if (toggle == 1) {
           terminal.clearScreen();
-          drawBorder(3, 3, terminal, 30);
+          drawBorder(1,3, terminal, 30);
         }
         if (mode == 0){
           putString(0,2,terminal,"Game Started. Press ArrowUp once to pause.   "); //game mode
-          File f = new File("map1.txt");
+          /*File f = new File("map1.txt");
           Scanner in = new Scanner(f);
           while (in.hasNext()){
             String line = in.nextLine();
@@ -115,10 +117,28 @@ public class Game {
             int y = Integer.parseInt(arr[1]);
 
             terminal.moveCursor(x,y);
-            terminal.applyBackgroundColor(Terminal.Color.RED);
+            terminal.applyBackgroundColor(Terminal.Color.WHITE);
             terminal.putCharacter(' ');
             terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
             terminal.applyForegroundColor(Terminal.Color.DEFAULT);
+          }
+          */
+
+          File f = new File("map1.txt");
+          Scanner in = new Scanner(f);
+          while (in.hasNext()){
+            String line = in.nextLine();
+            String[] arr = line.split(" ");
+            int xcor = Integer.parseInt(arr[0]);
+            int ycor = Integer.parseInt(arr[1]);
+            road.add(new Tile(xcor, ycor));
+            for (int i = 0; i < road.size(); i++){
+              terminal.moveCursor(road.get(i).getX(), road.get(i).getY());
+              terminal.applyBackgroundColor(Terminal.Color.WHITE);
+              terminal.putCharacter(' ');
+              terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
+              terminal.applyForegroundColor(Terminal.Color.DEFAULT);
+            }
           }
 
           if (key.getKind() == Key.Kind.ArrowUp){
