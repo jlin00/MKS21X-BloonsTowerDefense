@@ -18,6 +18,7 @@ import java.util.Scanner;
 import java.util.*;
 
 public class Game {
+
   //puts down a string at the specified location
   public static void putString(int r, int c,Terminal t, String s){
     t.moveCursor(r,c);
