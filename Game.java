@@ -42,7 +42,7 @@ public class Game {
     }
   */
 
-  public static void drawBorder(int r, int c, Terminal t, int length){
+  public static void drawBorder(int r, int c, Terminal t, int length){ //draws a border for the game
     for (int i = 0; i < length; i++){
       t.moveCursor (r, c + i);
       t.applyBackgroundColor(Terminal.Color.BLACK);
@@ -93,29 +93,37 @@ public class Game {
     int toggle = 0; //one time check to see if user has started game
     List<Tile> road = new ArrayList<Tile>();
 
-    int lives = 50;
+    int lives = 50; //user variables
     int money = 200;
     int income = 100;
+
+    int level = 1; //variables to be adjusted according to level
+    int num_balloons = 10;
+    List<Balloon> balloons = new ArrayList<Balloon>();
+    int balloon_lives = 1;
+    //double speed = 0.2;
+    int speed = 1;
+    boolean level_passed = false;
 
     while(running){
       Key key = terminal.readInput();
 
       if (key == null){
-        if (toggle == 0) putString(1,1,terminal,"This is the start screen. Press the ArrowDown key twice to load the game."); //start screen
+        if (toggle == 0) putString(1,1,terminal,"This is the start screen. Press the B key twice to load the game."); //start screen
       }
 
       if (key != null){
         toggle++;
-        if (toggle == 1) {
+        if (toggle == 1) { //exits out of start screen mode
           terminal.clearScreen();
           drawBorder(1,3, terminal, 30);
         }
         if (mode == 0){
-          putString(0,2,terminal,"Game Started. Press ArrowUp once to pause.   "); //game mode
+          putString(1,1,terminal,"Game Started. Press A once to pause. "); //game mode
 
           File f = new File("map1.txt");
           Scanner in = new Scanner(f);
-          while (in.hasNext()){
+          while (in.hasNext()){ //read in coordinates
             String line = in.nextLine();
             String[] arr = line.split(" ");
             int xcor = Integer.parseInt(arr[0]);
@@ -123,7 +131,7 @@ public class Game {
             road.add(new Tile(xcor, ycor));
           }
 
-          for (int x = 2; x < 60; x++){
+          for (int x = 2; x < 60; x++){ //color in backgrounn
             for (int y = 4; y < 33; y++){
               terminal.moveCursor(x,y);
               terminal.applyBackgroundColor(Terminal.Color.GREEN);
@@ -133,7 +141,7 @@ public class Game {
             }
           }
 
-          for (int i = 0; i < road.size(); i++){
+          for (int i = 0; i < road.size(); i++){ //color in road
             terminal.moveCursor(road.get(i).getX(), road.get(i).getY());
             terminal.applyBackgroundColor(Terminal.Color.WHITE);
             terminal.putCharacter(' ');
@@ -141,21 +149,30 @@ public class Game {
             terminal.applyForegroundColor(Terminal.Color.DEFAULT);
           }
 
-          if (key.getKind() == Key.Kind.ArrowUp){
+          for (int i = 0; i < num_balloons; i++){ //creates list of balloons
+            balloons.add(new Balloon(i, balloon_lives));
+            balloons.get(i).setSpeed(speed);
+          }
+
+          for (int i = 0; i < balloons.size(); i++){
+            
+          }
+
+          if (key.getCharacter() == 'a'){
             mode++;
           }
         }
 
         if (mode != 0){ //pause
-          putString(0,2,terminal,"Game Paused. Press ArrowDown twice to resume.");
+          putString(1,1,terminal,"Game Paused. Press B twice to resume.");
           lastTime = System.currentTimeMillis();
           currentTime = System.currentTimeMillis();
-          if (key.getKind() == Key.Kind.ArrowDown){
+          if (key.getCharacter() == 'b'){
             mode--;
           }
         }
 
-        if (key.getKind() == Key.Kind.Escape) {
+        if (key.getKind() == Key.Kind.Escape) { //exit game
           terminal.exitPrivateMode();
           running = false;
         }
