@@ -97,7 +97,7 @@ public class Game {
     int income = 100;
 
     int level = 1; //variables to be adjusted according to level
-    int num_balloons = 10;
+    int num_balloons = 1;
     List<Balloon> balloons = new ArrayList<Balloon>();
     int balloon_lives = 1;
     //double speed = 0.2;
@@ -154,7 +154,7 @@ public class Game {
           }
 
           for (int i = 0; i < balloons.size(); i++){
-            
+
           }
 
           if (key.getCharacter() == 'a'){
