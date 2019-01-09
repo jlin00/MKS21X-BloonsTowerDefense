@@ -83,10 +83,11 @@ public class Game {
     terminal.setCursorVisible(false);
 
     boolean running = true;
-    int mode = 0; //game mode
+    int mode = 1; //game mode
     long lastTime =  System.currentTimeMillis();
     long currentTime = lastTime;
     long timer = 0;
+    long seconds = 0;
 
     int toggle = 0; //one time check to see if user has started game
     List<Tile> road = new ArrayList<Tile>();
@@ -99,7 +100,7 @@ public class Game {
       Key key = terminal.readInput();
 
       if (key == null){
-        if (toggle == 0) putString(1,1,terminal,"This is the start screen. Press any key to begin."); //start screen
+        if (toggle == 0) putString(1,1,terminal,"This is the start screen. Press the ArrowDown key twice to load the game."); //start screen
       }
 
       if (key != null){
@@ -110,8 +111,6 @@ public class Game {
         }
         if (mode == 0){
           putString(0,2,terminal,"Game Started. Press ArrowUp once to pause.   "); //game mode
-          putString(65,10,terminal,"Lives Left: "+lives);
-          putString(65,11,terminal,"Money: "+money);
 
           File f = new File("map1.txt");
           Scanner in = new Scanner(f);
@@ -164,10 +163,12 @@ public class Game {
         lastTime = currentTime;
         currentTime = System.currentTimeMillis();
         timer += (currentTime - lastTime);//add the amount of time since the last frame
-        putString(0,0,terminal,"Seconds since start of game: "+(timer / 1000));
+        putString(65,9,terminal,"Time: "+(timer /1000));
+        putString(65,10,terminal,"Lives Left: "+lives);
+        putString(65,11,terminal,"Money: "+money);
       }
       if (mode == 1){
-        putString(0,0,terminal,"Seconds since start of game: " + (timer / 1000));
+        putString(65,9,terminal,"Time: " + (timer / 1000));
       }
     }
   }
