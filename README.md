@@ -47,7 +47,11 @@ This project aims to recreate a game known as Bloons Tower Defense. The program 
 </tr>
 <tr>
     <td>1/7/19</td>
-    <td>
+    <td>Today, we continued working on developing the graphics of the game in the terminal. We continued writing the Tile and Balloon classes as well. We also successfully implemented the Tile class to the Game terminal. 
+    </td>
+</tr><tr>
+    <td>1/8/19</td>
+    <td>Today, we continued writing methods for the Tile and Balloon classes. Hopefully, we will soon be able to test out their behaviors in the terminal. We are also working on features like drawing the map and setting up a timer system for the game. 
     </td>
 </tr>
 </table>
