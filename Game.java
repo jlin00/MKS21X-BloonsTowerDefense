@@ -90,7 +90,10 @@ public class Game {
 
     int toggle = 0; //one time check to see if user has started game
     List<Tile> road = new ArrayList<Tile>();
-    List<Tile> grass = new ArrayList<Tile>();
+
+    int lives = 50;
+    int money = 200;
+    int income = 100;
 
     while(running){
       Key key = terminal.readInput();
@@ -107,6 +110,8 @@ public class Game {
         }
         if (mode == 0){
           putString(0,2,terminal,"Game Started. Press ArrowUp once to pause.   "); //game mode
+          putString(65,10,terminal,"Lives Left: "+lives);
+          putString(65,11,terminal,"Money: "+money);
 
           File f = new File("map1.txt");
           Scanner in = new Scanner(f);
@@ -116,26 +121,24 @@ public class Game {
             int xcor = Integer.parseInt(arr[0]);
             int ycor = Integer.parseInt(arr[1]);
             road.add(new Tile(xcor, ycor));
+          }
 
-            for (int i = 0; i < road.size(); i++){
-              terminal.moveCursor(road.get(i).getX(), road.get(i).getY());
-              terminal.applyBackgroundColor(Terminal.Color.WHITE);
-              terminal.putCharacter(' ');
-              terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
-              terminal.applyForegroundColor(Terminal.Color.DEFAULT);
-            }
-            /*
-            for (int x = 2; x < 60; x++){
-              for (int y = 4; y < 31; y++){
-              terminal.moveCursor(x, y);
+          for (int x = 2; x < 60; x++){
+            for (int y = 4; y < 33; y++){
+              terminal.moveCursor(x,y);
               terminal.applyBackgroundColor(Terminal.Color.GREEN);
               terminal.putCharacter(' ');
               terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
               terminal.applyForegroundColor(Terminal.Color.DEFAULT);
-              grass.add(new Tile(x,y));
             }
-            }
-            */
+          }
+
+          for (int i = 0; i < road.size(); i++){
+            terminal.moveCursor(road.get(i).getX(), road.get(i).getY());
+            terminal.applyBackgroundColor(Terminal.Color.WHITE);
+            terminal.putCharacter(' ');
+            terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
+            terminal.applyForegroundColor(Terminal.Color.DEFAULT);
           }
 
           if (key.getKind() == Key.Kind.ArrowUp){
