@@ -172,7 +172,6 @@ public class Game {
           if (key.getCharacter() == 'a'){
             mode++;
           }
-        }
 
         if (mode != 0){ //pause
           putString(1,1,terminal,"Game Paused. Press B twice to resume.");
