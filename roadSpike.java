@@ -11,10 +11,14 @@ public class roadSpike extends Tower{
     y = yCord;
     cost = money;
     radius = rad;
-    findVicinity();
+    findTarget();
   }
 
+  /**A method that takes one life from the balloon target on its tile
+  */
   public void attack(){
-    System.out.println("temporary body");
+    if(this.getX() == target.getX() && this.getY() == target.getY()){
+        target.setLives(getLives() - 1);
+    }
   }
 }
