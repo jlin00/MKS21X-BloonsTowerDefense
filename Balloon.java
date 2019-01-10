@@ -89,7 +89,7 @@ public class Balloon{
 
   /**A method to move the balloon in the terminal to a new coordinate
   */
-  public void move(Terminal t, int newX, int newY){
+  public void move(int newX, int newY){
     //int diffx = newX - xcor;
     //int diffy = newY - ycor;
     xcor = newX;
