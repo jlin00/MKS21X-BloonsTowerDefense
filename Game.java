@@ -103,6 +103,10 @@ public class Game {
     //double speed = 0.2;
     int speed = 1;
     boolean level_passed = false;
+    int delay = 1000;
+
+
+    Balloon testBalloon = new Balloon(1,1,1,5,4);//for testing the move function
 
     while(running){
       Key key = terminal.readInput();
@@ -130,7 +134,7 @@ public class Game {
             road.add(new Tile(xcor, ycor));
           }
 
-          for (int x = 2; x < 60; x++){ //color in backgrounn
+          for (int x = 2; x < 60; x++){ //color in background
             for (int y = 4; y < 33; y++){
               terminal.moveCursor(x,y);
               terminal.applyBackgroundColor(Terminal.Color.GREEN);
@@ -146,15 +150,23 @@ public class Game {
             terminal.putCharacter(' ');
             terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
             terminal.applyForegroundColor(Terminal.Color.DEFAULT);
+            //putString(40, 40,terminal, ""+timer);
+            //if (timer == 1000){
+              //testBalloon.move(terminal, road.get(i).getX(), road.get(i).getY());
+            }
           }
+
+          /*
+          for (int i = 0; i < road.size(); i++){
+          if (lastTime % 1000 == 0){
+            testBalloon.move(terminal, road.get(i).getX(), road.get(i).getY());
+        }
+          }
+          */
+
 
           for (int i = 0; i < num_balloons; i++){ //creates list of balloons
-            balloons.add(new Balloon(i, balloon_lives));
-            balloons.get(i).setSpeed(speed);
-          }
-
-          for (int i = 0; i < balloons.size(); i++){
-            terminal.moveCursor()
+            balloons.add(new Balloon(i, balloon_lives, 1, 5, 4));
           }
 
           if (key.getCharacter() == 'a'){
