@@ -42,16 +42,23 @@ This project aims to recreate a game known as Bloons Tower Defense. The program 
     <td>1/6/19</td>
     <td>Today, we experimented with some graphics of the game. We read in coordinates from a map file, and tried to color
     in the terminal accordingly. This task is still a work in progress. We will continue working on it tomorrow, and will
-    also continue working on the Tile class. 
+    also continue working on the Tile class.
     </td>
 </tr>
 <tr>
     <td>1/7/19</td>
     <td>Today, we continued to experiment with the terminal graphics of the game. We started to format the graphics and achieved having two modes, one screen for starting up the game and second screen for the map of the game. The basic Tile class was finished with some additions, like the Balloon List, and we implemented it to the Game terminal. We also finished the Tower abstract class and started working on the three different towers, TackShooter, RoadSpike, and IceTower, that extend the abstract class.
     </td>
-</tr><tr>
+</tr>
+<tr>
     <td>1/8/19</td>
-    <td>Today, we continued writing methods for the Tile and Balloon classes. Hopefully, we will soon be able to test out their behaviors in the terminal. We are also working on features like drawing the map and setting up a timer system for the game. 
+    <td>Today, we continued writing methods for the Tile and Balloon classes. Hopefully, we will soon be able to test out their behaviors in the terminal. We are also working on features like drawing the map and setting up a timer system for the game.
+    </td>
+</tr>
+<tr>
+    <td>1/9/19</td>
+    <td>Today, we continued working on developing the graphics of the game. We attempted to implement the Balloon class in the terminal, with
+    limited success. We also merged the two branches together and will modify methods over the next few days as we test them out.  
     </td>
 </tr>
 </table>
