@@ -1,6 +1,7 @@
 public class Balloon{
   private int ID, lives, speed;
   private boolean isAlive;
+  private int xcor, ycor;
 
   /**A Balloon constructor
   *@param int each balloon has a given ID number to differentiate it easily
@@ -22,6 +23,15 @@ public class Balloon{
     isAlive = true;
   }
 
+  public Balloon(int num, int numLives, int speed, int xcor, int ycor){//most specific constructor
+    ID = num;
+    lives = numLives;
+    isAlive = true;
+    this.speed = speed;
+    this.xcor = xcor;
+    this.ycor = ycor;
+  }
+
   /**A method to get the number of lives a balloon has
   *@return int lives
   */
@@ -37,10 +47,24 @@ public class Balloon{
   }
 
   /**A method to check if a balloon is alive
-  *@return boolean isAlive
+  *@return int xcor
   */
   public boolean getIsAlive(){
     return isAlive;
+  }
+
+  /**A method to get x-coordinate of balloon
+  *@return boolean isAlive
+  */
+  public int getX(){
+    return xcor;
+  }
+
+  /**A method to get y-coordinate of balloon
+  *@return int ycor
+  */
+  public int getY(){
+    return ycor;
   }
 
   /**A method to change the number of lives a balloon has
