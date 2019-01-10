@@ -144,26 +144,20 @@ public class Game {
             }
           }
 
-          for (int i = 0; i < road.size(); i++){ //color in road
+          for (int i = 0; i < road.size(); i++){ //color in road and move balloons (how to separate this into two separate functions, how to create delay, why doesnt timer work)
             terminal.moveCursor(road.get(i).getX(), road.get(i).getY());
             terminal.applyBackgroundColor(Terminal.Color.WHITE);
             terminal.putCharacter(' ');
             terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
             terminal.applyForegroundColor(Terminal.Color.DEFAULT);
-            //putString(40, 40,terminal, ""+timer);
-            //if (timer == 1000){
-              //testBalloon.move(terminal, road.get(i).getX(), road.get(i).getY());
-            }
+            testBalloon.move(road.get(i).getX(), road.get(i).getY());
+            terminal.moveCursor(testBalloon.getX(), testBalloon.getY());
+            terminal.applyBackgroundColor(Terminal.Color.RED);
+            terminal.applyForegroundColor(Terminal.Color.YELLOW);
+            terminal.putCharacter('A');
+            terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
+            terminal.applyForegroundColor(Terminal.Color.DEFAULT);
           }
-
-          /*
-          for (int i = 0; i < road.size(); i++){
-          if (lastTime % 1000 == 0){
-            testBalloon.move(terminal, road.get(i).getX(), road.get(i).getY());
-        }
-          }
-          */
-
 
           for (int i = 0; i < num_balloons; i++){ //creates list of balloons
             balloons.add(new Balloon(i, balloon_lives, 1, 5, 4));
@@ -172,6 +166,7 @@ public class Game {
           if (key.getCharacter() == 'a'){
             mode++;
           }
+        }
 
         if (mode != 0){ //pause
           putString(1,1,terminal,"Game Paused. Press B twice to resume.");
@@ -182,7 +177,7 @@ public class Game {
           }
         }
 
-        if (key.getKind() == Key.Kind.Escape) { //exit game
+        if (key.getKind() == Key.Kind.Escape){ //exit game
           terminal.exitPrivateMode();
           running = false;
         }
