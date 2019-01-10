@@ -1,3 +1,17 @@
+import com.googlecode.lanterna.terminal.Terminal.SGR;
+import com.googlecode.lanterna.TerminalFacade;
+import com.googlecode.lanterna.input.Key;
+import com.googlecode.lanterna.input.Key.Kind;
+import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.terminal.Terminal.Color;
+import com.googlecode.lanterna.terminal.TerminalSize;
+import com.googlecode.lanterna.LanternaException;
+import com.googlecode.lanterna.input.CharacterPattern;
+import com.googlecode.lanterna.input.InputDecoder;
+import com.googlecode.lanterna.input.InputProvider;
+import com.googlecode.lanterna.input.Key;
+import com.googlecode.lanterna.input.KeyMappingProfile;
+
 public class Balloon{
   private int ID, lives, speed;
   private boolean isAlive;
@@ -85,5 +99,23 @@ public class Balloon{
   */
   public void makeDead(){
     isAlive = false;
+  }
+
+  /**A method to move the balloon in the terminal to a new coordinate
+  */
+  public void move(Terminal t, int newX, int newY){
+    //int diffx = newX - xcor;
+    //int diffy = newY - ycor;
+    t.moveCursor(newX, newY);
+    t.applyBackgroundColor(Terminal.Color.RED);
+    t.applyForegroundColor(Terminal.Color.YELLOW);
+    t.putCharacter('A');
+    t.applyBackgroundColor(Terminal.Color.DEFAULT);
+    t.applyForegroundColor(Terminal.Color.DEFAULT);
+    t.moveCursor(xcor, ycor);
+    t.applyBackgroundColor(Terminal.Color.WHITE);
+    t.putCharacter(' ');
+    t.applyBackgroundColor(Terminal.Color.DEFAULT);
+    t.applyForegroundColor(Terminal.Color.DEFAULT);
   }
 }
