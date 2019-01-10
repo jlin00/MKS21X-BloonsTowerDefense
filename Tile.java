@@ -3,7 +3,7 @@ import java.util.*;
 public class Tile{
   private int x, y;
   private boolean isRoad, isStart, isEnd, hasTower, hasBalloon;
-  private List<Balloon> onTile;
+  private List<Balloon> onTile = new ArrayList<Balloon>();
 
   /**A tile constructor
   *@param integers xCord and yCord are the x and y coordinates on the tile
