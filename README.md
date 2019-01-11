@@ -2,11 +2,10 @@
 This project aims to recreate a game known as Bloons Tower Defense. The program will be interactive and act similarly to the original game. The user will be able to choose a map to play the game in. Each map will have a road for the balloons to pass through and surrounding grass to place the towers. Balloons will enter from one end of the road and continue traveling until they either reach the end of the road or are popped by surrounding towers. Each balloon that reaches the end of the road will decrease the lives of the user. When the user has no more lives and has passed all the levels, the game ends. The user will steadily earn income as time passes and can use it to purchase towers that pop the balloons.
 
 ## To-Do List
-**Today's Date: 1/7/19**
+**Today's Date: 1/10/19**
 
-- [ ] Continue working on Game class
-- [ ] Figure out lanterna.jar
-- [ ] Continue working on Balloon and Tile classes
+- [ ] Update balloon movement on terminal
+- [ ] Start implementing towers onto terminal
 
 **Notes:**
 
@@ -59,6 +58,12 @@ This project aims to recreate a game known as Bloons Tower Defense. The program 
     <td>1/9/19</td>
     <td>Today, we continued working on developing the graphics of the game. We attempted to implement the Balloon class in the terminal, with
     limited success. We also merged the two branches together and will modify methods over the next few days as we test them out.  
+    </td>
+</tr>
+<tr>
+    <td>1/10/19</td>
+    <td>Today, we worked on implementing the balloon class and having it show up on the terminal. We still haven't figured out the timer system, so hopefully we
+    fix that problem sometime in the near future. We will also start working on implementing the tower class in order to prepare for demos.   
     </td>
 </tr>
 </table>
