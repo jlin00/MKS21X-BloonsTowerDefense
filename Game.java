@@ -87,10 +87,11 @@ public class Game {
     long lastTime =  System.currentTimeMillis();
     long currentTime = lastTime;
     long timer = 0;
-    long seconds = 0;
-
+    long sinceTime = 0;
     int toggle = 0; //one time check to see if user has started game
     List<Tile> road = new ArrayList<Tile>();
+    int ise = 0;
+    int balloonSinceTime = 0;
 
     int lives = 50; //user variables
     int money = 200;
@@ -100,13 +101,9 @@ public class Game {
     int num_balloons = 1;
     List<Balloon> balloons = new ArrayList<Balloon>();
     int balloon_lives = 1;
-    //double speed = 0.2;
-    int speed = 1;
     boolean level_passed = false;
-    int delay = 1000;
 
-
-    Balloon testBalloon = new Balloon(1,1,1,5,4);//for testing the move function
+    Balloon testBalloon = new Balloon(1,1,1000,5,4);//for testing the move function
 
     while(running){
       Key key = terminal.readInput();
@@ -150,13 +147,6 @@ public class Game {
             terminal.putCharacter(' ');
             terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
             terminal.applyForegroundColor(Terminal.Color.DEFAULT);
-            testBalloon.move(road.get(i).getX(), road.get(i).getY());
-            terminal.moveCursor(testBalloon.getX(), testBalloon.getY());
-            terminal.applyBackgroundColor(Terminal.Color.RED);
-            terminal.applyForegroundColor(Terminal.Color.YELLOW);
-            terminal.putCharacter('A');
-            terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
-            terminal.applyForegroundColor(Terminal.Color.DEFAULT);
           }
 
           for (int i = 0; i < num_balloons; i++){ //creates list of balloons
@@ -186,6 +176,36 @@ public class Game {
         lastTime = currentTime;
         currentTime = System.currentTimeMillis();
         timer += (currentTime - lastTime);//add the amount of time since the last frame
+        sinceTime += (currentTime - lastTime); //add the amount of time since the last frame
+        balloonSinceTime += (currentTime - lastTime);
+        if (sinceTime == 10000 && timer != 0){
+          money += 75;
+          sinceTime = 0;
+        }
+
+        if (balloonSinceTime == 1000){
+          if (ise < road.size()){
+            terminal.moveCursor(road.get(ise).getX(), road.get(ise).getY());
+            terminal.applyBackgroundColor(Terminal.Color.WHITE);
+            terminal.applyForegroundColor(Terminal.Color.RED);
+            terminal.putCharacter('Ǫ');
+            terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
+            terminal.applyForegroundColor(Terminal.Color.DEFAULT);
+
+            if (ise != 0){
+              terminal.moveCursor(road.get(ise - 1).getX(), road.get(ise - 1).getY() );
+              terminal.applyBackgroundColor(Terminal.Color.WHITE);
+              terminal.putCharacter(' ');
+              terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
+              terminal.applyForegroundColor(Terminal.Color.DEFAULT);
+            }
+
+            balloonSinceTime = 0;
+            ise++;
+          }
+          else ise = 0;
+        }
+
         putString(65,9,terminal,"Time: "+(timer /1000));
         putString(65,10,terminal,"Lives Left: "+lives);
         putString(65,11,terminal,"Money: "+money);
