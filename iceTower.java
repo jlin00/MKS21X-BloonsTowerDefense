@@ -1,3 +1,4 @@
+import java.util.*;
 public class iceTower extends Tower{
 
   /**A Tower constructor
@@ -11,10 +12,15 @@ public class iceTower extends Tower{
     y = yCord;
     cost = money;
     radius = rad;
-    findVicinity();
   }
 
-  public void attack(){
-    System.out.println("temporary body");
+  public void attack(List<Balloon> ball){
+    for(int i = 0; i < ball.size(); i++){
+      Balloon temp = ball.get(i);
+      double distance = Math.pow(this.getX() - temp.getX(), 2) + Math.pow(this.getY() - temp.getY(), 2);
+      if(distance <= (radius * radius)){
+        System.out.println("fill in delay stuff");
+      }
+    }
   }
 }
