@@ -11,10 +11,9 @@ public class tackShooter extends Tower{
     y = yCord;
     cost = money;
     radius = rad;
-    findVicinity();
   }
 
   public void attack(){
-    System.out.println("temporary body");
+    target.setLives(target.getLives() - 1);
   }
 }
