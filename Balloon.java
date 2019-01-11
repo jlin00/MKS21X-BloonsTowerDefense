@@ -1,5 +1,5 @@
 public class Balloon{
-  private int ID, lives, speed;
+  private int ID, lives, delay;
   private boolean isAlive;
   private int xcor, ycor;
 
@@ -23,11 +23,11 @@ public class Balloon{
     isAlive = true;
   }
 
-  public Balloon(int num, int numLives, int speed, int xcor, int ycor){//most specific constructor
+  public Balloon(int num, int numLives, int delay, int xcor, int ycor){//most specific constructor
     ID = num;
     lives = numLives;
     isAlive = true;
-    this.speed = speed;
+    this.delay = delay;
     this.xcor = xcor;
     this.ycor = ycor;
   }
@@ -40,10 +40,10 @@ public class Balloon{
   }
 
   /**A method to get the speed of a balloon, in terms of movement across the road
-  *@return int speed
+  *@return int delay
   */
-  public int getSpeed(){
-    return speed;
+  public int getDelay(){
+    return delay;
   }
 
   /**A method to check if a balloon is alive
@@ -77,8 +77,8 @@ public class Balloon{
   /**A method to change the speed of a balloon
   *@param int speed
   */
-  public void setSpeed(int num){
-    speed = num;
+  public void setDelay(int num){
+    delay = num;
   }
 
   /**A method to make a balloon 'dead' by changing the isAlive boolean to false
@@ -89,10 +89,8 @@ public class Balloon{
 
   /**A method to move the balloon in the terminal to a new coordinate
   */
-  public void move(int newX, int newY){
-    //int diffx = newX - xcor;
-    //int diffy = newY - ycor;
-    xcor = newX;
-    ycor = newY;
+  public void move(int newX, int newY, long currentGameTime, long currentLastTime){
+      xcor = newX;
+      ycor = newY;
   }
 }
