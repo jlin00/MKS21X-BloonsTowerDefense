@@ -1,22 +1,10 @@
 # Bloons Tower Defense
 This project aims to recreate a game known as Bloons Tower Defense. The program will be interactive and act similarly to the original game. The user will be able to choose a map to play the game in. Each map will have a road for the balloons to pass through and surrounding grass to place the towers. Balloons will enter from one end of the road and continue traveling until they either reach the end of the road or are popped by surrounding towers. Each balloon that reaches the end of the road will decrease the lives of the user. When the user has no more lives and has passed all the levels, the game ends. The user will steadily earn income as time passes and can use it to purchase towers that pop the balloons.
 
-## To-Do List
-**Today's Date: 1/10/19**
-
-- [ ] Update balloon movement on terminal
-- [ ] Start implementing towers onto terminal
-
-**Notes:**
-
-@TiffanyCao :+1:
-
-@jlin00 <write comments here>
-
 ## Instructions
-After cloning the game, the user must compile a few files in order for the game to operate. These files, namely Tile.java, Balloon.java, and Game.java, must be compiled with the lanterna jar file. To do this, use the terminal command "javac -cp lanterna:. <file_name.java>" For example, "javac -cp lanterna.jar: Tile.java" Afterward, use the terminal command "java -cp lanterna.jar:. <file_name>" such as "java -cp lanterna.jar:. Tile" Each of the three files previously mentioned have to be compiled in this way.
+After cloning the repo, the user must compile a few files in order for the game to operate. These files, namely Tile.java, Balloon.java, and Game.java, must be compiled with the lanterna jar file. To do this, use the terminal command "javac -cp lanterna:. <file_name.java>" For example, "javac -cp lanterna.jar: Tile.java" Afterward, use the terminal command "java -cp lanterna.jar:. <file_name>" such as "java -cp lanterna.jar:. Game". Only the Game class needs to be compiled in the latter fashion since it is the only file with a main. The default map of the game is Map 1. If you would like to use map 2, run "java -cp lanterna.jar:. Game 2" instead.
 
-Once Game.java is compiled, a terminal screen will appear, displaying the Bloons Tower Defense Game. To start the game, press B twice, which will load the map of the game. Pressing A twice will pause the game. Money is earned as time goes on—75 every 10 seconds. When the game is paused, the timer stops as well, so money will not be gained during this period. The currency can be used to buy towers. The game screen will display a chart of each tower type and their respective keys. To place a tower, use the arrow keys to move the cursor along the map to the tile that you want to place your tower on. Then press the key corresponding to the type of tower you want to place. Remember that the tile must be green and not a road tile.
+Once Game.java is compiled, a terminal screen will appear, displaying the Bloons Tower Defense Game. To start the game, press B once, which will load the map of the game. Pressing A will pause the game. Money is earned as time goes on— $75 every 10 seconds. When the game is paused, the timer stops as well, so money will not be gained during this period. The currency can be used to buy towers. The game screen will display a chart of each tower type and their respective keys. To place a tower, use the arrow keys to move the cursor along the map to the tile that you want to place your tower on. Then press the key corresponding to the type of tower you want to place. Remember that the tile must be green and not a road tile.
 
 The game is played by placing towers, which all have a radius, to attack balloons that will spawn onto the screen once the game starts. The balloons will move down the road tiles and each time a balloon reaches the end of the road, a life is lost. Users have a limited amount of lives. After they are used up, the user loses that level. Successfully popping all the balloons means the user can advance to the next level.
 
