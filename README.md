@@ -14,6 +14,11 @@ This project aims to recreate a game known as Bloons Tower Defense. The program 
 @jlin00 <write comments here>
 
 ## Instructions
+    After cloning the game, the user must compile a few files in order for the game to operate. These files, namely Tile.java, Balloon.java, and Game.java, must be compiled with the lanterna jar file. To do this, use the terminal command "javac -cp lanterna:. <file_name.java>" For example, "javac -cp lanterna.jar: Tile.java" Afterward, use the terminal command "java -cp lanterna.jar:. <file_name>" such as "java -cp lanterna.jar:. Tile" Each of the three files previously mentioned have to be compiled in this way.
+
+    Once Game.java is compiled, a terminal screen will appear, displaying the Bloons Tower Defense Game. To start the game, press B twice, which will load the map of the game. Pressing A twice will pause the game. Money is earned as time goes on—75 every 10 seconds. When the game is paused, the timer stops as well, so money will not be gained during this period. The currency can be used to buy towers. The game screen will display a chart of each tower type and their respective keys. To place a tower, use the arrow keys to move the cursor along the map to the tile that you want to place your tower on. Then press the key corresponding to the type of tower you want to place. Remember that the tile must be green and not a road tile.
+
+    The game is played by placing towers, which all have a radius, to attack balloons that will spawn onto the screen once the game starts. The balloons will move down the road tiles and each time a balloon reaches the end of the road, a life is lost. Users have a limited amount of lives. After they are used up, the user loses that level. Successfully popping all the balloons means the user can advance to the next level.
 
 ## Development Log
 <table>
@@ -66,4 +71,13 @@ This project aims to recreate a game known as Bloons Tower Defense. The program 
     fix that problem sometime in the near future. We will also start working on implementing the tower class in order to prepare for demos.   
     </td>
 </tr>
+<tr>
+    <td>1/11/19</td>
+    <td>Today, we continued to on implementing the balloon objects onto the terminal class. We had many challenges with this, such as the balloon getting stuck after some time and some flickering issues, but we at least managed to have one balloon object moving along the road. To address these issues, we went to our teacher to see if he could help us fix anything, and we received advice on how to improve the game and solve the problems. Besides the terminal graphics, we also revised the attack methods in each of the different towers.
+    </td>
+</tr>
+<tr>
+    <td>11/12/19</td>
+    <td>Today, we tried implementing the changes that our teacher had advised us to implement. Though the graphics of the terminal improved significantly due to these changes, we continued to have problems with the flickering balloons and the balloon getting stuck after a while. We had also changed the workings of the Balloon and Tile class so now they have to be compiled with the lanterna.jar in order for the game to work. Meanwhile, we also updated instructions for the game.
+    </td>
 </table>
