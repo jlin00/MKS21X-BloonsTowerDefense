@@ -1,7 +1,23 @@
+import com.googlecode.lanterna.terminal.Terminal.SGR;
+import com.googlecode.lanterna.TerminalFacade;
+import com.googlecode.lanterna.input.Key;
+import com.googlecode.lanterna.input.Key.Kind;
+import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.terminal.Terminal.Color;
+import com.googlecode.lanterna.terminal.TerminalSize;
+import com.googlecode.lanterna.LanternaException;
+import com.googlecode.lanterna.input.CharacterPattern;
+import com.googlecode.lanterna.input.InputDecoder;
+import com.googlecode.lanterna.input.InputProvider;
+import com.googlecode.lanterna.input.Key;
+import com.googlecode.lanterna.input.KeyMappingProfile;
+
 public class Balloon{
   private int ID, lives, delay;
   private boolean isAlive;
   private int xcor, ycor;
+  private boolean initialized;
+  private int atTile;
 
   /**A Balloon constructor
   *@param int each balloon has a given ID number to differentiate it easily
@@ -21,6 +37,8 @@ public class Balloon{
     ID = num;
     lives = numLives;
     isAlive = true;
+    initialized = false;
+    atTile = 0;
   }
 
   public Balloon(int num, int numLives, int delay, int xcor, int ycor){//most specific constructor
@@ -30,6 +48,8 @@ public class Balloon{
     this.delay = delay;
     this.xcor = xcor;
     this.ycor = ycor;
+    initialized = false;
+    atTile = 0;
   }
 
   /**A method to get the number of lives a balloon has
@@ -67,6 +87,20 @@ public class Balloon{
     return ycor;
   }
 
+  /**A method to boolean initialized of the balloon
+  *@return boolean initialized
+  */
+  public boolean getInit(){
+    return initialized;
+  }
+
+  /**A method to get tile of balloon
+  *@return int ycor
+  */
+  public int getTile(){
+    return atTile;
+  }
+
   /**A method to change the number of lives a balloon has
   *@param int numLives
   */
@@ -87,10 +121,32 @@ public class Balloon{
     isAlive = false;
   }
 
+  /**A method to set the tile of a balloon
+  */
+  public void setTile(int num){
+    atTile = num;
+  }
+
+  /**A method to make a balloon initialized by changing the initialized boolean to true
+  */
+  public void makeInit(){
+    initialized = true;
+  }
   /**A method to move the balloon in the terminal to a new coordinate
   */
-  public void move(int newX, int newY, long currentGameTime, long currentLastTime){
-      xcor = newX;
-      ycor = newY;
+  public void move(Tile t){
+      xcor = t.getX();
+      ycor = t.getY();
+      atTile++;
   }
+
+  public void draw(Terminal t){
+    t.moveCursor(xcor, ycor);
+    t.applyBackgroundColor(Terminal.Color.WHITE);
+    t.applyForegroundColor(Terminal.Color.RED);
+    t.putCharacter('Ǫ');
+    t.applyBackgroundColor(Terminal.Color.DEFAULT);
+    t.applyForegroundColor(Terminal.Color.DEFAULT);
+  }
+
 }
