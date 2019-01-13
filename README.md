@@ -68,7 +68,9 @@ The game is played by placing towers, which all have a radius, to attack balloon
     <td>1/12/19</td>
     <td>Today, we tried implementing the changes that our teacher had advised us to implement. Though the graphics of the terminal improved significantly due to these changes, we continued to have problems with the flickering balloons and the balloon getting stuck after a while. We had also changed the workings of the Balloon and Tile class so now they have to be compiled with the lanterna.jar in order for the game to work. Meanwhile, we also updated instructions for the game.
     </td>
-  <td>1/13/19</td>
+<tr>
+    <td>1/13/19</td>
     <td>
     </td>
+</tr>
 </table>
