@@ -1,3 +1,16 @@
+import com.googlecode.lanterna.terminal.Terminal.SGR;
+import com.googlecode.lanterna.TerminalFacade;
+import com.googlecode.lanterna.input.Key;
+import com.googlecode.lanterna.input.Key.Kind;
+import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.terminal.Terminal.Color;
+import com.googlecode.lanterna.terminal.TerminalSize;
+import com.googlecode.lanterna.LanternaException;
+import com.googlecode.lanterna.input.CharacterPattern;
+import com.googlecode.lanterna.input.InputDecoder;
+import com.googlecode.lanterna.input.InputProvider;
+import com.googlecode.lanterna.input.Key;
+import com.googlecode.lanterna.input.KeyMappingProfile;
 import java.util.*;
 
 public class Tile{
@@ -108,5 +121,13 @@ public class Tile{
   */
   public List<Balloon> getBalloons(){
     return onTile;
+  }
+
+  public void draw(Terminal t){
+    t.moveCursor(x, y);
+    t.applyBackgroundColor(Terminal.Color.WHITE);
+    t.putCharacter(' ');
+    t.applyBackgroundColor(Terminal.Color.DEFAULT);
+    t.applyForegroundColor(Terminal.Color.DEFAULT);
   }
 }
