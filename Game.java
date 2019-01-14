@@ -26,7 +26,7 @@ public class Game {
     }
   }
 
-  public static void drawBorder(int r, int c, Terminal t, int length){ //draws a border for the game, terminal must be at least 80 x 34
+  public static void drawBorder(int r, int c, Terminal t, int length){ //draws a border for the game, terminal must be at least 80 x 38
     for (int i = 0; i < length; i++){
       t.moveCursor (r, c + i);
       t.applyBackgroundColor(Terminal.Color.BLACK);
@@ -88,13 +88,28 @@ public class Game {
     int num_balloons = 5; //number of balloons to be initialized
     int balloons_made = 0; //number of balloons already initialized
     int balloon_lives = 1; //number of lives each balloon will have
-    int balloon_delay = 800;
+    int balloon_delay = 500; //milliseconds between each balloon movement
     boolean level_passed = false;
 
-    putString(0,0,terminal,"This is the start screen. Press b to begin.");
-    putString(0,1,terminal,"Once the game is running, press a to pause and b to resume.");
+    terminal.applySGR(Terminal.SGR.ENTER_BOLD);
+    putString(0,0,terminal,"Welcome to Bloons Tower Defense!");
+    terminal.applySGR(Terminal.SGR.RESET_ALL);
+    putString(0,2,terminal,"To begin the game, press b.");
+    putString(0,3,terminal,"Once you have begun, press a to pause and b to resume the game.");
+    putString(0,5,terminal,"Balloons will start spawning immediately and travel down the road.");
+    putString(0,6,terminal,"To defeat them, place down towers by typing the letter  of the tower you want");
+    putString(0,7,terminal,"to buy and using the arrow keys to give it a location on the grass, which are");
+    putString(0,8,terminal,"the green tiles. Press the enter key to place the tower down. You will ");
+    putString(0,9,terminal,"receive $75 every 10 seconds. Use your income wisely to purchase towers!");
+    putString(0,10,terminal,"If any balloons reach the end of the road, your lives will decrease.");
+    putString(0,11,terminal,"If your lives reach 0, you lose.");
+    terminal.applySGR(Terminal.SGR.ENTER_BLINK);
+    terminal.applySGR(Terminal.SGR.ENTER_BOLD);
+    putString(0,13,terminal,"Best of luck!");
+    terminal.applySGR(Terminal.SGR.RESET_ALL);
 
     while (running){
+      putString(0,size.getRows()-2,terminal,"[To exit the game, press the escape key.]");
       if (mode == 0){
         lastTime = currentTime;
         currentTime = System.currentTimeMillis();
@@ -137,7 +152,7 @@ public class Game {
       if (mode == 1){
         lastTime = System.currentTimeMillis();
         currentTime = System.currentTimeMillis();
-        putString(65,9,terminal,"Time: " + (timer / 1000));
+        if (toggle >= 1) putString(65,9,terminal,"Time: " + (timer / 1000));
       }
 
       Key key = terminal.readInput();
