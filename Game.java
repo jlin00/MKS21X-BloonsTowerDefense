@@ -26,22 +26,7 @@ public class Game {
     }
   }
 
-  //erases an area of the terminal where there may have been characters
-  /*
-  public static void clear(Terminal t){
-    t.moveCursor(1,2);
-    int x = t.getTerminalSize().getRows() + 1;
-    int y = t.getTerminalSize().getColumns() + 1;
-    //System.out.println(t.getTerminalSize()); //to check area for debugging purposes
-    int area = x * y;
-    //System.out.println(area); //debugging purposes
-    for (int i = 0; i < area; i++){
-      t.putCharacter(' '); //clears terminal
-    }
-    }
-  */
-
-  public static void drawBorder(int r, int c, Terminal t, int length){ //draws a border for the game
+  public static void drawBorder(int r, int c, Terminal t, int length){ //draws a border for the game, terminal must be at least 80 x 34
     for (int i = 0; i < length; i++){
       t.moveCursor (r, c + i);
       t.applyBackgroundColor(Terminal.Color.BLACK);
@@ -72,7 +57,6 @@ public class Game {
       t.applyBackgroundColor(Terminal.Color.DEFAULT);
       t.applyForegroundColor(Terminal.Color.DEFAULT);
     }
-
   }
 
   public static void main(String[] args) throws FileNotFoundException {
@@ -83,45 +67,90 @@ public class Game {
     terminal.setCursorVisible(false);
 
     boolean running = true;
-    int mode = 1; //game mode
+    int mode = 1; //start off in pause mode
+    int map = 1; //default map is Map 1
+    if (args.length != 0) map = Integer.parseInt(args[0]); //choice to choose map 2
     long lastTime =  System.currentTimeMillis();
-    long currentTime = lastTime;
+    long currentTime = lastTime; //timer syster
     long timer = 0;
-    long sinceTime = 0;
     int toggle = 0; //one time check to see if user has started game
-    List<Tile> road = new ArrayList<Tile>();
-    int ise = 0;
-    int balloonSinceTime = 0;
+    int balloonSinceTime = 0; //used to spawn a balloon every second
+    int balloonMoveTime = 0; //used to move all balloons every two seconds
+    int sinceTime = 0;
+    List<Tile> road = new ArrayList<Tile>(); //stores the coordinates from map files for the road
 
     int lives = 50; //user variables
     int money = 200;
-    int income = 100;
+    int income = 75;
 
-    int level = 1; //variables to be adjusted according to level
-    int num_balloons = 1;
     List<Balloon> balloons = new ArrayList<Balloon>();
-    int balloon_lives = 1;
+    int level = 1; //variables to be adjusted according to level
+    int num_balloons = 5; //number of balloons to be initialized
+    int balloons_made = 0; //number of balloons already initialized
+    int balloon_lives = 1; //number of lives each balloon will have
+    int balloon_delay = 800;
     boolean level_passed = false;
 
-    Balloon testBalloon = new Balloon(1,1,1000,5,4);//for testing the move function
+    putString(0,0,terminal,"This is the start screen. Press b to begin.");
+    putString(0,1,terminal,"Once the game is running, press a to pause and b to resume.");
 
-    while(running){
-      Key key = terminal.readInput();
+    while (running){
+      if (mode == 0){
+        lastTime = currentTime;
+        currentTime = System.currentTimeMillis();
+        timer += (currentTime - lastTime);//add the amount of time since the last frame
+        putString(65,9,terminal,"Time: "+(timer /1000));
+        putString(65,10,terminal,"Lives Left: "+lives);
+        putString(65,11,terminal,"Money: "+money);
 
-      if (key == null){
-        if (toggle == 0) putString(1,1,terminal,"This is the start screen. Press the B key twice to load the game."); //start screen
+        sinceTime += (currentTime - lastTime); //add the amount of time since the last frame
+        if (sinceTime >= 10000 && timer != 0){
+          money += income;
+          sinceTime = 0;
+        }
+
+        balloonSinceTime += (currentTime - lastTime);
+        if (balloonSinceTime >= 1000 && balloons_made < num_balloons){
+          balloons.add(new Balloon(balloons_made, balloon_lives, balloon_delay, 5, 4));
+          balloons_made++;
+          balloonSinceTime = 0;
+        }
+
+        balloonMoveTime += (currentTime - lastTime);
+        for(Balloon x: balloons){
+          if (balloonMoveTime >= x.getDelay()){
+            int temp = x.getTile();
+            if (temp < road.size()){
+              x.move(road.get(temp));
+              x.draw(terminal);
+
+              if (temp != 0){
+                road.get(temp - 1).draw(terminal);
+              }
+            }
+            balloonMoveTime = 0;
+          }
+        }
+
       }
+
+      if (mode == 1){
+        lastTime = System.currentTimeMillis();
+        currentTime = System.currentTimeMillis();
+        putString(65,9,terminal,"Time: " + (timer / 1000));
+      }
+
+      Key key = terminal.readInput();
 
       if (key != null){
         toggle++;
-        if (toggle == 1) { //exits out of start screen mode
+        if (toggle == 1){
           terminal.clearScreen();
           drawBorder(1,3, terminal, 30);
-        }
-        if (mode == 0){
-          putString(1,1,terminal,"Game Started. Press A once to pause. "); //game mode
 
-          File f = new File("map1.txt");
+          File f = new File("map0.txt");
+          if (map == 1) f = new File("map1.txt");
+          if (map == 2) f = new File("map2.txt");
           Scanner in = new Scanner(f);
           while (in.hasNext()){ //read in coordinates
             String line = in.nextLine();
@@ -141,78 +170,28 @@ public class Game {
             }
           }
 
-          for (int i = 0; i < road.size(); i++){ //color in road and move balloons (how to separate this into two separate functions, how to create delay, why doesnt timer work)
-            terminal.moveCursor(road.get(i).getX(), road.get(i).getY());
-            terminal.applyBackgroundColor(Terminal.Color.WHITE);
-            terminal.putCharacter(' ');
-            terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
-            terminal.applyForegroundColor(Terminal.Color.DEFAULT);
+          for (Tile x: road){ //color in roads
+            x.draw(terminal);
           }
 
-          for (int i = 0; i < num_balloons; i++){ //creates list of balloons
-            balloons.add(new Balloon(i, balloon_lives, 1, 5, 4));
-          }
-
-          if (key.getCharacter() == 'a'){
-            mode++;
-          }
         }
 
-        if (mode != 0){ //pause
-          putString(1,1,terminal,"Game Paused. Press B twice to resume.");
-          lastTime = System.currentTimeMillis();
-          currentTime = System.currentTimeMillis();
-          if (key.getCharacter() == 'b'){
-            mode--;
-          }
-        }
-
-        if (key.getKind() == Key.Kind.Escape){ //exit game
+        if (key.getKind() == Key.Kind.Escape){
           terminal.exitPrivateMode();
           running = false;
         }
-      }
-      if(mode == 0){
-        lastTime = currentTime;
-        currentTime = System.currentTimeMillis();
-        timer += (currentTime - lastTime);//add the amount of time since the last frame
-        sinceTime += (currentTime - lastTime); //add the amount of time since the last frame
-        balloonSinceTime += (currentTime - lastTime);
-        if (sinceTime == 10000 && timer != 0){
-          money += 75;
-          sinceTime = 0;
+
+        if (mode == 1 && key.getCharacter() == 'b'){
+          mode--;
         }
 
-        if (balloonSinceTime == 1000){
-          if (ise < road.size()){
-            terminal.moveCursor(road.get(ise).getX(), road.get(ise).getY());
-            terminal.applyBackgroundColor(Terminal.Color.WHITE);
-            terminal.applyForegroundColor(Terminal.Color.RED);
-            terminal.putCharacter('Ǫ');
-            terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
-            terminal.applyForegroundColor(Terminal.Color.DEFAULT);
-
-            if (ise != 0){
-              terminal.moveCursor(road.get(ise - 1).getX(), road.get(ise - 1).getY() );
-              terminal.applyBackgroundColor(Terminal.Color.WHITE);
-              terminal.putCharacter(' ');
-              terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
-              terminal.applyForegroundColor(Terminal.Color.DEFAULT);
-            }
-
-            balloonSinceTime = 0;
-            ise++;
-          }
-          else ise = 0;
+        if (mode == 0 && key.getCharacter() == 'a'){
+          mode++;
         }
 
-        putString(65,9,terminal,"Time: "+(timer /1000));
-        putString(65,10,terminal,"Lives Left: "+lives);
-        putString(65,11,terminal,"Money: "+money);
       }
-      if (mode == 1){
-        putString(65,9,terminal,"Time: " + (timer / 1000));
-      }
+
+
     }
   }
 }
