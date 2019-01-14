@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Tack{
   private int x, y;
   private int direction;
@@ -21,17 +23,7 @@ public class Tack{
   /**A method that will make the tack move according to its direction and attack balloons as it goes
   */
   public void move(){
-    for(int i = 0; i < balloons.size(); i++){
-      Balloon temp = balloons.get(i);
-      if(temp.getIsAlive() && temp.getInit()){
-        if(temp.getX() == this.getX() && temp.getY() == this.getY()){
-          temp.setLives(temp.getLives() - 1);
-          if(temp.getLives() == 0){
-            temp.makeDead();
-          }
-        }
-      }
-    }
+    attack(balloons);
     if(direction == 1){
       y -= 1;
       steps++;
@@ -50,6 +42,23 @@ public class Tack{
     }
   }
 
+  /**A method that attacks the balloons that the tack touches
+  *if the balloon's lives is 0, the balloon's status becomes isDead
+  */
+  public void attack(List<Balloon> balls){
+    for(int i = 0; i < balls.size(); i++){
+      Balloon temp = balls.get(i);
+      if(temp.getIsAlive() && temp.getInit()){
+        if(temp.getX() == this.getX() && temp.getY() == this.getY()){
+          temp.setLives(temp.getLives() - 1);
+          if(temp.getLives() == 0){
+            temp.makeDead();
+          }
+        }
+      }
+    }
+  }
+  
   /**A method to get the tack's x coordinate
   */
   public int getX(){
