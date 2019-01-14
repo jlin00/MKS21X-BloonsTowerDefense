@@ -149,7 +149,7 @@ public class Game {
                 road.get(temp - 1).draw(terminal);
               }
 
-              if (temp == road.size()-1){
+              if (temp == road.size()-1){ //when balloon reaches end of road
                 road.get(temp).draw(terminal);
                 x.makeDead();
                 lives--;
@@ -176,7 +176,7 @@ public class Game {
           terminal.clearScreen();
 
           File f = new File("map0.txt");
-          if (map == 1) f = new File("map1.txt");
+          if (map == 1) f = new File("map1.txt"); //different choices
           if (map == 2) f = new File("map2.txt");
           if (map == 3) f = new File("map3.txt");
           Scanner in = new Scanner(f);
@@ -253,11 +253,7 @@ public class Game {
           terminal.putCharacter(' ');
         }
 
-
-
       }
-
-
     }
   }
 }
