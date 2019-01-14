@@ -1,5 +1,6 @@
 public class tackShooter extends Tower{
 
+  private List<Tack> tacks = new ArrayList<Tack>();
   /**A Tower constructor
   *@param int xCord is the x position of the tower, also its row in the array
   *@param int yCord is the y position of the tower, also its column in the array
@@ -14,6 +15,15 @@ public class tackShooter extends Tower{
   }
 
   public void attack(){
-    target.setLives(target.getLives() - 1);
+    tacks.add(new Tack(this.getX(), this.getY(), 1));
+    tacks.add(new Tack(this.getX(), this.getY(), 2));
+    tacks.add(new Tack(this.getX(), this.getY(), 3));
+    tacks.add(new Tack(this.getX(), this.getY(), 4));
+    for(int i = 0; i < tacks.size(); i++){
+      Tack temp = tacks.get(i);
+      if(temp.getSteps() < this.getRadii()){
+        temp.move();
+      }
+    }
   }
 }
