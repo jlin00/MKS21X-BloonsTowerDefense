@@ -18,8 +18,13 @@ public class roadSpike extends Tower{
   public void attack(List<Balloon> balls){
     for(int i = 0; i < balls.size(); i++){
       Balloon temp = balls.get(i);
-      if(temp.getX() == this.getX() && temp.getY() == this.getY()){
-        temp.setLives(temp.getLives() - 1);
+      if(temp.getIsAlive() && temp.getInit()){
+        if(temp.getX() == this.getX() && temp.getY() == this.getY()){
+          temp.setLives(temp.getLives() - 1);
+          if(temp.getLives() == 0){
+            temp.makeDead();
+          }
+        }
       }
     }
   }
