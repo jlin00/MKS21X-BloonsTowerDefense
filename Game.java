@@ -168,7 +168,6 @@ public class Game {
       }
 
       Key key = terminal.readInput();
-
       if (key != null){ //what to start doing when key is pressed
 
         toggle++;
@@ -189,7 +188,7 @@ public class Game {
           }
         }
 
-        if (toggle >= 1){
+        if (toggle >= 1 && mode == 1){
           drawBorder(1,3, terminal, 30);
 
           for (int x = 2; x < 60; x++){ //color in background

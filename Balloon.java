@@ -13,7 +13,7 @@ import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.input.KeyMappingProfile;
 
 public class Balloon{
-  private int ID, lives, delay;
+  private int ID, lives, delay; //,sinceMoved;
   private boolean isAlive;
   private int xcor, ycor;
   private boolean initialized;
@@ -127,6 +127,10 @@ public class Balloon{
     atTile = num;
   }
 
+//  public void setSince(long num){
+  //  sinceMoved = num;
+//  }
+
   /**A method to make a balloon initialized by changing the initialized boolean to true
   */
   public void makeInit(){
@@ -138,6 +142,7 @@ public class Balloon{
       xcor = t.getX();
       ycor = t.getY();
       atTile++;
+    //  sinceMoved = 0;
   }
 
   public void draw(Terminal t){
