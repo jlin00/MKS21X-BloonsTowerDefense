@@ -11,6 +11,7 @@ import com.googlecode.lanterna.input.InputDecoder;
 import com.googlecode.lanterna.input.InputProvider;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.input.KeyMappingProfile;
+import com.googlecode.lanterna.screen.*;
 
 public class Balloon{
   private int ID, lives, delay;
@@ -51,7 +52,7 @@ public class Balloon{
     this.ycor = ycor;
     initialized = false;
     atTile = 0;
-    sinceMoved = 0;
+    sinceMoved = 200;
   }
 
   /**A method to get the number of lives a balloon has
@@ -159,6 +160,10 @@ public class Balloon{
     t.putCharacter('Ǫ');
     t.applyBackgroundColor(Terminal.Color.DEFAULT);
     t.applyForegroundColor(Terminal.Color.DEFAULT);
+  }
+
+  public void draw(Screen s){
+    s.putString(xcor,ycor,"Ǫ",Terminal.Color.RED,Terminal.Color.WHITE);
   }
 
 }
