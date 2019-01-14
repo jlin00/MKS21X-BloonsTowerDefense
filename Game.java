@@ -66,6 +66,9 @@ public class Game {
     TerminalSize size = terminal.getTerminalSize();
     terminal.setCursorVisible(false);
 
+    int cursorX = 10;
+    int cursorY = 10;
+
     boolean running = true;
     int mode = 1; //start off in pause mode
     int map = 1; //default map is Map 1
@@ -88,9 +91,10 @@ public class Game {
     int num_balloons = 5; //number of balloons to be initialized
     int balloons_made = 0; //number of balloons already initialized
     int balloon_lives = 1; //number of lives each balloon will have
-    int balloon_delay = 500; //milliseconds between each balloon movement
+    int balloon_delay = 200; //milliseconds between each balloon movement
     boolean level_passed = false;
 
+    //instructions to play game
     terminal.applySGR(Terminal.SGR.ENTER_BOLD);
     putString(0,0,terminal,"Welcome to Bloons Tower Defense!");
     terminal.applySGR(Terminal.SGR.RESET_ALL);
@@ -109,6 +113,7 @@ public class Game {
     terminal.applySGR(Terminal.SGR.RESET_ALL);
 
     while (running){
+
       putString(0,size.getRows()-2,terminal,"[To exit the game, press the escape key.]");
       if (mode == 0){
         lastTime = currentTime;
@@ -117,6 +122,7 @@ public class Game {
         putString(65,9,terminal,"Time: "+(timer /1000));
         putString(65,10,terminal,"Lives Left: "+lives);
         putString(65,11,terminal,"Money: "+money);
+        putString(65,14,terminal,"Made: "+ balloons.size());
 
         sinceTime += (currentTime - lastTime); //add the amount of time since the last frame
         if (sinceTime >= 10000 && timer != 0){
@@ -124,16 +130,16 @@ public class Game {
           sinceTime = 0;
         }
 
-        balloonSinceTime += (currentTime - lastTime);
+        balloonSinceTime += (currentTime - lastTime); //spawn in balloons
         if (balloonSinceTime >= 1000 && balloons_made < num_balloons){
           balloons.add(new Balloon(balloons_made, balloon_lives, balloon_delay, 5, 4));
           balloons_made++;
           balloonSinceTime = 0;
         }
 
-        balloonMoveTime += (currentTime - lastTime);
+        balloonMoveTime += (currentTime - lastTime); //move balloons
         for(Balloon x: balloons){
-          if (balloonMoveTime >= x.getDelay()){
+          if (balloonMoveTime >= x.getDelay() && x.getIsAlive()){
             int temp = x.getTile();
             if (temp < road.size()){
               x.move(road.get(temp));
@@ -142,6 +148,12 @@ public class Game {
               if (temp != 0){
                 road.get(temp - 1).draw(terminal);
               }
+
+              if (temp == road.size()-1){
+                road.get(temp).draw(terminal);
+                x.makeDead();
+                lives--;
+              }
             }
             balloonMoveTime = 0;
           }
@@ -149,7 +161,7 @@ public class Game {
 
       }
 
-      if (mode == 1){
+      if (mode == 1){ //pause timer
         lastTime = System.currentTimeMillis();
         currentTime = System.currentTimeMillis();
         if (toggle >= 1) putString(65,9,terminal,"Time: " + (timer / 1000));
@@ -157,7 +169,17 @@ public class Game {
 
       Key key = terminal.readInput();
 
-      if (key != null){
+      if (key != null){ //what to start doing when key is pressed
+
+        /* //test code for placing down towers
+        terminal.moveCursor(cursorX,cursorY);
+        terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
+        terminal.applyForegroundColor(Terminal.Color.BLACK);
+        terminal.putCharacter('\u00a4');
+        terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
+        terminal.applyForegroundColor(Terminal.Color.DEFAULT);
+        */
+
         toggle++;
         if (toggle == 1){
           terminal.clearScreen();
@@ -192,18 +214,46 @@ public class Game {
 
         }
 
-        if (key.getKind() == Key.Kind.Escape){
+        if (key.getKind() == Key.Kind.Escape){ //exit game
           terminal.exitPrivateMode();
           running = false;
         }
 
-        if (mode == 1 && key.getCharacter() == 'b'){
+        if (mode == 1 && key.getCharacter() == 'b'){ //enter game mode
           mode--;
         }
 
-        if (mode == 0 && key.getCharacter() == 'a'){
+        if (mode == 0 && key.getCharacter() == 'a'){ //pause game
           mode++;
         }
+
+        /* //test code for moving around towers
+        if (toggle >= 1 && key.getKind() == Key.Kind.ArrowUp){
+          terminal.moveCursor(cursorX,cursorY);
+          terminal.putCharacter(' ');
+          cursorY--;
+
+        }
+
+        if (toggle >= 1 && key.getKind() == Key.Kind.ArrowDown){
+          terminal.moveCursor(cursorX,cursorY);
+          terminal.putCharacter(' ');
+          cursorY++;
+        }
+
+        if (toggle >= 1 && key.getKind() == Key.Kind.ArrowLeft){
+          terminal.moveCursor(cursorX,cursorY);
+          terminal.putCharacter(' ');
+          cursorX--;
+        }
+
+        if (toggle >= 1 && key.getKind() == Key.Kind.ArrowRight){
+          terminal.moveCursor(cursorX,cursorY);
+          terminal.putCharacter(' ');
+          cursorX++;
+        }
+        */
+
 
       }
 
