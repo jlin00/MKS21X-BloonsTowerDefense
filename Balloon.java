@@ -13,8 +13,9 @@ import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.input.KeyMappingProfile;
 
 public class Balloon{
-  private int ID, lives, delay; //,sinceMoved;
+  private int ID, lives, delay;
   private boolean isAlive;
+  private long sinceMoved;
   private int xcor, ycor;
   private boolean initialized;
   private int atTile;
@@ -50,6 +51,7 @@ public class Balloon{
     this.ycor = ycor;
     initialized = false;
     atTile = 0;
+    sinceMoved = 0;
   }
 
   /**A method to get the number of lives a balloon has
@@ -101,6 +103,10 @@ public class Balloon{
     return atTile;
   }
 
+  public long getSince(){
+    return sinceMoved;
+  }
+
   /**A method to change the number of lives a balloon has
   *@param int numLives
   */
@@ -138,11 +144,12 @@ public class Balloon{
   }
   /**A method to move the balloon in the terminal to a new coordinate
   */
-  public void move(Tile t){
-      xcor = t.getX();
-      ycor = t.getY();
-      atTile++;
-    //  sinceMoved = 0;
+  public void move(Tile t, long timer){
+    sinceMoved = timer;
+    xcor = t.getX();
+    ycor = t.getY();
+    atTile++;
+    sinceMoved += delay;
   }
 
   public void draw(Terminal t){

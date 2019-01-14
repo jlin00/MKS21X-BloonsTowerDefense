@@ -122,7 +122,7 @@ public class Game {
         putString(65,9,terminal,"Time: "+(timer /1000));
         putString(65,10,terminal,"Lives Left: "+lives);
         putString(65,11,terminal,"Money: "+money);
-        //putString(65,14,terminal,"Made: "+ balloons.size());
+        putString(65,14,terminal,"Made: "+ balloons.size());
 
         sinceTime += (currentTime - lastTime); //add the amount of time since the last frame
         if (sinceTime >= 10000 && timer != 0){
@@ -139,7 +139,7 @@ public class Game {
 
         balloonMoveTime += (currentTime - lastTime); //move balloons
         for(Balloon x: balloons){
-          if (balloonMoveTime >= x.getDelay() && x.getIsAlive()){
+          if (balloonMoveTime >= x.getSince()){
             int temp = x.getTile();
             if (temp < road.size()){
               x.move(road.get(temp));
@@ -155,9 +155,8 @@ public class Game {
                 lives--;
               }
             }
-            balloonMoveTime = 0;
           }
-        }
+        }//remove after for loops 
 
       }
 
@@ -206,13 +205,14 @@ public class Game {
           }
 
           //test code for placing down towers
-         terminal.moveCursor(cursorX,cursorY);
+         //terminal.moveCursor(cursorX,cursorY);
          //terminal.applyBackgroundColor(Terminal.Color.BLACK);
          //terminal.applyForegroundColor(Terminal.Color.WHITE);
          //terminal.putCharacter('+');
          //terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
          //terminal.applyForegroundColor(Terminal.Color.DEFAULT);
         }
+
 
         if (key.getKind() == Key.Kind.Escape){ //exit game
           terminal.exitPrivateMode();
@@ -227,6 +227,7 @@ public class Game {
           mode++;
         }
 
+        /*
          //test code for moving around towers
         if (toggle >= 1 && key.getKind() == Key.Kind.ArrowUp){
           cursorY--;
@@ -251,6 +252,7 @@ public class Game {
           terminal.moveCursor(cursorX,cursorY);
           terminal.putCharacter(' ');
         }
+        */
 
       }
     }
