@@ -73,7 +73,7 @@ The game is played by placing towers, which all have a radius, to attack balloon
     </td>
 <tr>
     <td>1/13/19</td>
-    <td>Today, we continued to work on the terminal graphics. We managed to have one balloon moving without getting stuck after making major changes to the Game, Balloon and Tile classes. While some balloon problems were fixed, we had trouble with the tower graphics on the screen. In particular, the cursor caused problems with the coloring of the terminal, which we were unable to solve. As we worked on that, we also created some new maps for the game and made the game able to switch between maps easily. We updated the instructions screen as well as the UML diagram.
+    <td>Today, we continued to work on the terminal graphics. We managed to have one balloon moving without getting stuck after making major changes to the Game, Balloon and Tile classes. While some balloon problems were fixed, we had trouble with the tower graphics on the screen. In particular, the cursor caused problems with the coloring of the terminal, which we were unable to solve. As we worked on that, we also created some new maps for the game and made the game able to switch between maps easily. We updated the instructions screen as well as the UML diagram. We made the tackShooter tower more advanced by creating a new object, Tack to be owned by the tackShooter. Tack will move and attack balloons, but we have yet to test that out.
     </td>
 </tr>
 </table>
