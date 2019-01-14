@@ -122,7 +122,7 @@ public class Game {
         putString(65,9,terminal,"Time: "+(timer /1000));
         putString(65,10,terminal,"Lives Left: "+lives);
         putString(65,11,terminal,"Money: "+money);
-        putString(65,14,terminal,"Made: "+ balloons.size());
+        //putString(65,14,terminal,"Made: "+ balloons.size());
 
         sinceTime += (currentTime - lastTime); //add the amount of time since the last frame
         if (sinceTime >= 10000 && timer != 0){
