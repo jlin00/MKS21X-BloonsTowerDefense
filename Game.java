@@ -69,7 +69,7 @@ public class Game {
     boolean running = true;
     int mode = 1; //start off in pause mode
     int map = 1; //default map is Map 1
-    if (args.length != 0) map = Integer.parseInt(args[0]); //choice to choose map 2
+    if (args.length != 0) map = Integer.parseInt(args[0]); //choice to choose map 2 or 3
     long lastTime =  System.currentTimeMillis();
     long currentTime = lastTime; //timer syster
     long timer = 0;
@@ -166,6 +166,7 @@ public class Game {
           File f = new File("map0.txt");
           if (map == 1) f = new File("map1.txt");
           if (map == 2) f = new File("map2.txt");
+          if (map == 3) f = new File("map3.txt");
           Scanner in = new Scanner(f);
           while (in.hasNext()){ //read in coordinates
             String line = in.nextLine();
