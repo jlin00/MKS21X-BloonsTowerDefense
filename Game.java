@@ -171,19 +171,9 @@ public class Game {
 
       if (key != null){ //what to start doing when key is pressed
 
-        /* //test code for placing down towers
-        terminal.moveCursor(cursorX,cursorY);
-        terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
-        terminal.applyForegroundColor(Terminal.Color.BLACK);
-        terminal.putCharacter('\u00a4');
-        terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
-        terminal.applyForegroundColor(Terminal.Color.DEFAULT);
-        */
-
         toggle++;
         if (toggle == 1){
           terminal.clearScreen();
-          drawBorder(1,3, terminal, 30);
 
           File f = new File("map0.txt");
           if (map == 1) f = new File("map1.txt");
@@ -197,6 +187,10 @@ public class Game {
             int ycor = Integer.parseInt(arr[1]);
             road.add(new Tile(xcor, ycor));
           }
+        }
+
+        if (toggle >= 1){
+          drawBorder(1,3, terminal, 30);
 
           for (int x = 2; x < 60; x++){ //color in background
             for (int y = 4; y < 33; y++){
@@ -212,6 +206,13 @@ public class Game {
             x.draw(terminal);
           }
 
+          //test code for placing down towers
+         terminal.moveCursor(cursorX,cursorY);
+         //terminal.applyBackgroundColor(Terminal.Color.BLACK);
+         //terminal.applyForegroundColor(Terminal.Color.WHITE);
+         //terminal.putCharacter('+');
+         //terminal.applyBackgroundColor(Terminal.Color.DEFAULT);
+         //terminal.applyForegroundColor(Terminal.Color.DEFAULT);
         }
 
         if (key.getKind() == Key.Kind.Escape){ //exit game
@@ -227,32 +228,31 @@ public class Game {
           mode++;
         }
 
-        /* //test code for moving around towers
+         //test code for moving around towers
         if (toggle >= 1 && key.getKind() == Key.Kind.ArrowUp){
+          cursorY--;
           terminal.moveCursor(cursorX,cursorY);
           terminal.putCharacter(' ');
-          cursorY--;
-
         }
 
         if (toggle >= 1 && key.getKind() == Key.Kind.ArrowDown){
+          cursorY++;
           terminal.moveCursor(cursorX,cursorY);
           terminal.putCharacter(' ');
-          cursorY++;
         }
 
         if (toggle >= 1 && key.getKind() == Key.Kind.ArrowLeft){
+          cursorX--;
           terminal.moveCursor(cursorX,cursorY);
           terminal.putCharacter(' ');
-          cursorX--;
         }
 
         if (toggle >= 1 && key.getKind() == Key.Kind.ArrowRight){
+          cursorX++;
           terminal.moveCursor(cursorX,cursorY);
           terminal.putCharacter(' ');
-          cursorX++;
         }
-        */
+
 
 
       }
