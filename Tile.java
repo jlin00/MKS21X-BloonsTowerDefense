@@ -18,14 +18,16 @@ public class Tile{
   private int x, y;
   private boolean isRoad, isStart, isEnd, hasTower, hasBalloon;
   private List<Balloon> onTile = new ArrayList<Balloon>();
+  private boolean walkable;
 
   /**A tile constructor
   *@param integers xCord and yCord are the x and y coordinates on the tile
   *they represent the tile's place on the 2D Tile array of the map
   */
-  public Tile(int xCord, int yCord){
+  public Tile(int xCord, int yCord, boolean walkable){
     x = xCord;
     y = yCord;
+    this.walkable = walkable;
   }
 
   /**A method to get the x coordinate of a tile
@@ -33,6 +35,12 @@ public class Tile{
   */
   public int getX(){
     return x;
+  }
+
+  /**A method to get walkable ability of a tile
+  */
+  public boolean getWalkable(){
+    return walkable;
   }
 
   /**A method to get the y coordinate of a tile
@@ -89,6 +97,12 @@ public class Tile{
     isRoad = false;
   }
 
+  /**A method that makes a tile unwalkable
+  */
+  public void makeUnwalkable(){
+    walkable = false;
+  }
+
   /**A method that makes a road tile the starting tile where balloons will spawn
   **Precondition: the tile must be a road tile in order to be the starting tile
                   the tile must not be the ending road tile
@@ -132,7 +146,8 @@ public class Tile{
     t.applyForegroundColor(Terminal.Color.DEFAULT);
   }
 
-  public void draw(Screen s){
-    s.putString(x,y," ",Terminal.Color.DEFAULT,Terminal.Color.WHITE);
+  public void draw(Screen s, boolean isBorder){
+    if (isBorder) s.putString(x,y," ",Terminal.Color.DEFAULT,Terminal.Color.BLACK);
+    else s.putString(x,y," ",Terminal.Color.DEFAULT,Terminal.Color.WHITE);
   }
 }
