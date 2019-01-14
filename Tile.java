@@ -12,6 +12,7 @@ import com.googlecode.lanterna.input.InputProvider;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.input.KeyMappingProfile;
 import java.util.*;
+import com.googlecode.lanterna.screen.*;
 
 public class Tile{
   private int x, y;
@@ -129,5 +130,9 @@ public class Tile{
     t.putCharacter(' ');
     t.applyBackgroundColor(Terminal.Color.DEFAULT);
     t.applyForegroundColor(Terminal.Color.DEFAULT);
+  }
+
+  public void draw(Screen s){
+    s.putString(x,y," ",Terminal.Color.DEFAULT,Terminal.Color.WHITE);
   }
 }
