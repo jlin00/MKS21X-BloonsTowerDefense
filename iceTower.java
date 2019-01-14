@@ -18,8 +18,10 @@ public class iceTower extends Tower{
     for(int i = 0; i < ball.size(); i++){
       Balloon temp = ball.get(i);
       double distance = Math.pow(this.getX() - temp.getX(), 2) + Math.pow(this.getY() - temp.getY(), 2);
-      if(distance <= (radius * radius)){
-        System.out.println("fill in delay stuff");
+      if(temp.getIsAlive() && temp.getInit()){
+        if(distance <= (radius * radius)){
+          temp.setDelay(5000);
+        }
       }
     }
   }
