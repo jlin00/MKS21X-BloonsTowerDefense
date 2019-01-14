@@ -15,9 +15,12 @@ public class roadSpike extends Tower{
 
   /**A method that takes one life from the balloon target on its tile
   */
-  public void attack(){
-    if(this.getX() == target.getX() && this.getY() == target.getY()){
-        target.setLives(target.getLives() - 1);
+  public void attack(List<Balloon> balls){
+    for(int i = 0; i < balls.size(); i++){
+      Balloon temp = balls.get(i);
+      if(temp.getX() == this.getX() && temp.getY() == this.getY()){
+        temp.setLives(temp.getLives() - 1);
+      }
     }
   }
 }
