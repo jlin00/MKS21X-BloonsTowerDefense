@@ -61,8 +61,8 @@ public class GameScreen{
     TerminalSize size = terminal.getTerminalSize();
     terminal.setCursorVisible(false);
 
-    int cursorX = 5;
-    int cursorY = 4;
+    int cursorX = 30;
+    int cursorY = 18;
 
     boolean running = true;
     int mode = 1; //start off in pause mode
@@ -78,6 +78,8 @@ public class GameScreen{
     List<Tile> road = new ArrayList<Tile>(); //stores the coordinates from map files for the road
     List<Tile> border = new ArrayList<Tile>();
 
+    List<Tower> towers = new ArrayList<Tower>(); //stores towers that have been placed on the map
+
     int lives = 50; //user variables
     int money = 200;
     int income = 75;
@@ -89,6 +91,7 @@ public class GameScreen{
     int balloon_lives = 1; //number of lives each balloon will have
     int balloon_delay = 100; //milliseconds between each balloon movement
     boolean level_passed = false;
+
     Screen s = new Screen(terminal);
     s.startScreen();
     s.setCursorPosition(null);
@@ -109,6 +112,7 @@ public class GameScreen{
     s.refresh();
 
     while (running){
+      s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
 
       s.putString(0,size.getRows()-2,"[To exit the game, press the escape key.]",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
       if (mode == 0){
@@ -119,6 +123,8 @@ public class GameScreen{
         s.putString(65,10,"Lives Left: "+lives,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         s.putString(65,11,"Money: "+money,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         s.putString(65,5,"Level: "+level,Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+        //s.putString(65,16,"X: "+cursorX,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
+        //s.putString(65,17,"Y: "+cursorY,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         //s.putString(65,14,"Made: "+ balloons.size(),Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         s.refresh();
 
@@ -213,36 +219,37 @@ public class GameScreen{
         }
 
          //test code for moving around towers
-        if (toggle >= 1 && key.getKind() == Key.Kind.ArrowUp){
+        if (toggle >= 0 && key.getKind() == Key.Kind.ArrowUp){
           if (isWalkable(cursorX, cursorY-1)){
             cursorY--;
-            s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
-            s.putString(cursorX,cursorY+1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+              s.putString(cursorX,cursorY+1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
-        if (toggle >= 1 && key.getKind() == Key.Kind.ArrowDown){
+        if (toggle >= 0 && key.getKind() == Key.Kind.ArrowDown){
           if (isWalkable(cursorX, cursorY+1)){
             cursorY++;
-            s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
             s.putString(cursorX,cursorY-1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
-        if (toggle >= 1 && key.getKind() == Key.Kind.ArrowLeft){
+        if (toggle >= 0 && key.getKind() == Key.Kind.ArrowLeft){
           if (isWalkable(cursorX-1, cursorY)){
             cursorX--;
-            s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
             s.putString(cursorX+1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
-        if (toggle >= 1 && key.getKind() == Key.Kind.ArrowRight){
+        if (toggle >= 0 && key.getKind() == Key.Kind.ArrowRight){
           if (isWalkable(cursorX+1, cursorY)){
             cursorX++;
-            s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
             s.putString(cursorX-1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
+        }
+
+        if (toggle >= 1 && key.getKind() == Key.Kind.Enter){
+          s.putString(cursorX,cursorY,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
+          cursorX++;
         }
 
       }
