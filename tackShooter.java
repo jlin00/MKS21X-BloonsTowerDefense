@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class tackShooter extends Tower{
+public class TackShooter extends Tower{
 
   private List<Tack> tacks = new ArrayList<Tack>();
 
@@ -10,7 +10,7 @@ public class tackShooter extends Tower{
   *@param int money is the cost
   *@param int rad is the radius
   */
-  public tackShooter(int xCord, int yCord, int money, int rad){
+  public TackShooter(int xCord, int yCord, int money, int rad){
     x = xCord;
     y = yCord;
     cost = money;
@@ -20,6 +20,8 @@ public class tackShooter extends Tower{
   /**A method that creates four tacks and calls for them to move and attack
   *once the tack reaches outside of the radius, it is removed from the list of tacks
   */
+
+  /*
   public void attack(){
     tacks.add(new Tack(this.getX(), this.getY(), 1));
     tacks.add(new Tack(this.getX(), this.getY(), 2));
@@ -35,4 +37,5 @@ public class tackShooter extends Tower{
       }
     }
   }
+  */
 }
