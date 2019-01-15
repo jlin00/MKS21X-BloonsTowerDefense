@@ -136,7 +136,7 @@ public class GameScreen{
         s.putString(65,10,"Lives Left: "+lives,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         s.putString(65,11,"Money: "+money,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         s.putString(65,5,"Level: "+level,Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-        s.putString(65,12,"TackShooters: "+TackShooters.size(),Terminal.Color.BLACK,Terminal.Color.DEFAULT);
+        s.putString(65,12,"TESTING TackShooters: "+TackShooters.size(),Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         //s.putString(65,16,"X: "+cursorX,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         //s.putString(65,17,"Y: "+cursorY,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         //s.putString(65,14,"Made: "+ balloons.size(),Terminal.Color.BLACK,Terminal.Color.DEFAULT);
@@ -156,6 +156,10 @@ public class GameScreen{
         }
 
         for (Tile x: road){
+          x.draw(s);
+        }
+
+        for (TackShooter x: TackShooters){
           x.draw(s);
         }
 
@@ -263,7 +267,7 @@ public class GameScreen{
 
         if (toggle >= 1 && key.getKind() == Key.Kind.Enter){
           if (isPlaceable(cursorX,cursorY,road,TackShooters)){
-            s.putString(cursorX,cursorY,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
+            //s.putString(cursorX,cursorY,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
             TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterRad));
           }
           cursorX++;
