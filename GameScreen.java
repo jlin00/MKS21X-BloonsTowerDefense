@@ -54,6 +54,17 @@ public class GameScreen{
     return true;
   }
 
+  public static boolean isPlaceable(int xcor, int ycor, List<Tile> road, List<TackShooter> TackShooters){
+    for (Tile x: road){
+      if (x.getX() == xcor && x.getY() == ycor) return false;
+    }
+
+    for (TackShooter x: TackShooters){
+      if (x.getX() == xcor && x.getY() == ycor) return false;
+    }
+    return true;
+  }
+
   public static void main(String[] args) throws FileNotFoundException {
     Terminal terminal = TerminalFacade.createTextTerminal();
     terminal.enterPrivateMode();
@@ -78,7 +89,9 @@ public class GameScreen{
     List<Tile> road = new ArrayList<Tile>(); //stores the coordinates from map files for the road
     List<Tile> border = new ArrayList<Tile>();
 
-    List<Tower> towers = new ArrayList<Tower>(); //stores towers that have been placed on the map
+    List<TackShooter> TackShooters = new ArrayList<TackShooter>(); //stores towers that have been placed on the map
+    int TackShooterPrice = 150; //price for tackShooters
+    int TackShooterRad = 4; //radius for tackShooters
 
     int lives = 50; //user variables
     int money = 200;
@@ -112,7 +125,7 @@ public class GameScreen{
     s.refresh();
 
     while (running){
-      s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
+      if (isPlaceable(cursorX,cursorY,road,TackShooters)) s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
 
       s.putString(0,size.getRows()-2,"[To exit the game, press the escape key.]",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
       if (mode == 0){
@@ -123,6 +136,7 @@ public class GameScreen{
         s.putString(65,10,"Lives Left: "+lives,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         s.putString(65,11,"Money: "+money,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         s.putString(65,5,"Level: "+level,Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+        s.putString(65,12,"TackShooters: "+TackShooters.size(),Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         //s.putString(65,16,"X: "+cursorX,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         //s.putString(65,17,"Y: "+cursorY,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         //s.putString(65,14,"Made: "+ balloons.size(),Terminal.Color.BLACK,Terminal.Color.DEFAULT);
@@ -222,33 +236,36 @@ public class GameScreen{
         if (toggle >= 0 && key.getKind() == Key.Kind.ArrowUp){
           if (isWalkable(cursorX, cursorY-1)){
             cursorY--;
-              s.putString(cursorX,cursorY+1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+              if (isPlaceable(cursorX,cursorY+1,road,TackShooters)) s.putString(cursorX,cursorY+1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
         if (toggle >= 0 && key.getKind() == Key.Kind.ArrowDown){
           if (isWalkable(cursorX, cursorY+1)){
             cursorY++;
-            s.putString(cursorX,cursorY-1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+            if (isPlaceable(cursorX,cursorY-1,road,TackShooters)) s.putString(cursorX,cursorY-1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
         if (toggle >= 0 && key.getKind() == Key.Kind.ArrowLeft){
           if (isWalkable(cursorX-1, cursorY)){
             cursorX--;
-            s.putString(cursorX+1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+            if (isPlaceable(cursorX+1,cursorY,road,TackShooters)) s.putString(cursorX+1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
         if (toggle >= 0 && key.getKind() == Key.Kind.ArrowRight){
           if (isWalkable(cursorX+1, cursorY)){
             cursorX++;
-            s.putString(cursorX-1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+            if (isPlaceable(cursorX-1,cursorY,road,TackShooters)) s.putString(cursorX-1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
         if (toggle >= 1 && key.getKind() == Key.Kind.Enter){
-          s.putString(cursorX,cursorY,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
+          if (isPlaceable(cursorX,cursorY,road,TackShooters)){
+            s.putString(cursorX,cursorY,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
+            TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterRad));
+          }
           cursorX++;
         }
 
