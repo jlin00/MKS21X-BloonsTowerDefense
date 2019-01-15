@@ -65,6 +65,13 @@ public class GameScreen{
     return true;
   }
 
+  public static void levelUp(int level, int num_balloons, int balloon_lives, int balloon_delay){
+    level++;
+    num_balloons+=5;
+    balloon_lives++;
+    balloon_delay-=50;
+  }
+
   public static void main(String[] args) throws FileNotFoundException {
     Terminal terminal = TerminalFacade.createTextTerminal();
     terminal.enterPrivateMode();
@@ -102,7 +109,7 @@ public class GameScreen{
     int num_balloons = 5; //number of balloons to be initialized
     int balloons_made = 0; //number of balloons already initialized
     int balloon_lives = 1; //number of lives each balloon will have
-    int balloon_delay = 100; //milliseconds between each balloon movement
+    int balloon_delay = 700; //milliseconds between each balloon movement
     boolean level_passed = false;
 
     Screen s = new Screen(terminal);
@@ -184,6 +191,11 @@ public class GameScreen{
           balloons.add(new Balloon(balloons_made, balloon_lives, balloon_delay, road.get(0).getX(), road.get(0).getY()));
           balloons_made++;
           balloonSinceTime = 0;
+        }
+
+        if (balloons.size() == 0) {
+          level_passed = true;
+          levelUp();
         }
       }
 
