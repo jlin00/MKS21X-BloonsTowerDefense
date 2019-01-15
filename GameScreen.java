@@ -164,6 +164,9 @@ public class GameScreen{
         s.putString(65,10,"Lives Left: "+lives+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,11,"Money: "+money+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,5,"Level: "+level+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+        s.putString(65,15, "Tower Key:", Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+        s.putString(65,18,"TackShooter: key T, Price "+TackShooterPrice+", Radius "+TackShooterRad+"",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
+
         //s.putString(65,12,"TESTING TackShooters: "+TackShooters.size()+"     ",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         //s.putString(65,16,"X: "+cursorX,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         //s.putString(65,17,"Y: "+cursorY,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
