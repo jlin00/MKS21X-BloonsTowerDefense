@@ -111,31 +111,59 @@ public class GameScreen{
     s.clear();
 
     //instructions to play game
-    s.putString(0,0,"Welcome to Bloons Tower Defense!",Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-    s.putString(0,2,"To begin the game, press b.",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-    s.putString(0,3,"Once you have begun, press a to pause and b to resume the game.",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-    s.putString(0,5,"Balloons will start spawning immediately and travel down the road.",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-    s.putString(0,6,"To defeat them, place down towers by typing the letter  of the tower you want",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-    s.putString(0,7,"to buy and using the arrow keys to give it a location on the grass, which are",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-    s.putString(0,8,"the green tiles. Press the enter key to place the tower down. You will ",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-    s.putString(0,9,"receive $75 every 10 seconds. Use your income wisely to purchase towers!",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-    s.putString(0,10,"If any balloons reach the end of the road, your lives will decrease.",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-    s.putString(0,11,"If your lives reach 0, you lose.",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-    s.putString(0,13,"Best of luck!",Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
+    s.putString(0,0,"Welcome to Bloons Tower Defense!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+    s.putString(0,2,"To begin the game, press b.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,3,"Once you have begun, press a to pause and b to resume the game.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,5,"Balloons will start spawning immediately and travel down the road.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,6,"To defeat them, place down towers by typing the letter  of the tower you want",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,7,"to buy and using the arrow keys to give it a location on the grass, which are",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,8,"the green tiles. Press the enter key to place the tower down. You will ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,9,"receive $75 every 10 seconds. Use your income wisely to purchase towers!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,10,"If any balloons reach the end of the road, your lives will decrease.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,11,"If your lives reach 0, you lose.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,13,"Best of luck!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
     s.refresh();
 
     while (running){
       if (isPlaceable(cursorX,cursorY,road,TackShooters)) s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
+      s.refresh();
 
-      s.putString(0,size.getRows()-2,"[To exit the game, press the escape key.]",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
+      for (Tile x: road){
+        x.draw(s);
+      }
+
+      for (TackShooter x: TackShooters){
+        x.draw(s);
+      }
+
+      balloonMoveTime += (currentTime - lastTime); //move balloons
+      for(int i = balloons.size()-1; i >= 0; i--){
+      //  s.putString(65, 18,t"sinceTime: "+x.getSince()+" bmt: "+balloonMoveTime,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
+      Balloon x = balloons.get(i);
+        x.draw(s);
+        if (balloonMoveTime >= x.getSince() && x.getIsAlive()){
+          if (x.getTile() < road.size()){
+            x.move(road.get(x.getTile()), balloonMoveTime);
+
+            if (x.getTile() == road.size()-1){ //when balloon reaches end of road
+              x.makeDead();
+              lives--;
+              balloons.remove(i);
+            }
+          }
+        }
+      }
+      s.refresh();
+
+      s.putString(0,size.getRows()-2,"[To exit the game, press the escape key.]",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       if (mode == 0){
         lastTime = currentTime;
         currentTime = System.currentTimeMillis();
         timer += (currentTime - lastTime);//add the amount of time since the last frame
-        s.putString(65,9,"Time: "+(timer /1000)+"            ",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-        s.putString(65,10,"Lives Left: "+lives+"            ",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-        s.putString(65,11,"Money: "+money+"            ",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-        s.putString(65,5,"Level: "+level+"            ",Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+        s.putString(65,9,"Time: "+(timer /1000)+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,10,"Lives Left: "+lives+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,11,"Money: "+money+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,5,"Level: "+level+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
         //s.putString(65,12,"TESTING TackShooters: "+TackShooters.size()+"     ",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         //s.putString(65,16,"X: "+cursorX,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         //s.putString(65,17,"Y: "+cursorY,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
@@ -154,38 +182,12 @@ public class GameScreen{
           balloons_made++;
           balloonSinceTime = 0;
         }
-
-        for (Tile x: road){
-          x.draw(s);
-        }
-
-        for (TackShooter x: TackShooters){
-          x.draw(s);
-        }
-
-        balloonMoveTime += (currentTime - lastTime); //move balloons
-        for(int i = balloons.size()-1; i >= 0; i--){
-        //  s.putString(65, 18,t"sinceTime: "+x.getSince()+" bmt: "+balloonMoveTime,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-        Balloon x = balloons.get(i);
-          x.draw(s);
-          if (balloonMoveTime >= x.getSince() && x.getIsAlive()){
-            if (x.getTile() < road.size()){
-              x.move(road.get(x.getTile()), balloonMoveTime);
-
-              if (x.getTile() == road.size()-1){ //when balloon reaches end of road
-                x.makeDead();
-                lives--;
-                balloons.remove(i);
-              }
-            }
-          }
-        }
       }
 
       if (mode == 1){ //pause timer
         lastTime = System.currentTimeMillis();
         currentTime = System.currentTimeMillis();
-        if (toggle >= 1) s.putString(65,9,"Time: " + (timer / 1000),Terminal.Color.BLACK,Terminal.Color.DEFAULT);
+        if (toggle >= 1) s.putString(65,9,"Time: " + (timer / 1000),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       }
 
       Key key = s.readInput();
