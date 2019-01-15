@@ -29,28 +29,26 @@ public class GameScreen{
   }
   */
 
-  public static void determineBorder(int r, int c, int length, List<Tile> border){ //draws a border for the game, terminal must be at least 80 x 38
+  public static void drawBorder(int r, int c, int length, Screen s){ //draws a border for the game, terminal must be at least 80 x 38
     for (int i = 0; i < length; i++){
-      border.add(new Tile(r,c+i,false));
+      s.putString(r,c+i," ",Terminal.Color.DEFAULT,Terminal.Color.BLACK);
     }
 
     for (int i = 0; i < 2*length; i++){
-      border.add(new Tile(r+i,c,false));
+      s.putString(r+i,c," ",Terminal.Color.DEFAULT,Terminal.Color.BLACK);
     }
 
     for (int i = 0; i < 2*length; i++){
-      border.add(new Tile(r+i,c+length,false));
+      s.putString(r+i,c+length," ",Terminal.Color.DEFAULT,Terminal.Color.BLACK);
     }
 
     for (int i = 0; i < length; i++){
-      border.add(new Tile((r+length-1)*2,c+i,false));
+      s.putString((r+length-1)*2,c+i," ",Terminal.Color.DEFAULT,Terminal.Color.BLACK);
     }
   }
 
-  public static void drawBorder(Screen s, List<Tile> border){
-    for (Tile x: border){
-      x.draw(s,true);
-    }
+  public static boolean isWalkable(int xcor, int ycor){
+    return false;
   }
 
   public static void main(String[] args) throws FileNotFoundException {
@@ -133,12 +131,13 @@ public class GameScreen{
         }
 
         for (Tile x: road){
-          x.draw(s, false);
+          x.draw(s);
         }
 
         balloonMoveTime += (currentTime - lastTime); //move balloons
-        for(Balloon x: balloons){
+        for(int i = balloons.size()-1; i >= 0; i--){
         //  s.putString(65, 18,t"sinceTime: "+x.getSince()+" bmt: "+balloonMoveTime,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
+        Balloon x = balloons.get(i);
           x.draw(s);
           if (balloonMoveTime >= x.getSince() && x.getIsAlive()){
             if (x.getTile() < road.size()){
@@ -147,13 +146,13 @@ public class GameScreen{
               if (x.getTile() == road.size()-1){ //when balloon reaches end of road
                 x.makeDead();
                 lives--;
-                road.get(x.getTile() - 1).draw(s,false);
+                //road.get(x.getTile()).draw(s);
+                balloons.remove(i);
               }
             }
           }
         }
 
-        //s.refresh();//remove after for loops
       }
 
       if (mode == 1){ //pause timer
@@ -179,13 +178,12 @@ public class GameScreen{
             String[] arr = line.split(" ");
             int xcor = Integer.parseInt(arr[0]);
             int ycor = Integer.parseInt(arr[1]);
-            road.add(new Tile(xcor, ycor, true));
+            road.add(new Tile(xcor, ycor));
           }
         }
 
         if (toggle >= 1 && mode == 1){
-          determineBorder(1,3,30,border);
-          drawBorder(s,border);
+          drawBorder(1,3,30,s);
 
           for (int x = 2; x < 60; x++){ //color in background
             for (int y = 4; y < 33; y++){
