@@ -88,11 +88,18 @@ public class Game {
 
     List<Balloon> balloons = new ArrayList<Balloon>();
     int level = 1; //variables to be adjusted according to level
-    int num_balloons = 5; //number of balloons to be initialized
+    int num_balloons = 1; //number of balloons to be initialized
     int balloons_made = 0; //number of balloons already initialized
     int balloon_lives = 1; //number of lives each balloon will have
-    int balloon_delay = 200; //milliseconds between each balloon movement
+    int balloon_delay = 500; //milliseconds between each balloon movement
     boolean level_passed = false;
+    //screen s = new screen(terminal)
+
+    //replace putstring(x,y,termina...)
+    //s.putstring(x,y,....)
+
+
+    //end of loop s.refresh()
 
     //instructions to play game
     terminal.applySGR(Terminal.SGR.ENTER_BOLD);
@@ -111,6 +118,7 @@ public class Game {
     terminal.applySGR(Terminal.SGR.ENTER_BOLD);
     putString(0,13,terminal,"Best of luck!");
     terminal.applySGR(Terminal.SGR.RESET_ALL);
+
 
     while (running){
 
@@ -139,24 +147,25 @@ public class Game {
 
         balloonMoveTime += (currentTime - lastTime); //move balloons
         for(Balloon x: balloons){
+          putString(65, 18,terminal,"sinceTime: "+x.getSince()+" bmt: "+balloonMoveTime);
+          x.draw(terminal);
           if (balloonMoveTime >= x.getSince()){
-            int temp = x.getTile();
-            if (temp < road.size()){
-              x.move(road.get(temp));
+            if (x.getTile() < road.size()){
+              x.move(road.get(x.getTile()), balloonMoveTime);
               x.draw(terminal);
 
-              if (temp != 0){
-                road.get(temp - 1).draw(terminal);
+              if (x.getTile() != 0){
+                road.get(x.getTile()- 1).draw(terminal);
               }
 
-              if (temp == road.size()-1){ //when balloon reaches end of road
-                road.get(temp).draw(terminal);
+              if (x.getTile() == road.size()-1){ //when balloon reaches end of road
+                road.get(x.getTile()).draw(terminal);
                 x.makeDead();
                 lives--;
               }
             }
           }
-        }//remove after for loops 
+        }//remove after for loops
 
       }
 
