@@ -216,32 +216,32 @@ public class GameScreen{
         if (toggle >= 1 && key.getKind() == Key.Kind.ArrowUp){
           if (isWalkable(cursorX, cursorY-1)){
             cursorY--;
-            terminal.moveCursor(cursorX,cursorY);
-            terminal.putCharacter(' ');
+            s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
+            s.putString(cursorX,cursorY+1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
         if (toggle >= 1 && key.getKind() == Key.Kind.ArrowDown){
           if (isWalkable(cursorX, cursorY+1)){
             cursorY++;
-            terminal.moveCursor(cursorX,cursorY);
-            terminal.putCharacter(' ');
+            s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
+            s.putString(cursorX,cursorY-1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
         if (toggle >= 1 && key.getKind() == Key.Kind.ArrowLeft){
           if (isWalkable(cursorX-1, cursorY)){
             cursorX--;
-            terminal.moveCursor(cursorX,cursorY);
-            terminal.putCharacter(' ');
+            s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
+            s.putString(cursorX+1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
         if (toggle >= 1 && key.getKind() == Key.Kind.ArrowRight){
           if (isWalkable(cursorX+1, cursorY)){
             cursorX++;
-            terminal.moveCursor(cursorX,cursorY);
-            terminal.putCharacter(' ');
+            s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
+            s.putString(cursorX-1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
