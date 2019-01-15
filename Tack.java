@@ -23,9 +23,7 @@ public class Tack{
   /**A method that will make the tack move according to its direction and attack balloons as it goes
   */
 
-  /*
   public void move(){
-    attack(balloons);
     if(direction == 1){
       y -= 1;
       steps++;
@@ -43,9 +41,8 @@ public class Tack{
       steps++;
     }
   }
-  */
 
-  
+
   /**A method that attacks the balloons that the tack touches
   *if the balloon's lives is 0, the balloon's status becomes isDead
   */

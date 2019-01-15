@@ -35,25 +35,4 @@ public class TackShooter extends Tower{
     s.putString(x,y,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
   }
 
-  /**A method that creates four tacks and calls for them to move and attack
-  *once the tack reaches outside of the radius, it is removed from the list of tacks
-  */
-
-  /*
-  public void attack(){
-    tacks.add(new Tack(this.getX(), this.getY(), 1));
-    tacks.add(new Tack(this.getX(), this.getY(), 2));
-    tacks.add(new Tack(this.getX(), this.getY(), 3));
-    tacks.add(new Tack(this.getX(), this.getY(), 4));
-    for(int i = 0; i < tacks.size(); i++){
-      Tack temp = tacks.get(i);
-      if(temp.getSteps() > this.getRadii()){
-        tacks.remove(i);
-      }
-      if(temp.getSteps() < this.getRadii()){
-        temp.move();
-      }
-    }
-  }
-  */
 }
