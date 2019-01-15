@@ -19,6 +19,7 @@ import java.util.Scanner;
 import java.util.*;
 
 public class GameScreen{
+
   /*
   //puts down a string at the specified location
   public static void putString(int r, int c,Terminal t, String s){
@@ -48,7 +49,9 @@ public class GameScreen{
   }
 
   public static boolean isWalkable(int xcor, int ycor){
-    return false;
+    if ((xcor == 1 || xcor == 60) && (ycor >= 3 && ycor <= 33)) return false;
+    if ((ycor == 3 || ycor == 33) && (xcor >= 1 && xcor <= 60)) return false;
+    return true;
   }
 
   public static void main(String[] args) throws FileNotFoundException {
@@ -58,8 +61,8 @@ public class GameScreen{
     TerminalSize size = terminal.getTerminalSize();
     terminal.setCursorVisible(false);
 
-    int cursorX = 10;
-    int cursorY = 10;
+    int cursorX = 5;
+    int cursorY = 4;
 
     boolean running = true;
     int mode = 1; //start off in pause mode
@@ -88,6 +91,7 @@ public class GameScreen{
     boolean level_passed = false;
     Screen s = new Screen(terminal);
     s.startScreen();
+    s.setCursorPosition(null);
     s.clear();
 
     //instructions to play game
@@ -114,6 +118,7 @@ public class GameScreen{
         s.putString(65,9,"Time: "+(timer /1000),Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         s.putString(65,10,"Lives Left: "+lives,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         s.putString(65,11,"Money: "+money,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
+        s.putString(65,5,"Level: "+level,Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
         //s.putString(65,14,"Made: "+ balloons.size(),Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         s.refresh();
 
@@ -125,7 +130,7 @@ public class GameScreen{
 
         balloonSinceTime += (currentTime - lastTime); //spawn in balloons
         if (balloonSinceTime >= 1000 && balloons_made < num_balloons){
-          balloons.add(new Balloon(balloons_made, balloon_lives, balloon_delay, 5, 4));
+          balloons.add(new Balloon(balloons_made, balloon_lives, balloon_delay, road.get(0).getX(), road.get(0).getY()));
           balloons_made++;
           balloonSinceTime = 0;
         }
@@ -146,7 +151,6 @@ public class GameScreen{
               if (x.getTile() == road.size()-1){ //when balloon reaches end of road
                 x.makeDead();
                 lives--;
-                //road.get(x.getTile()).draw(s);
                 balloons.remove(i);
               }
             }
@@ -165,7 +169,7 @@ public class GameScreen{
       if (key != null){ //what to start doing when key is pressed
 
         toggle++;
-        if (toggle == 1){
+        if (toggle == 1){ //one-time execution
           s.clear();
 
           File f = new File("map0.txt");
@@ -208,32 +212,38 @@ public class GameScreen{
           mode++;
         }
 
-        /*
          //test code for moving around towers
         if (toggle >= 1 && key.getKind() == Key.Kind.ArrowUp){
-          cursorY--;
-          terminal.moveCursor(cursorX,cursorY);
-          terminal.putCharacter(' ');
+          if (isWalkable(cursorX, cursorY-1)){
+            cursorY--;
+            terminal.moveCursor(cursorX,cursorY);
+            terminal.putCharacter(' ');
+          }
         }
 
         if (toggle >= 1 && key.getKind() == Key.Kind.ArrowDown){
-          cursorY++;
-          terminal.moveCursor(cursorX,cursorY);
-          terminal.putCharacter(' ');
+          if (isWalkable(cursorX, cursorY+1)){
+            cursorY++;
+            terminal.moveCursor(cursorX,cursorY);
+            terminal.putCharacter(' ');
+          }
         }
 
         if (toggle >= 1 && key.getKind() == Key.Kind.ArrowLeft){
-          cursorX--;
-          terminal.moveCursor(cursorX,cursorY);
-          terminal.putCharacter(' ');
+          if (isWalkable(cursorX-1, cursorY)){
+            cursorX--;
+            terminal.moveCursor(cursorX,cursorY);
+            terminal.putCharacter(' ');
+          }
         }
 
         if (toggle >= 1 && key.getKind() == Key.Kind.ArrowRight){
-          cursorX++;
-          terminal.moveCursor(cursorX,cursorY);
-          terminal.putCharacter(' ');
+          if (isWalkable(cursorX+1, cursorY)){
+            cursorX++;
+            terminal.moveCursor(cursorX,cursorY);
+            terminal.putCharacter(' ');
+          }
         }
-        */
 
       }
     }
