@@ -180,7 +180,6 @@ public class GameScreen{
             }
           }
         }
-
       }
 
       if (mode == 1){ //pause timer
@@ -218,8 +217,6 @@ public class GameScreen{
               s.putString(x,y," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
             }
           }
-
-          //test code for placing down towers
         }
 
 
