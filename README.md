@@ -1,6 +1,11 @@
 # Bloons Tower Defense
 This project aims to recreate a game known as Bloons Tower Defense. The program will be interactive and act similarly to the original game. The user will be able to choose a map to play the game in. Each map will have a road for the balloons to pass through and surrounding grass to place the towers. Balloons will enter from one end of the road and continue traveling until they either reach the end of the road or are popped by surrounding towers. Each balloon that reaches the end of the road will decrease the lives of the user. When the user has no more lives and has passed all the levels, the game ends. The user will steadily earn income as time passes and can use it to purchase towers that pop the balloons.
 
+## To-Do List
+-[ ] fix hitTarget method for tacks
+-[ ] fix border issue for tacks
+-[ ] fix levelUp method in GameScreen
+
 ## Instructions
 (Make your terminal full screen for the best experience! Otherwise, make sure it is at least 80x38.)
 <b>Do not resize the terminal during the game!</b>
@@ -79,6 +84,11 @@ The game is played by placing towers, which all have a radius, to attack balloon
 <tr>
     <td>1/14/19</td>
     <td>Today, we continued working on the terminal graphics. The balloon movement is fully functional now after moving the implementation onto a Screen. We also worked started implementing Towers into the GameScreen class using arrow keys. Today, we also demonstrated our game in class. We still need to work on Tower attack methods. 
+    </td>
+</tr>
+  <tr>
+    <td>1/15/19</td>
+    <td>Today, we began implementing the TackShooter and Tack classes into the terminal. We added methods such as spawnTacks() for TackShooter and move(), draw() and hitTarget() for Tacks. We added code for this into the terminal and were able to get TackShooters to start shooting Tacks according to specifications such as radius, speed and delay. We also started to write a levelUp function. We will continue working on modifying hitTarget(), fix some draw() issues for Tack and fix the levelUp() function. 
     </td>
 </tr>
 </table>
