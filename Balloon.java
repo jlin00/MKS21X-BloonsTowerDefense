@@ -52,7 +52,7 @@ public class Balloon{
     this.ycor = ycor;
     initialized = false;
     atTile = 0;
-    sinceMoved = 200;
+    sinceMoved = 0;
   }
 
   /**A method to get the number of lives a balloon has
