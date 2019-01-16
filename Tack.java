@@ -66,7 +66,7 @@ public class Tack{
   public void hitTarget(List<Balloon> balloons){
     for (int i = balloons.size()-1; i >= 0; i--){
       Balloon temp = balloons.get(i);
-      if (temp.getInit() && temp.getX() == x && temp.getY() == y){
+      if (temp.getX() == x && temp.getY() == y){
         temp.setLives(temp.getLives() - 1);
         System.out.println("HIT!!!");
         if (temp.getLives() == 0) balloons.remove(i);
