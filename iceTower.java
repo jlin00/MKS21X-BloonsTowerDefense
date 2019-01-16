@@ -25,4 +25,15 @@ public class iceTower extends Tower{
       }
     }
   }
+
+  /*placing an iceTower on the terminal, to be placed in the GameScreen class
+  if(toggle >= 1 && key.getCharacter() == 'i'){
+    if(isPlaceable(cursorX, cursorY, road, IceTowers) && (money - IceTowerPrice >= 0){
+      IceTowers.add(new iceTower(cursorX, cursorY, IceTowerPrice, IceTowerRad));
+      money -= IceTowerPrice;
+      cursorX++;
+  }
+  */
+
+  //s.putString(tba,tba,"IceTower: key I, Price "+IceTowerPrice+", Radius "+IceTowerRad+"",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
 }
