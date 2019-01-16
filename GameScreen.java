@@ -20,16 +20,6 @@ import java.util.*;
 
 public class GameScreen{
 
-  /*
-  //puts down a string at the specified location
-  public static void putString(int r, int c,Terminal t, String s){
-    t.moveCursor(r,c);
-    for(int i = 0; i < s.length();i++){
-      t.putCharacter(s.charAt(i));
-    }
-  }
-  */
-
   public static void drawBorder(int r, int c, int length, Screen s){ //draws a border for the game, terminal must be at least 80 x 38
     for (int i = 0; i < length; i++){
       s.putString(r,c+i," ",Terminal.Color.DEFAULT,Terminal.Color.BLACK);
@@ -63,14 +53,6 @@ public class GameScreen{
       if (x.getX() == xcor && x.getY() == ycor) return false;
     }
     return true;
-  }
-
-  public static void levelUp(int level, int num_balloons, int balloon_lives, int balloon_delay, boolean level_started){
-    level++;
-    num_balloons+=5;
-    balloon_lives++;
-    balloon_delay-=10;
-    level_started = false;
   }
 
   public static void main(String[] args) throws FileNotFoundException {
@@ -117,7 +99,8 @@ public class GameScreen{
     int num_balloons = 5; //number of balloons to be initialized
     int balloons_made = 0; //number of balloons already initialized
     int balloon_lives = 1; //number of lives each balloon will have
-    int balloon_delay = 250; //milliseconds between each balloon movement
+    int balloon_delay = 500; //milliseconds between each balloon movement
+    int balloon_spawnTime = 2000;
     boolean level_started = false;
 
     Screen s = new Screen(terminal);
@@ -202,16 +185,21 @@ public class GameScreen{
         }
 
         balloonSinceTime += (currentTime - lastTime); //spawn in balloons
-        if (balloonSinceTime >= 1000 && balloons_made < num_balloons){
+        if (balloonSinceTime >= balloon_spawnTime && balloons_made < num_balloons){
           level_started = true;
           balloons.add(new Balloon(balloons_made, balloon_lives, balloon_delay, road.get(0).getX(), road.get(0).getY()));
           balloons_made++;
           balloonSinceTime = 0;
         }
 
-        if (balloons.size() == 0){
-          levelUp(level,num_balloons,balloon_lives,balloon_delay,level_started);
+        if (balloons.size() == 0 && level_started){
+          level++;
+          num_balloons+=5;
+          balloon_lives++;
+          balloon_delay-=50;
+          level_started = false;
         }
+        s.refresh();
 
         TackShooterSinceTime  += (currentTime - lastTime); //create new tacks
         for (TackShooter x: TackShooters){
@@ -322,7 +310,8 @@ public class GameScreen{
             //s.putString(cursorX,cursorY,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
             TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterDelay,TackShooterRad));
             money -= TackShooterPrice;
-            cursorX++;
+            if (cursorX == 59) cursorX--;
+            else cursorX++;
           }
         }
 
