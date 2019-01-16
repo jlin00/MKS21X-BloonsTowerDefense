@@ -65,11 +65,12 @@ public class GameScreen{
     return true;
   }
 
-  public static void levelUp(int level, int num_balloons, int balloon_lives, int balloon_delay){
+  public static void levelUp(int level, int num_balloons, int balloon_lives, int balloon_delay, boolean level_started){
     level++;
     num_balloons+=5;
     balloon_lives++;
-    balloon_delay-=50;
+    balloon_delay-=10;
+    level_started = false;
   }
 
   public static void main(String[] args) throws FileNotFoundException {
@@ -90,27 +91,34 @@ public class GameScreen{
     long currentTime = lastTime; //timer syster
     long timer = 0;
     int toggle = 0; //one time check to see if user has started game
-    int balloonSinceTime = 0; //used to spawn a balloon every second
-    int balloonMoveTime = 0; //used to move all balloons every two seconds
-    int sinceTime = 0;
+    int sinceTime = 0; //keep track of income
+
     List<Tile> road = new ArrayList<Tile>(); //stores the coordinates from map files for the road
     List<Tile> border = new ArrayList<Tile>();
 
     List<TackShooter> TackShooters = new ArrayList<TackShooter>(); //stores towers that have been placed on the map
-    int TackShooterPrice = 150; //price for tackShooters
-    int TackShooterRad = 4; //radius for tackShooters
+    int TackShooterPrice = 125; //price for tackShooters
+    int TackShooterDelay = 400; //delay between each tackshooter shot
+    int TackShooterRad = 4;
+    int TackShooterSinceTime = 0;
+
+    List<Tack> tacks = new ArrayList<Tack>();
+    int tackSinceTime = 0;
+    int tackDelay = 75;
 
     int lives = 50; //user variables
-    int money = 200;
+    int money = 250;
     int income = 75;
 
     List<Balloon> balloons = new ArrayList<Balloon>();
+    int balloonSinceTime = 0; //used to spawn a balloon every second
+    int balloonMoveTime = 0; //used to move all balloons every two seconds
     int level = 1; //variables to be adjusted according to level
     int num_balloons = 5; //number of balloons to be initialized
     int balloons_made = 0; //number of balloons already initialized
     int balloon_lives = 1; //number of lives each balloon will have
-    int balloon_delay = 700; //milliseconds between each balloon movement
-    boolean level_passed = false;
+    int balloon_delay = 250; //milliseconds between each balloon movement
+    boolean level_started = false;
 
     Screen s = new Screen(terminal);
     s.startScreen();
@@ -143,6 +151,10 @@ public class GameScreen{
         x.draw(s);
       }
 
+      for (Tack x: tacks){
+        x.draw(s);
+      }
+
       balloonMoveTime += (currentTime - lastTime); //move balloons
       for(int i = balloons.size()-1; i >= 0; i--){
       //  s.putString(65, 18,t"sinceTime: "+x.getSince()+" bmt: "+balloonMoveTime,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
@@ -160,6 +172,7 @@ public class GameScreen{
           }
         }
       }
+
       s.refresh();
 
       s.putString(0,size.getRows()-2,"[To exit the game, press the escape key.]",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -171,8 +184,10 @@ public class GameScreen{
         s.putString(65,10,"Lives Left: "+lives+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,11,"Money: "+money+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,5,"Level: "+level+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-        s.putString(65,15, "Tower Key:", Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-        s.putString(65,18,"TackShooter: key T, Price "+TackShooterPrice+", Radius "+TackShooterRad+"",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
+        //s.putString(65,15, "Tower Key:", Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+        //s.putString(65,16,"TackShooter: key T, Price "+TackShooterPrice+", Radius "+TackShooterRad+"",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        //s.putString(65,18,"size: "+balloons.size(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        //s.putString(65,20,"balloonTime "+balloonSinceTime,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
 
         //s.putString(65,12,"TESTING TackShooters: "+TackShooters.size()+"     ",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
         //s.putString(65,16,"X: "+cursorX,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
@@ -188,15 +203,38 @@ public class GameScreen{
 
         balloonSinceTime += (currentTime - lastTime); //spawn in balloons
         if (balloonSinceTime >= 1000 && balloons_made < num_balloons){
+          level_started = true;
           balloons.add(new Balloon(balloons_made, balloon_lives, balloon_delay, road.get(0).getX(), road.get(0).getY()));
           balloons_made++;
           balloonSinceTime = 0;
         }
 
-        if (balloons.size() == 0) {
-          level_passed = true;
-          levelUp();
+        if (balloons.size() == 0){
+          levelUp(level,num_balloons,balloon_lives,balloon_delay,level_started);
         }
+
+        TackShooterSinceTime  += (currentTime - lastTime); //create new tacks
+        for (TackShooter x: TackShooters){
+          if (TackShooterSinceTime >= x.getSince()){
+            x.spawnTacks(tacks, TackShooterSinceTime, tackDelay);
+          }
+        }
+        //s.putString(65,20,"Tack#: "+tacks.size(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+
+        tackSinceTime += (currentTime - lastTime); //fire tacks
+        for (int i = tacks.size()-1; i>=0; i--){
+          Tack x = tacks.get(i);
+          if (tackSinceTime >= x.getSince()){
+            x.undraw(s, x.getX(), x.getY(), road);
+            x.move(tackSinceTime);
+            x.hitTarget(balloons);
+            if (x.getSteps() >= TackShooterRad){
+              tacks.remove(i);
+            }
+          }
+        }
+
+        s.refresh();
       }
 
       if (mode == 1){ //pause timer
@@ -282,7 +320,7 @@ public class GameScreen{
         if (toggle >= 1 && key.getKind() == Key.Kind.Enter){
           if (isPlaceable(cursorX,cursorY,road,TackShooters) && (money - TackShooterPrice >= 0)){
             //s.putString(cursorX,cursorY,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
-            TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterRad));
+            TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterDelay,TackShooterRad));
             money -= TackShooterPrice;
             cursorX++;
           }
