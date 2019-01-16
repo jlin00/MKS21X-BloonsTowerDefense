@@ -70,6 +70,7 @@ public abstract class Tower{
   *the balloon target is the nearest balloon on a road tile within the radius of the tower
   *@return Balloon
   */
+  /*
   public Balloon findTarget(List<Tile> roads){
     double distance = (radius * radius) + 1;
     Tile temp;
@@ -87,6 +88,7 @@ public abstract class Tower{
       target = possibleTargets.get(Math.abs(100 % possibleTargets.size()));
       return target;
   }
+  */
 
   public void draw(Terminal t){
     t.moveCursor(x, y);
