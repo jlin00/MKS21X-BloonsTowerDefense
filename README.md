@@ -91,4 +91,9 @@ The game is played by placing towers, which all have a radius, to attack balloon
     <td>Today, we began implementing the TackShooter and Tack classes into the terminal. We added methods such as spawnTacks() for TackShooter and move(), draw() and hitTarget() for Tacks. We added code for this into the terminal and were able to get TackShooters to start shooting Tacks according to specifications such as radius, speed and delay. We also started to write a levelUp function. We will continue working on modifying hitTarget(), fix some draw() issues for Tack and fix the levelUp() function. 
     </td>
 </tr>
+ <tr>
+    <td>1/16/19</td>
+    <td>Today, we fixed a cursor bug and also fixed the levelUp() function. We started modifying the Tack class by writing an inRadius() function, which we will continue testing. We also will start makign all the main class variables into private fields of GameScreen.
+    </td>
+</tr>
 </table>
