@@ -93,7 +93,12 @@ The game is played by placing towers, which all have a radius, to attack balloon
 </tr>
  <tr>
     <td>1/16/19</td>
-    <td>Today, we fixed a cursor bug and also fixed the levelUp() function. We started modifying the Tack class by writing an inRadius() function, which we will continue testing. We also will start makign all the main class variables into private fields of GameScreen.
+    <td>Today, we fixed a cursor bug and also fixed the levelUp() function. We started modifying the Tack class by writing an inRadius() function, which we will continue testing. We also will start making all the main class variables into private fields of GameScreen.
     </td>
+</tr>
+<tr>
+  <td>1/17/19</td>
+  <td>
+  </td>
 </tr>
 </table>
