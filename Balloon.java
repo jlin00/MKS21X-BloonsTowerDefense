@@ -14,19 +14,17 @@ import com.googlecode.lanterna.input.KeyMappingProfile;
 import com.googlecode.lanterna.screen.*;
 
 public class Balloon{
-  private int ID, lives, delay;
+  private int lives, delay;
   private boolean isAlive;
   private long sinceMoved;
   private int xcor, ycor;
-  private boolean initialized;
   private int atTile;
 
   /**A Balloon constructor
   *@param int each balloon has a given ID number to differentiate it easily
   *the default number of lives is 1
   */
-  public Balloon(int num){
-    ID = num;
+  public Balloon(){
     lives = 1;
     isAlive = true;
   }
@@ -35,22 +33,18 @@ public class Balloon{
   *@param int each balloon has a given ID nummber
   *@param int number of lives can be determined by the user
   */
-  public Balloon(int num, int numLives){
-    ID = num;
+  public Balloon(int numLives){
     lives = numLives;
     isAlive = true;
-    initialized = false;
     atTile = 0;
   }
 
-  public Balloon(int num, int numLives, int delay, int xcor, int ycor){//most specific constructor
-    ID = num;
+  public Balloon(int numLives, int delay, int xcor, int ycor){//most specific constructor
     lives = numLives;
     isAlive = true;
     this.delay = delay;
     this.xcor = xcor;
     this.ycor = ycor;
-    initialized = false;
     atTile = 0;
     sinceMoved = 0;
   }
@@ -90,13 +84,6 @@ public class Balloon{
     return ycor;
   }
 
-  /**A method to boolean initialized of the balloon
-  *@return boolean initialized
-  */
-  public boolean getInit(){
-    return initialized;
-  }
-
   /**A method to get tile of balloon
   *@return int ycor
   */
@@ -134,15 +121,6 @@ public class Balloon{
     atTile = num;
   }
 
-//  public void setSince(long num){
-  //  sinceMoved = num;
-//  }
-
-  /**A method to make a balloon initialized by changing the initialized boolean to true
-  */
-  public void makeInit(){
-    initialized = true;
-  }
   /**A method to move the balloon in the terminal to a new coordinate
   */
   public void move(Tile t, long timer){
