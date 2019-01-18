@@ -51,25 +51,28 @@ public class SpikeTower extends Tower{
 
   /**A method to create spike objects to be placed onto a road tile on the screen
   */
-  public void spawnSpikes(List<Spike> spikes, long timer, int delay){
+  public void spawnSpikes(List<Spike> spikes, List<Tile> road, long timer, int delay, int money, int lives){
     sinceShot = timer;
-    for (int i = 0; i < 4; i++){
-      spikes.add(new Spike(x,y,i,delay));
-    }
+    Tile toSpawn = pickRoad(road);
+    spikes.add(new Spike(toSpawn.getX(),toSpawn.getY(),money,lives));
     sinceShot += this.delay;
   }
 
-  /**A method that reads through the list of road tiles and checks that a road is in radius
-  *this is needed to place a spike on a road
-  */
-  public boolean inRadius(List<Tile> roads){
-    for (int i = roads.size() - 1; i >= 0; i--){
-      Tile temp = roads.get(i);
-      if ((temp.getX() >= x - radius && temp.getX() <= x + radius && temp.getY() == y) || (temp.getY() >= y - radius && temp.getY() <= y + radius && temp.getX() == x)){
-        return true;
-      }
-    }
+  public boolean inRadius(Tile road){
+    if (road.getX() >= x - radius && road.getX() <= x + radius && road.getY() >= y - radius && road.getY() <= y + radius) return true;
     return false;
+  }
+
+  public Tile pickRoad(List<Tile> road){
+    List<Tile> eligible_tiles = new ArrayList<Tile>();
+    for (Tile x: road){
+      if (inRadius(x)) eligible_tiles.add(x);
+    }
+    int max = eligible_tiles.size() - 1;
+    int min = 0;
+    int range = max + 1;
+    int rand = (int)(Math.random() * range) + min;
+    return eligible_tiles.get(rand);
   }
 
 }

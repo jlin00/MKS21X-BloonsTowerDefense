@@ -51,7 +51,7 @@ public class Spike extends Tower{
   }
 
   public void draw(Screen s){
-    s.putString(x,y,"\u2734",Terminal.Color.BLACK,Terminal.Color.WHITE);
+    s.putString(x,y,"*",Terminal.Color.BLACK,Terminal.Color.WHITE);
   }
 
 
