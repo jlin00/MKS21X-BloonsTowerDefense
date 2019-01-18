@@ -50,4 +50,14 @@ public class TackShooter extends Tower{
     sinceShot += this.delay;
   }
 
+  public boolean inRadius(List<Balloon> balloons){
+    for (int i = balloons.size() - 1; i >= 0; i--){
+      Balloon temp = balloons.get(i);
+      if ((temp.getX() >= x - radius && temp.getX() <= x + radius && temp.getY() == y) || (temp.getY() >= y - radius && temp.getY() <= y + radius && temp.getX() == x)){
+        return true;
+      }
+    }
+    return false;
+  }
+
 }
