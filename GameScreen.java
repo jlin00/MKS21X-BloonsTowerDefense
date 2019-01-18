@@ -107,12 +107,13 @@ public class GameScreen{
 
     List<SpikeTower> SpikeTowers = new ArrayList<SpikeTower>();
     int SpikeTowerPrice = 300;
-    int SpikeTowerDelay = 4000;
+    int SpikeTowerDelay = 8000;
     int SpikeLivesRad = 4;
     int SpikeTowerSinceTime = 0;
+    int SpikeTowerLives = 3;
 
     int lives = 50; //user variables
-    int money = 200;
+    int money = 300;
     int income = 75;
 
     List<Balloon> balloons = new ArrayList<Balloon>();
@@ -139,16 +140,13 @@ public class GameScreen{
 
     //instructions to play game
     s.putString(0,0,"Welcome to Bloons Tower Defense!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-    s.putString(0,2,"To begin the game, press b.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,3,"Once you have begun, press a to pause and b to resume the game.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,5,"Balloons will start spawning immediately and travel down the road.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,6,"To defeat them, place down towers by typing the letter  of the tower you want",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,7,"to buy and using the arrow keys to give it a location on the grass, which are",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,8,"the green tiles. Press the enter key to place the tower down. You will ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,9,"receive $75 every 10 seconds. Use your income wisely to purchase towers!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,10,"If any balloons reach the end of the road, your lives will decrease.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,11,"If your lives reach 0, you lose.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,13,"Best of luck!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
+    s.putString(0,2,"To begin the game, press b. Once you have begun, press a to pause and b to resume the game.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,4,"Balloons will start spawning immediately and travel down the road. To defeat them, place down towers by",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,5,"typing the letter  of the tower you want to buy and using the arrow keys to give it a location",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,6,"on the grass, which are the green tiles. Press the enter key to place the tower down. You will ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,7,"receive $75 every 10 seconds. Use your income wisely to purchase towers! If any balloons reach the end ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,8,"of the road, your lives will decrease. If your lives reach 0, you lose.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,12,"Best of luck!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
     s.refresh();
 
     while (running){
@@ -262,6 +260,13 @@ public class GameScreen{
             if (x.getSteps() >= TackShooterRad){
               tacks.remove(i);
             }
+          }
+        }
+
+        SpikeTowerSinceTime += (currentTime - lastTime); //create new spikes
+        for (SpikeTower x: SpikeTowers){
+          if (SpikeTowerSinceTime >= x.getSince()){
+            x.spawnSpikes(spikes,road,SpikeTowerSinceTime,SpikeTowerDelay,SpikePrice,SpikeTowerLives);
           }
         }
 
