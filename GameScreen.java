@@ -55,6 +55,13 @@ public class GameScreen{
     return true;
   }
 
+  public static boolean isPlaceable(int xcor, int ycor, List<Tile> road){
+    for (Tile x: road){
+      if (x.getX() == xcor && x.getY() == ycor) return true;
+    }
+    return false;
+  }
+
   public static void main(String[] args) throws FileNotFoundException {
     Terminal terminal = TerminalFacade.createTextTerminal();
     terminal.enterPrivateMode();
@@ -88,6 +95,10 @@ public class GameScreen{
     int tackSinceTime = 0;
     int tackDelay = 75;
 
+    List<Spike> spikes = new ArrayList<Spike>();
+    int SpikePrice = 50;
+    int SpikeLives = 5;
+
     int lives = 50; //user variables
     int money = 250;
     int income = 75;
@@ -103,6 +114,11 @@ public class GameScreen{
     int balloon_spawnTime = 1200;
     boolean level_started = false;
     boolean all_spawned = false;
+
+    //which tower is being placed down
+    boolean tack_toggled = false;
+    boolean spike_toggled = false;
+    boolean ice_toggled = false;
 
     Screen s = new Screen(terminal);
     s.startScreen();
@@ -124,8 +140,7 @@ public class GameScreen{
     s.refresh();
 
     while (running){
-      if (isPlaceable(cursorX,cursorY,road,TackShooters)) s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
-      s.refresh();
+    //  s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
 
       for (Tile x: road){
         x.draw(s);
@@ -138,6 +153,12 @@ public class GameScreen{
       for (Tack x: tacks){
         x.draw(s);
       }
+
+      for (Spike x: spikes){
+        x.draw(s);
+      }
+
+      if (toggle > 0) s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
 
       balloonMoveTime += (currentTime - lastTime); //move balloons
       for(int i = balloons.size()-1; i >= 0; i--){
@@ -159,7 +180,7 @@ public class GameScreen{
 
       s.refresh();
 
-      s.putString(0,size.getRows()-2,"[To exit the game, press the escape key.]",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+      s.putString(10,size.getRows()-2,"[To exit the game, press the escape key.]",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       if (mode == 0){
         lastTime = currentTime;
         currentTime = System.currentTimeMillis();
@@ -235,6 +256,12 @@ public class GameScreen{
           }
         }
 
+        for (int i = spikes.size()-1; i>=0; i--){ //see if spikes hit anything
+          Spike x = spikes.get(i);
+          if (x.getLives() == 0) spikes.remove(i);
+          x.hitTarget(balloons);
+        }
+
         s.refresh();
       }
 
@@ -290,42 +317,77 @@ public class GameScreen{
         }
 
          //test code for moving around towers
-        if (toggle >= 0 && key.getKind() == Key.Kind.ArrowUp){
+        if (toggle > 0 && key.getKind() == Key.Kind.ArrowUp){
           if (isWalkable(cursorX, cursorY-1)){
             cursorY--;
               if (isPlaceable(cursorX,cursorY+1,road,TackShooters)) s.putString(cursorX,cursorY+1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
-        if (toggle >= 0 && key.getKind() == Key.Kind.ArrowDown){
+        if (toggle > 0 && key.getKind() == Key.Kind.ArrowDown){
           if (isWalkable(cursorX, cursorY+1)){
             cursorY++;
             if (isPlaceable(cursorX,cursorY-1,road,TackShooters)) s.putString(cursorX,cursorY-1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
-        if (toggle >= 0 && key.getKind() == Key.Kind.ArrowLeft){
+        if (toggle > 0 && key.getKind() == Key.Kind.ArrowLeft){
           if (isWalkable(cursorX-1, cursorY)){
             cursorX--;
             if (isPlaceable(cursorX+1,cursorY,road,TackShooters)) s.putString(cursorX+1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
-        if (toggle >= 0 && key.getKind() == Key.Kind.ArrowRight){
+        if (toggle > 0 && key.getKind() == Key.Kind.ArrowRight){
           if (isWalkable(cursorX+1, cursorY)){
             cursorX++;
             if (isPlaceable(cursorX-1,cursorY,road,TackShooters)) s.putString(cursorX-1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
+        if (toggle > 0 && key.getCharacter() == 't'){
+          tack_toggled = true;
+          spike_toggled = false;
+          ice_toggled = false;
+        }
+
+        if (toggle > 0 && key.getCharacter() == '*'){
+          tack_toggled = false;
+          spike_toggled = true;
+          ice_toggled = false;
+        }
+
+        if (toggle > 0 && key.getCharacter() == 'f'){
+          tack_toggled = false;
+          spike_toggled = false;
+          ice_toggled = true;
+        }
+
         if (toggle >= 1 && key.getKind() == Key.Kind.Enter){
-          if (isPlaceable(cursorX,cursorY,road,TackShooters) && (money - TackShooterPrice >= 0)){
-            //s.putString(cursorX,cursorY,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
-            TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterDelay,TackShooterRad));
-            money -= TackShooterPrice;
-            if (cursorX == 59) cursorX--;
-            else cursorX++;
+          if (tack_toggled){
+            if (isPlaceable(cursorX,cursorY,road,TackShooters) && (money - TackShooterPrice >= 0)){
+              //s.putString(cursorX,cursorY,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
+              TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterDelay,TackShooterRad));
+              money -= TackShooterPrice;
+              if (cursorX == 59) cursorX--;
+              else cursorX++;
+            }
           }
+
+          if (spike_toggled){
+            if (isPlaceable(cursorX,cursorY,road) && (money - SpikePrice >= 0)){
+              spikes.add(new Spike(cursorX,cursorY,SpikePrice,SpikeLives));
+              money -= SpikePrice;
+              if (cursorX == 59) cursorX--;
+              else cursorX++;
+            }
+          }
+
+          if (ice_toggled){
+
+          }
+
+
         }
 
       }
