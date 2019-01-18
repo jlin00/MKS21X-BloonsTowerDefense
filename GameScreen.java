@@ -105,6 +105,12 @@ public class GameScreen{
     int SpikePrice = 50;
     int SpikeLives = 5;
 
+    List<SpikeTower> SpikeTowers = new ArrayList<SpikeTower>();
+    int SpikeTowerPrice = 300;
+    int SpikeTowerDelay = 4000;
+    int SpikeLivesRad = 4;
+    int SpikeTowerSinceTime = 0;
+
     int lives = 50; //user variables
     int money = 200;
     int income = 75;
@@ -124,6 +130,7 @@ public class GameScreen{
     //which tower is being placed down
     boolean tack_toggled = false;
     boolean spike_toggled = false;
+    boolean factory_toggled = false;
 
     Screen s = new Screen(terminal);
     s.startScreen();
@@ -160,6 +167,10 @@ public class GameScreen{
       }
 
       for (Spike x: spikes){
+        x.draw(s);
+      }
+
+      for (SpikeTower x: SpikeTowers){
         x.draw(s);
       }
 
@@ -346,17 +357,21 @@ public class GameScreen{
         if (toggle > 0 && key.getCharacter() == 't'){
           tack_toggled = true;
           spike_toggled = false;
+          factory_toggled = false;
         }
 
         if (toggle > 0 && key.getCharacter() == '*'){
           tack_toggled = false;
           spike_toggled = true;
+          factory_toggled = false;
         }
 
-        if (toggle > 0 && key.getCharacter() == 'f'){
+        if (toggle > 0 && key.getCharacter() == 's'){
           tack_toggled = false;
           spike_toggled = false;
+          factory_toggled = true;
         }
+
 
         if (toggle >= 1 && key.getKind() == Key.Kind.Enter){
           if (tack_toggled){
@@ -372,6 +387,15 @@ public class GameScreen{
             if (spikeIsPlaceable(cursorX,cursorY,road,spikes) && (money - SpikePrice >= 0)){
               spikes.add(new Spike(cursorX,cursorY,SpikePrice,SpikeLives));
               money -= SpikePrice;
+              if (cursorX == 59) cursorX--;
+              else cursorX++;
+            }
+          }
+
+          if (factory_toggled){
+            if (isPlaceable(cursorX,cursorY,road,TackShooters) && (money - SpikeTowerPrice >= 0)){
+              SpikeTowers.add(new SpikeTower(cursorX,cursorY,SpikeTowerPrice,SpikeTowerDelay,SpikeLivesRad));
+              money -= SpikeTowerPrice;
               if (cursorX == 59) cursorX--;
               else cursorX++;
             }

@@ -46,7 +46,7 @@ public class SpikeTower extends Tower{
   /**A method that draws the spike tower onto the screen using the letter S to represent it
   */
   public void draw(Screen s){
-    s.putString(x,y,"S",Terminal.Color.WHITE,Terminal.Color.BLUE);
+    s.putString(x,y,"S",Terminal.Color.WHITE,Terminal.Color.RED);
   }
 
   /**A method to create spike objects to be placed onto a road tile on the screen
