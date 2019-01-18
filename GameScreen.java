@@ -20,7 +20,7 @@ import java.util.*;
 
 public class GameScreen{
 
-  public static void drawBorder(int r, int c, int length, Screen s){ //draws a border for the game, terminal must be at least 80 x 38
+  public static void drawBorder(int r, int c, int length, Screen s){ //draws a border for the game, terminal must be at least 110 x 38
     for (int i = 0; i < length; i++){
       s.putString(r,c+i," ",Terminal.Color.DEFAULT,Terminal.Color.BLACK);
     }
@@ -44,12 +44,16 @@ public class GameScreen{
     return true;
   }
 
-  public static boolean isPlaceable(int xcor, int ycor, List<Tile> road, List<TackShooter> TackShooters){
+  public static boolean isPlaceable(int xcor, int ycor, List<Tile> road, List<TackShooter> TackShooters, List<FreezeTower> FreezeTowers){
     for (Tile x: road){
       if (x.getX() == xcor && x.getY() == ycor) return false;
     }
 
     for (TackShooter x: TackShooters){
+      if (x.getX() == xcor && x.getY() == ycor) return false;
+    }
+
+    for (FreezeTower x: FreezeTowers){
       if (x.getX() == xcor && x.getY() == ycor) return false;
     }
     return true;
@@ -86,7 +90,7 @@ public class GameScreen{
     List<Tile> border = new ArrayList<Tile>();
 
     List<TackShooter> TackShooters = new ArrayList<TackShooter>(); //stores towers that have been placed on the map
-    int TackShooterPrice = 125; //price for tackShooters
+    int TackShooterPrice = 150; //price for tackShooters
     int TackShooterDelay = 400; //delay between each tackshooter shot
     int TackShooterRad = 4;
     int TackShooterSinceTime = 0;
@@ -99,8 +103,15 @@ public class GameScreen{
     int SpikePrice = 50;
     int SpikeLives = 5;
 
+    List<FreezeTower> FreezeTowers = new ArrayList<FreezeTower>();
+    int FreezeTowerPrice = 100;
+    int FreezeTowerRad = 4;
+    int FreezeTowerDelay = 2500;
+    int FreezeTowerSinceTime = 0;
+    int freezeTime = 500;
+
     int lives = 50; //user variables
-    int money = 250;
+    int money = 200;
     int income = 75;
 
     List<Balloon> balloons = new ArrayList<Balloon>();
@@ -158,24 +169,27 @@ public class GameScreen{
         x.draw(s);
       }
 
+      for (FreezeTower x: FreezeTowers){
+        x.draw(s);
+      }
+
       if (toggle > 0) s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
 
       balloonMoveTime += (currentTime - lastTime); //move balloons
       for(int i = balloons.size()-1; i >= 0; i--){
-      //  s.putString(65, 18,t"sinceTime: "+x.getSince()+" bmt: "+balloonMoveTime,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-      Balloon x = balloons.get(i);
+        Balloon x = balloons.get(i);
         x.draw(s);
-        if (balloonMoveTime >= x.getSince() && x.getIsAlive()){
-          if (x.getTile() < road.size()){
-            x.move(road.get(x.getTile()), balloonMoveTime);
+          if (balloonMoveTime >= x.getSince() && x.getIsAlive()){
+            if (x.getTile() < road.size()){
+              x.move(road.get(x.getTile()), balloonMoveTime);
 
-            if (x.getTile() == road.size()-1){ //when balloon reaches end of road
-              x.makeDead();
-              lives--;
-              balloons.remove(i);
+              if (x.getTile() == road.size()-1){ //when balloon reaches end of road
+                x.makeDead();
+                lives--;
+                balloons.remove(i);
+              }
             }
           }
-        }
       }
 
       s.refresh();
@@ -189,15 +203,10 @@ public class GameScreen{
         s.putString(65,10,"Lives Left: "+lives+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,11,"Money: "+money+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,5,"Level: "+level+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-        //s.putString(65,15, "Tower Key:", Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-        //s.putString(65,16,"TackShooter: key T, Price "+TackShooterPrice+", Radius "+TackShooterRad+"",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        //s.putString(65,18,"size: "+balloons.size(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        //s.putString(65,20,"balloonTime "+balloonSinceTime,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-
-        //s.putString(65,12,"TESTING TackShooters: "+TackShooters.size()+"     ",Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-        //s.putString(65,16,"X: "+cursorX,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-        //s.putString(65,17,"Y: "+cursorY,Terminal.Color.BLACK,Terminal.Color.DEFAULT);
-        //s.putString(65,14,"Made: "+ balloons.size(),Terminal.Color.BLACK,Terminal.Color.DEFAULT);
+        s.putString(65,15, "Tower Key", Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline);
+        s.putString(65,16,"TackShooter: key t, Price "+TackShooterPrice+", Radius "+TackShooterRad,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,17,"FreezeTower: key f, Price "+FreezeTowerPrice+", Radius "+FreezeTowerRad,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,18,"Spike:       key *, Price "+SpikePrice+", Hits "+SpikeLives,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.refresh();
 
         sinceTime += (currentTime - lastTime); //add the amount of time since the last frame
@@ -320,28 +329,28 @@ public class GameScreen{
         if (toggle > 0 && key.getKind() == Key.Kind.ArrowUp){
           if (isWalkable(cursorX, cursorY-1)){
             cursorY--;
-              if (isPlaceable(cursorX,cursorY+1,road,TackShooters)) s.putString(cursorX,cursorY+1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+              if (isPlaceable(cursorX,cursorY+1,road,TackShooters,FreezeTowers)) s.putString(cursorX,cursorY+1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
         if (toggle > 0 && key.getKind() == Key.Kind.ArrowDown){
           if (isWalkable(cursorX, cursorY+1)){
             cursorY++;
-            if (isPlaceable(cursorX,cursorY-1,road,TackShooters)) s.putString(cursorX,cursorY-1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+            if (isPlaceable(cursorX,cursorY-1,road,TackShooters,FreezeTowers)) s.putString(cursorX,cursorY-1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
         if (toggle > 0 && key.getKind() == Key.Kind.ArrowLeft){
           if (isWalkable(cursorX-1, cursorY)){
             cursorX--;
-            if (isPlaceable(cursorX+1,cursorY,road,TackShooters)) s.putString(cursorX+1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+            if (isPlaceable(cursorX+1,cursorY,road,TackShooters,FreezeTowers)) s.putString(cursorX+1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
         if (toggle > 0 && key.getKind() == Key.Kind.ArrowRight){
           if (isWalkable(cursorX+1, cursorY)){
             cursorX++;
-            if (isPlaceable(cursorX-1,cursorY,road,TackShooters)) s.putString(cursorX-1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+            if (isPlaceable(cursorX-1,cursorY,road,TackShooters,FreezeTowers)) s.putString(cursorX-1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
@@ -365,8 +374,7 @@ public class GameScreen{
 
         if (toggle >= 1 && key.getKind() == Key.Kind.Enter){
           if (tack_toggled){
-            if (isPlaceable(cursorX,cursorY,road,TackShooters) && (money - TackShooterPrice >= 0)){
-              //s.putString(cursorX,cursorY,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
+            if (isPlaceable(cursorX,cursorY,road,TackShooters,FreezeTowers) && (money - TackShooterPrice >= 0)){
               TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterDelay,TackShooterRad));
               money -= TackShooterPrice;
               if (cursorX == 59) cursorX--;
@@ -384,10 +392,13 @@ public class GameScreen{
           }
 
           if (ice_toggled){
-
+            if (isPlaceable(cursorX,cursorY,road,TackShooters,FreezeTowers) && (money - FreezeTowerPrice >= 0)){
+              FreezeTowers.add(new FreezeTower(cursorX,cursorY,FreezeTowerPrice,FreezeTowerDelay,FreezeTowerRad));
+              money -= FreezeTowerPrice;
+              if (cursorX == 59) cursorX--;
+              else cursorX++;
+            }
           }
-
-
         }
 
       }
