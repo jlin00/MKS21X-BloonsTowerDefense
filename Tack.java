@@ -61,6 +61,8 @@ public class Tack{
       steps++;
     }
     sinceTime += delay;
+    if ((x == 1 || x == 60) && (y >= 3 && y <= 33)) steps = 4;
+    if ((y == 3 || y == 33) && (x >= 1 && x <= 60)) steps = 4;
   }
 
   public void hitTarget(List<Balloon> balloons){
@@ -68,7 +70,6 @@ public class Tack{
       Balloon temp = balloons.get(i);
       if (temp.getX() == x && temp.getY() == y){
         temp.setLives(temp.getLives() - 1);
-        System.out.println("HIT!!!");
         if (temp.getLives() == 0) balloons.remove(i);
       }
     }
@@ -84,9 +85,6 @@ public class Tack{
   public void undraw(Screen s, int xcor, int ycor, List<Tile> road){
     for (Tile x: road){
       if (xcor == x.getX() && ycor == x.getY()) s.putString(xcor,ycor," ",Terminal.Color.DEFAULT,Terminal.Color.WHITE);
-      else if ((xcor == 1 || xcor == 60) && (ycor >= 3 && ycor <= 33)) s.putString(xcor,ycor," ",Terminal.Color.DEFAULT,Terminal.Color.BLACK);
-      else if ((ycor == 3 || ycor == 33) && (xcor >= 1 && xcor <= 60)) s.putString(xcor,ycor," ",Terminal.Color.DEFAULT,Terminal.Color.BLACK);
-      else if (xcor < 1 || xcor > 60 || ycor < 3 || ycor > 33) s.putString(xcor,ycor," ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       else s.putString(xcor,ycor," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
     }
   }
@@ -120,6 +118,10 @@ public class Tack{
   */
   public int getDirection(){
     return direction;
+  }
+
+  public void setSteps(int num){
+    steps = num;
   }
 
 }
