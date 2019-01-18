@@ -141,7 +141,13 @@ public class Balloon{
   }
 
   public void draw(Screen s){
-    s.putString(xcor,ycor,"Ǫ",Terminal.Color.RED,Terminal.Color.WHITE);
+    if (lives == 1) s.putString(xcor,ycor,"\u29ed",Terminal.Color.RED,Terminal.Color.WHITE);
+    if (lives == 2) s.putString(xcor,ycor,"\u29ed",Terminal.Color.YELLOW,Terminal.Color.WHITE);
+    if (lives == 3) s.putString(xcor,ycor,"\u29ed",Terminal.Color.GREEN,Terminal.Color.WHITE);
+    if (lives == 4) s.putString(xcor,ycor,"\u29ed",Terminal.Color.CYAN,Terminal.Color.WHITE);
+    if (lives == 5) s.putString(xcor,ycor,"\u29ed",Terminal.Color.BLUE,Terminal.Color.WHITE);
+    if (lives == 6) s.putString(xcor,ycor,"\u29ed",Terminal.Color.MAGENTA,Terminal.Color.WHITE);
+    if (lives == 6) s.putString(xcor,ycor,"\u29ed",Terminal.Color.BLACK,Terminal.Color.WHITE);
   }
 
 }
