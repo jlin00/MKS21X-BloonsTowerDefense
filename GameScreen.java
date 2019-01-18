@@ -99,9 +99,10 @@ public class GameScreen{
     int num_balloons = 5; //number of balloons to be initialized
     int balloons_made = 0; //number of balloons already initialized
     int balloon_lives = 1; //number of lives each balloon will have
-    int balloon_delay = 500; //milliseconds between each balloon movement
-    int balloon_spawnTime = 2000;
+    int balloon_delay = 600; //milliseconds between each balloon movement
+    int balloon_spawnTime = 1200;
     boolean level_started = false;
+    boolean all_spawned = false;
 
     Screen s = new Screen(terminal);
     s.startScreen();
@@ -187,23 +188,35 @@ public class GameScreen{
         balloonSinceTime += (currentTime - lastTime); //spawn in balloons
         if (balloonSinceTime >= balloon_spawnTime && balloons_made < num_balloons){
           level_started = true;
-          balloons.add(new Balloon(balloons_made, balloon_lives, balloon_delay, road.get(0).getX(), road.get(0).getY()));
+          balloons.add(new Balloon(balloon_lives, balloon_delay, road.get(0).getX(), road.get(0).getY()));
           balloons_made++;
+          if (balloons_made == num_balloons) all_spawned = true;
           balloonSinceTime = 0;
         }
 
-        if (balloons.size() == 0 && level_started){
+        if (balloons.size() == 0 && level_started && all_spawned){
           level++;
           num_balloons+=5;
+          balloons_made=0;
           balloon_lives++;
           balloon_delay-=50;
+          for (Tack x: tacks) x.setSteps(4); //reset tacks
+          mode=1;
           level_started = false;
+          all_spawned = false;
+          s.putString(10,1,"Now commencing level "+level+". Press b to begin.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
         }
+        /*
+        s.putString(65,25,"balloons: "+num_balloons,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,26,"b_lives: "+balloon_lives,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,27,"b_delay: "+balloon_delay,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,28,"started: "+level_started,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        */
         s.refresh();
 
         TackShooterSinceTime  += (currentTime - lastTime); //create new tacks
         for (TackShooter x: TackShooters){
-          if (TackShooterSinceTime >= x.getSince()){
+          if (TackShooterSinceTime >= x.getSince() && x.inRadius(balloons)){
             x.spawnTacks(tacks, TackShooterSinceTime, tackDelay);
           }
         }
@@ -212,7 +225,7 @@ public class GameScreen{
         tackSinceTime += (currentTime - lastTime); //fire tacks
         for (int i = tacks.size()-1; i>=0; i--){
           Tack x = tacks.get(i);
-          if (tackSinceTime >= x.getSince()){
+          if (tackSinceTime >= x.getSince()){ //creates delay between tacks shot
             x.undraw(s, x.getX(), x.getY(), road);
             x.move(tackSinceTime);
             x.hitTarget(balloons);
