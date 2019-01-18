@@ -21,9 +21,10 @@ public class SpikeTower extends Tower{
   private int radius;
 
   /**A Tower constructor
-  *@param int xCord is the x position of the tower, also its row in the array
-  *@param int yCord is the y position of the tower, also its column in the array
+  *@param int xCord is the x position of the tower, also its x coordinate on the screen
+  *@param int yCord is the y position of the tower, also its y coordinate on the screen
   *@param int money is the cost
+  *@param int delay is the time needed to pass before the spike tower can place another spike
   *@param int rad is the radius
   */
   public SpikeTower(int xCord, int yCord, int money, int delay, int rad){
@@ -35,14 +36,21 @@ public class SpikeTower extends Tower{
     radius = rad;
   }
 
+  /**A method that returns when the spike tower last placed a spike on a road
+  *@return long sinceShot variable
+  */
   public long getSince(){
     return sinceShot;
   }
 
+  /**A method that draws the spike tower onto the screen using the letter S to represent it
+  */
   public void draw(Screen s){
     s.putString(x,y,"S",Terminal.Color.WHITE,Terminal.Color.BLUE);
   }
 
+  /**A method to create spike objects to be placed onto a road tile on the screen
+  */
   public void spawnSpikes(List<Spike> spikes, long timer, int delay){
     sinceShot = timer;
     for (int i = 0; i < 4; i++){
@@ -51,6 +59,9 @@ public class SpikeTower extends Tower{
     sinceShot += this.delay;
   }
 
+  /**A method that reads through the list of road tiles and checks that a road is in radius
+  *this is needed to place a spike on a road
+  */
   public boolean inRadius(List<Tile> roads){
     for (int i = roads.size() - 1; i >= 0; i--){
       Tile temp = roads.get(i);
