@@ -98,7 +98,7 @@ The game is played by placing towers, which all have a radius, to attack balloon
 </tr>
 <tr>
   <td>1/17/19</td>
-  <td>
+  <td>Today, we finished most of the Tack class, and made the tack shooter shoot out tacks only when a balloon was in radius. We also tried fixing timer issues so that the tacks wouldn't miss the balloons and we're still working on that. To improve the game, we had to move some methods and variables around in the GameScreen class. We will continue to optimize the tacks and maybe try implementing an IceTower. 
   </td>
 </tr>
 </table>
