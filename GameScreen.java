@@ -92,7 +92,7 @@ public class GameScreen{
     List<Tile> border = new ArrayList<Tile>();
 
     List<TackShooter> TackShooters = new ArrayList<TackShooter>(); //stores towers that have been placed on the map
-    int TackShooterPrice = 150; //price for tackShooters
+    int TackShooterPrice = 250; //price for tackShooters
     int TackShooterDelay = 400; //delay between each tackshooter shot
     int TackShooterRad = 4;
     int TackShooterSinceTime = 0;
@@ -106,7 +106,7 @@ public class GameScreen{
     int SpikeLives = 5;
 
     List<SpikeTower> SpikeTowers = new ArrayList<SpikeTower>();
-    int SpikeTowerPrice = 300;
+    int SpikeTowerPrice = 200;
     int SpikeTowerDelay = 8000;
     int SpikeTowerRad = 3;
     int SpikeTowerSinceTime = 0;
@@ -114,13 +114,13 @@ public class GameScreen{
 
     int lives = 50; //user variables
     int money = 300;
-    int income = 75;
+    int income = 50;
 
     List<Balloon> balloons = new ArrayList<Balloon>();
     int balloonSinceTime = 0; //used to spawn a balloon every second
     int balloonMoveTime = 0; //used to move all balloons every two seconds
     int level = 1; //variables to be adjusted according to level
-    int num_balloons = 5; //number of balloons to be initialized
+    int num_balloons = 15; //number of balloons to be initialized
     int balloons_made = 0; //number of balloons already initialized
     int balloon_lives = 1; //number of lives each balloon will have
     int balloon_delay = 600; //milliseconds between each balloon movement
@@ -144,12 +144,13 @@ public class GameScreen{
     s.putString(0,4,"Balloons will start spawning immediately and travel down the road. To defeat them, place down towers by",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,5,"typing the letter  of the tower you want to buy and using the arrow keys to give it a location",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,6,"on the grass, which are the green tiles. Press the enter key to place the tower down. You will ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,7,"receive $75 every 10 seconds. Use your income wisely to purchase towers! If any balloons reach the end ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,7,"receive $50 every 10 seconds. Use your income wisely to purchase towers! If any balloons reach the end ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,8,"of the road, your lives will decrease. If your lives reach 0, you lose.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,12,"Best of luck!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
     s.refresh();
 
     while (running){
+
     //  s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
 
       for (Tile x: road){
@@ -170,6 +171,17 @@ public class GameScreen{
 
       for (SpikeTower x: SpikeTowers){
         x.draw(s);
+      }
+
+      if (level <= 15) balloon_delay = 100;
+      if (level <= 11) balloon_delay = 150;
+      if (level <= 7) balloon_delay = 200;
+      if (level <= 3) balloon_delay = 300;
+      if (level == 16){
+        s.stopScreen();
+        running = false;
+        System.out.println("\n\n\nYou won!\n\n\n");
+
       }
 
       if (toggle > 0) s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
@@ -204,8 +216,8 @@ public class GameScreen{
         s.putString(65,5,"Level: "+level+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
         s.putString(65,15, "Tower Key", Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline);
         s.putString(65,16,"TackShooter: key t, Price "+TackShooterPrice+", Radius "+TackShooterRad,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,17,"SpikeTower:  key s, Price "+SpikeTowerPrice+", Radius "+SpikeTowerRad+ "Hits "+SpikeTowerLives,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,18,"Spike:       key *, Price "+SpikePrice+", Hits "+SpikeLives,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,17,"SpikeTower:  key s, Price "+SpikeTowerPrice+", Radius "+SpikeTowerRad+ ", Hits "+SpikeTowerLives,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,18,"Spike:       key *, Price  "+SpikePrice+", Hits "+SpikeLives,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.refresh();
 
         sinceTime += (currentTime - lastTime); //add the amount of time since the last frame
@@ -225,10 +237,9 @@ public class GameScreen{
 
         if (balloons.size() == 0 && level_started && all_spawned){
           level++;
-          num_balloons+=5;
+          num_balloons+=10;
           balloons_made=0;
-          balloon_lives++;
-          balloon_delay-=50;
+          if (level % 2 == 0) balloon_lives++;
           for (Tack x: tacks) x.setSteps(4); //reset tacks
           mode=1;
           level_started = false;
