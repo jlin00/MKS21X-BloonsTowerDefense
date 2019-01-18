@@ -4,7 +4,7 @@ This project aims to recreate a game known as Bloons Tower Defense. The program 
 ## To-Do List
 - [ ] add new levels in GameScreen
 - [ ] implement freezeTower in GameScreen
-- [ ] add colors for balloons 
+- [ ] add colors for balloons
 
 ## Instructions
 (Make your terminal full screen for the best experience! Otherwise, make sure it is at least 110x40.)
@@ -14,7 +14,7 @@ After cloning the repo, the user must compile a few files in order for the game 
 
 Once GameScreen.java is compiled, a terminal screen will appear, displaying the Bloons Tower Defense Game. To start the game, press B once, which will load the map of the game. Pressing A will pause the game. Money is earned as time goes on— $75 every 10 seconds. When the game is paused, the timer stops as well, so money will not be gained during this period. The currency can be used to buy towers. The game screen will display a chart of each tower type and their respective keys. To place a tower, use the arrow keys to move the cursor along the map to the tile that you want to place your tower on. Then press the key corresponding to the type of tower you want to place. Remember that the tile must be green and not a road tile.
 
-The game is played by placing towers, which all have a radius, to attack balloons that will spawn onto the screen once the game starts. The balloons will move down the road tiles and each time a balloon reaches the end of the road, a life is lost. Users have a limited amount of lives. After they are used up, the user loses that level. Successfully popping all the balloons means the user can advance to the next level.
+The game is played by placing towers, which all have a radius, to attack balloons that will spawn onto the screen once the game starts. To place a tower, read the Tower Key on the screen for the key that corresponds with the tower you want to place. After pressing the key, press enter to place it on the screen. The balloons will move down the road tiles and each time a balloon reaches the end of the road, a life is lost. Users have a limited amount of lives. After they are used up, the user loses that level. Successfully popping all the balloons means the user can advance to the next level.
 
 ## Development Log
 <table>
@@ -83,12 +83,12 @@ The game is played by placing towers, which all have a radius, to attack balloon
 </tr>
 <tr>
     <td>1/14/19</td>
-    <td>Today, we continued working on the terminal graphics. The balloon movement is fully functional now after moving the implementation onto a Screen. We also worked started implementing Towers into the GameScreen class using arrow keys. Today, we also demonstrated our game in class. We still need to work on Tower attack methods. 
+    <td>Today, we continued working on the terminal graphics. The balloon movement is fully functional now after moving the implementation onto a Screen. We also worked started implementing Towers into the GameScreen class using arrow keys. Today, we also demonstrated our game in class. We still need to work on Tower attack methods.
     </td>
 </tr>
   <tr>
     <td>1/15/19</td>
-    <td>Today, we began implementing the TackShooter and Tack classes into the terminal. We added methods such as spawnTacks() for TackShooter and move(), draw() and hitTarget() for Tacks. We added code for this into the terminal and were able to get TackShooters to start shooting Tacks according to specifications such as radius, speed and delay. We also started to write a levelUp function. We will continue working on modifying hitTarget(), fix some draw() issues for Tack and fix the levelUp() function. 
+    <td>Today, we began implementing the TackShooter and Tack classes into the terminal. We added methods such as spawnTacks() for TackShooter and move(), draw() and hitTarget() for Tacks. We added code for this into the terminal and were able to get TackShooters to start shooting Tacks according to specifications such as radius, speed and delay. We also started to write a levelUp function. We will continue working on modifying hitTarget(), fix some draw() issues for Tack and fix the levelUp() function.
     </td>
 </tr>
  <tr>
@@ -98,7 +98,7 @@ The game is played by placing towers, which all have a radius, to attack balloon
 </tr>
 <tr>
   <td>1/17/19</td>
-  <td>Today, we finished most of the Tack class, and made the tack shooter shoot out tacks only when a balloon was in radius. We also tried fixing timer issues so that the tacks wouldn't miss the balloons. We also implemented the Spike class in the terminal and started the implementation of the FreezeTower class. 
+  <td>Today, we finished most of the Tack class, and made the tack shooter shoot out tacks only when a balloon was in radius. We also tried fixing timer issues so that the tacks wouldn't miss the balloons. We also implemented the Spike class in the terminal and started the implementation of the FreezeTower class.
   </td>
 </tr>
 </table>
