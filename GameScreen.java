@@ -108,7 +108,7 @@ public class GameScreen{
     List<SpikeTower> SpikeTowers = new ArrayList<SpikeTower>();
     int SpikeTowerPrice = 300;
     int SpikeTowerDelay = 8000;
-    int SpikeLivesRad = 4;
+    int SpikeTowerRad = 3;
     int SpikeTowerSinceTime = 0;
     int SpikeTowerLives = 3;
 
@@ -204,6 +204,7 @@ public class GameScreen{
         s.putString(65,5,"Level: "+level+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
         s.putString(65,15, "Tower Key", Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline);
         s.putString(65,16,"TackShooter: key t, Price "+TackShooterPrice+", Radius "+TackShooterRad,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,17,"SpikeTower:  key s, Price "+SpikeTowerPrice+", Radius "+SpikeTowerRad+ "Hits "+SpikeTowerLives,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,18,"Spike:       key *, Price "+SpikePrice+", Hits "+SpikeLives,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.refresh();
 
@@ -234,6 +235,8 @@ public class GameScreen{
           all_spawned = false;
           s.putString(10,1,"Now commencing level "+level+". Press b to begin.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
         }
+
+        if (level_started) s.putString(10,1,  "                                           ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         /*
         s.putString(65,25,"balloons: "+num_balloons,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,26,"b_lives: "+balloon_lives,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -399,7 +402,7 @@ public class GameScreen{
 
           if (factory_toggled){
             if (isPlaceable(cursorX,cursorY,road,TackShooters) && (money - SpikeTowerPrice >= 0)){
-              SpikeTowers.add(new SpikeTower(cursorX,cursorY,SpikeTowerPrice,SpikeTowerDelay,SpikeLivesRad));
+              SpikeTowers.add(new SpikeTower(cursorX,cursorY,SpikeTowerPrice,SpikeTowerDelay,SpikeTowerRad));
               money -= SpikeTowerPrice;
               if (cursorX == 59) cursorX--;
               else cursorX++;
