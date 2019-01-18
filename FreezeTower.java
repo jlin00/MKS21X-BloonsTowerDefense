@@ -1,4 +1,3 @@
-//API : http://mabe02.github.io/lanterna/apidocs/2.1/
 import com.googlecode.lanterna.terminal.Terminal.SGR;
 import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.input.Key;
@@ -17,39 +16,31 @@ import java.util.*;
 
 public class FreezeTower extends Tower{
 
+  private int delay;
+  private long sinceShot;
+  private long freezeTime;
+
   /**A Tower constructor
   *@param int xCord is the x position of the tower, also its row in the array
   *@param int yCord is the y position of the tower, also its column in the array
   *@param int money is the cost
   *@param int rad is the radius
   */
-  public FreezeTower(int xCord, int yCord, int money, int rad){
+  public FreezeTower(int xCord, int yCord, int money, int rad, int delay){
     x = xCord;
     y = yCord;
     cost = money;
     radius = rad;
+    this.delay = delay;
+    sinceShot = 0;
   }
 
-  public void attack(List<Balloon> ball, long timer){
-    for(int i = 0; i < ball.size(); i++){
-      Balloon temp = ball.get(i);
-      double distance = Math.pow(this.getX() - temp.getX(), 2) + Math.pow(this.getY() - temp.getY(), 2);
-      if(temp.getIsAlive() && temp.getInit()){
-        if(distance <= (radius * radius)){
-          temp.setDelay(5000);
-        }
-      }
-    }
+  public long getSince(){
+    return sinceShot;
   }
 
-  /*placing an iceTower on the terminal, to be placed in the GameScreen class
-  if(toggle >= 1 && key.getCharacter() == 'i'){
-    if(isPlaceable(cursorX, cursorY, road, IceTowers) && (money - IceTowerPrice >= 0){
-      IceTowers.add(new iceTower(cursorX, cursorY, IceTowerPrice, IceTowerRad));
-      money -= IceTowerPrice;
-      cursorX++;
+  public void draw(Screen s){
+    s.putString(x,y,"F",Terminal.Color.WHITE,Terminal.Color.MAGENTA);
   }
-  */
 
-  //s.putString(tba,tba,"IceTower: key I, Price "+IceTowerPrice+", Radius "+IceTowerRad+"",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
 }
