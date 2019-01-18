@@ -56,10 +56,15 @@ public class GameScreen{
     return true;
   }
 
-  public static boolean isPlaceable(int xcor, int ycor, List<Tile> road){
+  public static boolean spikeIsPlaceable(int xcor, int ycor, List<Tile> road, List<Spike> spikes){
+    for (Spike x: spikes){
+      if (x.getX() == xcor && x.getY() == ycor) return false;
+    }
+
     for (Tile x: road){
       if (x.getX() == xcor && x.getY() == ycor) return true;
     }
+
     return false;
   }
 
@@ -364,7 +369,7 @@ public class GameScreen{
           }
 
           if (spike_toggled){
-            if (isPlaceable(cursorX,cursorY,road) && (money - SpikePrice >= 0)){
+            if (spikeIsPlaceable(cursorX,cursorY,road,spikes) && (money - SpikePrice >= 0)){
               spikes.add(new Spike(cursorX,cursorY,SpikePrice,SpikeLives));
               money -= SpikePrice;
               if (cursorX == 59) cursorX--;
