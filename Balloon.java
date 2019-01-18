@@ -147,7 +147,7 @@ public class Balloon{
     if (lives == 4) s.putString(xcor,ycor,"\u29ed",Terminal.Color.CYAN,Terminal.Color.WHITE);
     if (lives == 5) s.putString(xcor,ycor,"\u29ed",Terminal.Color.BLUE,Terminal.Color.WHITE);
     if (lives == 6) s.putString(xcor,ycor,"\u29ed",Terminal.Color.MAGENTA,Terminal.Color.WHITE);
-    if (lives == 6) s.putString(xcor,ycor,"\u29ed",Terminal.Color.BLACK,Terminal.Color.WHITE);
+    if (lives == 7) s.putString(xcor,ycor,"\u29ed",Terminal.Color.BLACK,Terminal.Color.WHITE);
   }
 
 }
