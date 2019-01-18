@@ -17,30 +17,42 @@ import java.util.*;
 
 public class Spike extends Tower{
 
+  private int lives;
+
   /**A Tower constructor
   *@param int xCord is the x position of the tower, also its row in the array
   *@param int yCord is the y position of the tower, also its column in the array
   *@param int money is the cost
   */
-  public Spike(int xCord, int yCord, int money){
+  public Spike(int xCord, int yCord, int money, int lives){
     x = xCord;
     y = yCord;
     cost = money;
+    this.lives = lives;
   }
 
-  /**A method that takes one life from the balloon target on its tile
-  public void attack(List<Balloon> balls){
-    for(int i = 0; i < balls.size(); i++){
-      Balloon temp = balls.get(i);
-      if(temp.getIsAlive() && temp.getInit()){
-        if(temp.getX() == this.getX() && temp.getY() == this.getY()){
-          temp.setLives(temp.getLives() - 1);
-          if(temp.getLives() == 0){
-            temp.makeDead();
-          }
-        }
+  public int getLives(){
+    return lives;
+  }
+
+  public void loseLife(){
+    lives--;
+  }
+
+  public void hitTarget(List<Balloon> balloons){
+    for (int i = balloons.size()-1; i >= 0; i--){
+      Balloon temp = balloons.get(i);
+      if (temp.getX() == x && temp.getY() == y){
+        temp.setLives(temp.getLives() - 1);
+        lives--;
+        if (temp.getLives() == 0) balloons.remove(i);
       }
     }
   }
-  */
+
+  public void draw(Screen s){
+    s.putString(x,y,"*",Terminal.Color.DEFAULT,Terminal.Color.WHITE);
+  }
+
+
 }
