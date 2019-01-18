@@ -19,8 +19,6 @@ public class Balloon{
   private long sinceMoved;
   private int xcor, ycor;
   private int atTile;
-  private boolean isFrozen;
-  private long freezeTime;
 
   /**A Balloon constructor
   *@param int each balloon has a given ID number to differentiate it easily
@@ -49,8 +47,6 @@ public class Balloon{
     this.ycor = ycor;
     atTile = 0;
     sinceMoved = 0;
-    isFrozen = false;
-    freezeTime = 0;
   }
 
   /**A method to get the number of lives a balloon has
@@ -58,10 +54,6 @@ public class Balloon{
   */
   public int getLives(){
     return lives;
-  }
-
-  public long getFreezeTime(){
-    return freezeTime;
   }
 
   /**A method to get the speed of a balloon, in terms of movement across the road
@@ -103,10 +95,6 @@ public class Balloon{
     return sinceMoved;
   }
 
-  public boolean getFrozen(){
-    return isFrozen;
-  }
-
   /**A method to change the number of lives a balloon has
   *@param int numLives
   */
@@ -131,19 +119,6 @@ public class Balloon{
   */
   public void setTile(int num){
     atTile = num;
-  }
-
-  public void freeze(){
-    isFrozen = true;
-  }
-
-  public void unfreeze(){
-    isFrozen = false;
-    freezeTime = 0;
-  }
-
-  public void setFreezeTime(long time){
-    freezeTime = time;
   }
 
   /**A method to move the balloon in the terminal to a new coordinate
