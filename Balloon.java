@@ -135,14 +135,14 @@ public class Balloon{
 
   /**A method to move the balloon in the terminal to the next road tile using the coordinates of that tile
   *@param Tile t is the next road tile
-  *@param long timer is the amount of time since the last frame
+  *@param long timer is how long the game has been going on
   */
   public void move(Tile t, long timer){
     sinceMoved = timer;
     xcor = t.getX();
     ycor = t.getY();
     atTile++;
-    sinceMoved += delay; //the delay is added to check that the balloon will only move after the delay time has passed
+    sinceMoved += delay; //the delay is added to check iGameScreen that the balloon will only move after the delay time has passed
   }
 
   /**A method that draws the balloon onto the terminal

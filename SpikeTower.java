@@ -21,10 +21,10 @@ public class SpikeTower extends Tower{
   private int radius;
 
   /**A Tower constructor
-  *@param int xCord is the x position of the tower, also its x coordinate on the screen
-  *@param int yCord is the y position of the tower, also its y coordinate on the screen
+  *@param int xCord is the SpikeTower's x-coordinate on the screen
+  *@param int yCord is the SpikeTower's y-coordinate on the screen
   *@param int money is the cost
-  *@param int delay is the time needed to pass before the spike tower can place another spike
+  *@param int delay is the time needed to pass before the Spike Tower can place another spike
   *@param int rad is the radius
   */
   public SpikeTower(int xCord, int yCord, int money, int delay, int rad){
@@ -37,7 +37,7 @@ public class SpikeTower extends Tower{
   }
 
   /**A method that returns when the spike tower last placed a spike on a road
-  *@return long sinceShot variable
+  *@return long sinceShot
   */
   public long getSince(){
     return sinceShot;
@@ -50,28 +50,42 @@ public class SpikeTower extends Tower{
   }
 
   /**A method to create spike objects to be placed onto a road tile on the screen
+  *@param List<Spike> spikes
+  *@param List<Tile> road
+  *@param long timer is how long the game has been going on
+  *@param int delay is the time in between spike placement
+  *@param int money is the cost of the spikes
+  *@param int lives is the amount of lives the spikes will have
   */
   public void spawnSpikes(List<Spike> spikes, List<Tile> road, long timer, int delay, int money, int lives){
     sinceShot = timer;
     Tile toSpawn = pickRoad(road);
     spikes.add(new Spike(toSpawn.getX(),toSpawn.getY(),money,lives));
-    sinceShot += this.delay;
+    sinceShot += this.delay; //the delay is added to check in GameScreen that the spikes will only be placed after the delay time has passed
   }
 
+  /**A method that checks if a road tile is within the radius of the Spike Tower based on coordinates
+  *@param Tile road
+  *@return boolean
+  */
   public boolean inRadius(Tile road){
     if (road.getX() >= x - radius && road.getX() <= x + radius && road.getY() >= y - radius && road.getY() <= y + radius) return true;
     return false;
   }
 
+  /**A method that puts all the road tiles within the radius of the Spike Tower into a list and randomly chooses a road tile from that List
+  *@param List<Tile> road
+  *@return Tile (a randomly chosen road tile within radius)
+  */
   public Tile pickRoad(List<Tile> road){
     List<Tile> eligible_tiles = new ArrayList<Tile>();
-    for (Tile x: road){
+    for (Tile x: road){ //if the road tile is within radius...
       if (inRadius(x)) eligible_tiles.add(x);
     }
     int max = eligible_tiles.size() - 1;
     int min = 0;
     int range = max + 1;
-    int rand = (int)(Math.random() * range) + min;
+    int rand = (int)(Math.random() * range) + min; //get a random road tile from the list eligible_tiles
     return eligible_tiles.get(rand);
   }
 
