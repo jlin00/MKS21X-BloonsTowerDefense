@@ -89,6 +89,18 @@ public class GameScreen{
     return false;
   }
 
+  public static boolean isUpgradeable(int xcor, int ycor, List<TackShooter> TackShooters, List<SpikeTower> SpikeTowers){
+    for (TackShooter x: TackShooters){
+      if (x.getX() == xcor && x.getY() == ycor && x.canUpgrade()) return true;
+    }
+
+    for (SpikeTower x: SpikeTowers){
+      if (x.getX() == xcor && x.getY() == ycor && x.canUpgrade()) return true;
+    }
+
+    return false;
+  }
+
   public static void main(String[] args) throws FileNotFoundException {
     Terminal terminal = TerminalFacade.createTextTerminal();
     terminal.enterPrivateMode();
@@ -131,9 +143,10 @@ public class GameScreen{
     int SpikeTowerDelay = 8000; //delay time for SpikeTowers to place another spike
     int SpikeTowerRad = 3; //the radius of the SpikeTowers; spikes can only be placed on road tiles within the radius
     int SpikeTowerSinceTime = 0; //the time since the SpikeTowers last placed spikes
-    int SpikeTowerLives = 3; //the SpikeTowers can only place three spikes
+    int SpikeTowerLives = 3; //the SpikeTowers spikes have 3 hits
+    int UpgradePrice = 300;
 
-    int lives = 50; //user variables
+    int lives = 25; //user variables
     int money = 300;
     int income = 50;
 
@@ -199,7 +212,7 @@ public class GameScreen{
       if (level <= 11) balloon_delay = 150;
       if (level <= 7) balloon_delay = 200;
       if (level <= 3) balloon_delay = 300;
-      if (level == 16){ //after 15 levels, the game is won
+      if (level == 16 || lives == 0){ //after 15 levels, the game is won or if lives reach 0, game is over
         mode = 2;
       }
 
@@ -330,7 +343,7 @@ public class GameScreen{
         SpikeTowerSinceTime += (currentTime - lastTime); //adds the amount of time since the last frame
         for (SpikeTower x: SpikeTowers){
           if (SpikeTowerSinceTime >= x.getSince()){ //checks that a spike can be placed again by checking the time a spike was last placed
-            x.spawnSpikes(spikes,road,SpikeTowerSinceTime,SpikeTowerDelay,SpikePrice,SpikeTowerLives); //spawns a spike
+            x.spawnSpikes(spikes,road,SpikeTowerSinceTime,SpikeTowerDelay,SpikePrice); //spawns a spike
           }
         }
 
@@ -350,7 +363,8 @@ public class GameScreen{
       }
 
       if (mode == 2){//win game mode
-        s.putString(10,1,"\t  You won! Press ESC to exit.\t",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
+        if (level == 16) s.putString(10,1,"\t  You won! Press ESC to exit.\t",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
+        if (lives == 0) s.putString(10,1,"\t You lost! Press ESC to exit.\t",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
       }
 
       Key key = s.readInput();
@@ -403,6 +417,8 @@ public class GameScreen{
           if (isWalkable(cursorX, cursorY-1)){
             cursorY--;
               if (isPlaceable(cursorX,cursorY+1,road,TackShooters,SpikeTowers)) s.putString(cursorX,cursorY+1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+              if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0) s.putString(65,30,"Upgrade for $300?",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+              else s.putString(65,30,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
           }
         }
 
@@ -410,6 +426,8 @@ public class GameScreen{
           if (isWalkable(cursorX, cursorY+1)){
             cursorY++;
             if (isPlaceable(cursorX,cursorY-1,road,TackShooters,SpikeTowers)) s.putString(cursorX,cursorY-1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+            if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0) s.putString(65,30,"Upgrade for $300?",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+            else s.putString(65,30,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
           }
         }
 
@@ -417,6 +435,8 @@ public class GameScreen{
           if (isWalkable(cursorX-1, cursorY)){
             cursorX--;
             if (isPlaceable(cursorX+1,cursorY,road,TackShooters,SpikeTowers)) s.putString(cursorX+1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+            if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0) s.putString(65,30,"Upgrade for $300?",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+            else s.putString(65,30,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
           }
         }
 
@@ -424,6 +444,8 @@ public class GameScreen{
           if (isWalkable(cursorX+1, cursorY)){
             cursorX++;
             if (isPlaceable(cursorX-1,cursorY,road,TackShooters,SpikeTowers)) s.putString(cursorX-1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+            if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0) s.putString(65,30,"Upgrade for $300?",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+            else s.putString(65,30,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
           }
         }
 
@@ -453,7 +475,7 @@ public class GameScreen{
         if (toggle >= 1 && key.getKind() == Key.Kind.Enter){
           if (tack_toggled){ //if the tower chosen is a TackShooter
             if (isPlaceable(cursorX,cursorY,road,TackShooters,SpikeTowers) && (money - TackShooterPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
-              TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterDelay,TackShooterRad)); //a new TackShooter is created on the map
+              TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterDelay,TackShooterRad,1)); //a new TackShooter is created on the map
               money -= TackShooterPrice; //take away money
               if (cursorX == 59) cursorX--;
               else cursorX++;
@@ -471,12 +493,30 @@ public class GameScreen{
 
           if (factory_toggled){ //if the tower chosen is a SpikeTower
             if (isPlaceable(cursorX,cursorY,road,TackShooters,SpikeTowers) && (money - SpikeTowerPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
-              SpikeTowers.add(new SpikeTower(cursorX,cursorY,SpikeTowerPrice,SpikeTowerDelay,SpikeTowerRad)); //a new SpikeTower is created on the map
+              SpikeTowers.add(new SpikeTower(cursorX,cursorY,SpikeTowerPrice,SpikeTowerDelay,SpikeTowerRad,SpikeTowerLives)); //a new SpikeTower is created on the map
               money -= SpikeTowerPrice; //take away money
               if (cursorX == 59) cursorX--;
               else cursorX++;
             }
           }
+
+          if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0){
+            for (SpikeTower x: SpikeTowers){
+              if (x.getX() == cursorX && x.getY() == cursorY && x.canUpgrade()){
+                x.upgrade();
+                money -= UpgradePrice;
+              }
+            }
+
+            for (TackShooter x: TackShooters){
+              if (x.getX() == cursorX && x.getY() == cursorY && x.canUpgrade()){
+                x.upgrade();
+                money -= UpgradePrice;
+              }
+            }
+
+          }
+
         }
 
       }
