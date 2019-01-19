@@ -286,7 +286,7 @@ public class GameScreen{
         for (int i = tacks.size()-1; i>=0; i--){
           Tack x = tacks.get(i);
           if (tackSinceTime >= x.getSince()){ //creates delay between tacks shots
-            x.undraw(s, x.getX(), x.getY(), road); //undraw tacks between movements
+            x.undraw(s, x.getX(), x.getY(), road); //undraw tacks if it's on a road tile
             x.move(tackSinceTime); //tacks move
             x.hitTarget(balloons); //check if tacks have hit a balloon and takes a life from the balloon hit
             if (x.getSteps() >= TackShooterRad){ //if the tacks have reached the radius of their movements

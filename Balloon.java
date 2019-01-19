@@ -14,11 +14,11 @@ import com.googlecode.lanterna.input.KeyMappingProfile;
 import com.googlecode.lanterna.screen.*;
 
 public class Balloon{
-  private int lives, delay;
-  private boolean isAlive;
-  private long sinceMoved;
-  private int xcor, ycor;
-  private int atTile;
+  private int lives, delay; //tnumber of lives the balloon has; the time between balloon movements
+  private boolean isAlive; //status of the balloon
+  private long sinceMoved; //time needed for the next balloon movement
+  private int xcor, ycor; //x and y coordinates
+  private int atTile; //the number of the road tile that the balloon is currently on
 
   /**A Balloon constructor
   *the default number of lives is 1
@@ -52,7 +52,7 @@ public class Balloon{
     this.xcor = xcor;
     this.ycor = ycor;
     atTile = 0; //the balloon is "placed" at the first road tile
-    sinceMoved = 0; //this variable keeps how long it has been since the balloon last moved
+    sinceMoved = 0; //this variable keeps the next time at which a balloon can move again
   }
 
   /**A method to get the number of lives a balloon has
@@ -98,8 +98,7 @@ public class Balloon{
     return atTile;
   }
 
-  /**A method to get the time it has been since the balloon last moved
-  *it is used to check when a balloon can move again
+  /**A method to get the next time the game needs to reach before the balloon can move again
   *@return long sinceMoved
   */
   public long getSince(){
@@ -113,8 +112,8 @@ public class Balloon{
     lives = numLives;
   }
 
-  /**A method to change the speed of a balloon
-  *@param int speed
+  /**A method to change the delay time of a balloon
+  *@param int num
   */
   public void setDelay(int num){
     delay = num;
@@ -142,7 +141,7 @@ public class Balloon{
     xcor = t.getX();
     ycor = t.getY();
     atTile++;
-    sinceMoved += delay; //the delay is added to check iGameScreen that the balloon will only move after the delay time has passed
+    sinceMoved += delay; //the delay is added to reflect the new time the game needs to reach before the balloon can move again
   }
 
   /**A method that draws the balloon onto the terminal

@@ -16,9 +16,9 @@ import com.googlecode.lanterna.screen.*;
 
 public class SpikeTower extends Tower{
 
-  private int delay;
-  private long sinceShot;
-  private int radius;
+  private int delay; //time between spike placements
+  private long sinceShot; //time needed for the next spike placement
+  private int radius; //range in which the SpikeTower can place spikes
 
   /**A Tower constructor
   *@param int xCord is the SpikeTower's x-coordinate on the screen
@@ -44,6 +44,7 @@ public class SpikeTower extends Tower{
   }
 
   /**A method that draws the spike tower onto the screen using the letter S to represent it
+  *@param Screen s
   */
   public void draw(Screen s){
     s.putString(x,y,"S",Terminal.Color.WHITE,Terminal.Color.RED);
@@ -61,7 +62,7 @@ public class SpikeTower extends Tower{
     sinceShot = timer;
     Tile toSpawn = pickRoad(road);
     spikes.add(new Spike(toSpawn.getX(),toSpawn.getY(),money,lives));
-    sinceShot += this.delay; //the delay is added to check in GameScreen that the spikes will only be placed after the delay time has passed
+    sinceShot += this.delay; //the delay is added to reflect the new time the game needs to reach for the SpikeTower to place another spike
   }
 
   /**A method that checks if a road tile is within the radius of the Spike Tower based on coordinates
