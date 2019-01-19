@@ -67,24 +67,6 @@ public class GameScreen{
     return true;
   }
 
-  /**A method that checks if a TackShooter can be placed at a given coordinate on the map
-  *@param int xcor
-  *@param int ycor
-  *@param List<Tile> road
-  *@param List<SpikeTower> SpikeTowers
-  */
-  public static boolean SpikeTowerIsPlaceable(int xcor, int ycor, List<Tile> road, List<SpikeTower> SpikeTowers){
-    for (Tile x: road){ //SpikeTowers cannot be placed on a road tile
-      if (x.getX() == xcor && x.getY() == ycor) return false;
-    }
-
-    for (SpikeTower x: SpikeTowers){ //SpikeTowers cannot be placed on top of each other
-      if (x.getX() == xcor && x.getY() == ycor) return false;
-    }
-
-    return true;
-  }
-
   /**A method that checks if a spike object can be placed at a given coordinate on the map
   *@param int xcor
   *@param int ycor
@@ -92,15 +74,15 @@ public class GameScreen{
   *@param List<Spike> spikes
   */
   public static boolean spikeIsPlaceable(int xcor, int ycor, List<Tile> road, List<Spike> spikes){
-    for (Spike x: spikes){ //Spikes cannot be placed on a road tile
+    for (Spike x: spikes){ //Spikes cannot be placed on each other
       if (x.getX() == xcor && x.getY() == ycor) return false;
     }
 
-    for (Tile x: road){ //Spikes cannot be placed on top of each other
-      if (x.getX() == xcor && x.getY() == ycor) return false;
+    for (Tile x: road){ //Spikes can only be placed on road tiles
+      if (x.getX() == xcor && x.getY() == ycor) return true;
     }
 
-    return true;
+    return false;
   }
 
   public static void main(String[] args) throws FileNotFoundException {
@@ -256,9 +238,9 @@ public class GameScreen{
         s.refresh();
 
         sinceTime += (currentTime - lastTime); //adds the amount of time since the last frame
-        if (sinceTime >= 10000 && timer != 0){ //if sinceTime is greater than 10 seconds, income is gained
+        if (sinceTime >= 10000 && timer != 0){ //if the time since the last income gain is greater than 10 seconds, income is gained
           money += income;
-          sinceTime = 0;
+          sinceTime = 0; //the income timer is set to 0 again for the next time 
         }
 
         balloonSinceTime += (currentTime - lastTime); //adds the amount of time since the last frame
