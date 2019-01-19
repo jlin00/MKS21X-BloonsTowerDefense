@@ -19,6 +19,8 @@ public class SpikeTower extends Tower{
   private int delay; //time between spike placements
   private long sinceShot; //time needed for the next spike placement
   private int radius; //range in which the SpikeTower can place spikes
+  private int upgrade; //keeps track of upgrade number
+  private int lives;
 
   /**A SpikeTower constructor
   *@param int xCord is the SpikeTower's x-coordinate on the screen
@@ -27,13 +29,15 @@ public class SpikeTower extends Tower{
   *@param int delay is the time needed to pass before the Spike Tower can place another spike
   *@param int rad is the radius
   */
-  public SpikeTower(int xCord, int yCord, int money, int delay, int rad){
+  public SpikeTower(int xCord, int yCord, int money, int delay, int rad, int lives){
     x = xCord;
     y = yCord;
     cost = money;
     sinceShot = 0;
     this.delay = delay;
     radius = rad;
+    upgrade = 0;
+    this.lives = lives;
   }
 
   /**A method to get the next time the game needs to reach before the SpikeTower can place a spike again
@@ -58,7 +62,7 @@ public class SpikeTower extends Tower{
   *@param int money is the cost of the spikes
   *@param int lives is the amount of lives the spikes will have
   */
-  public void spawnSpikes(List<Spike> spikes, List<Tile> road, long timer, int delay, int money, int lives){
+  public void spawnSpikes(List<Spike> spikes, List<Tile> road, long timer, int delay, int money){
     sinceShot = timer;
     Tile toSpawn = pickRoad(road);
     spikes.add(new Spike(toSpawn.getX(),toSpawn.getY(),money,lives));
@@ -88,6 +92,16 @@ public class SpikeTower extends Tower{
     int range = max + 1;
     int rand = (int)(Math.random() * range) + min; //get a random road tile from the list eligible_tiles
     return eligible_tiles.get(rand);
+  }
+
+  public void upgrade(){
+    lives++;
+    delay-=1500;
+    upgrade++;
+  }
+
+  public boolean canUpgrade(){
+    return (upgrade < 2);
   }
 
 }

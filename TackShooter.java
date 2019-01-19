@@ -18,6 +18,8 @@ public class TackShooter extends Tower{
 
   private int delay; //the time between each round of tack shooting
   private long sinceShot; //the time needed for the next round of tack shooting
+  private int upgrade;
+  private int hits;
 
   /**A TackShooter constructor
   *@param int xCord is the TackShooter's x-coordinate on the screen
@@ -26,13 +28,15 @@ public class TackShooter extends Tower{
   *@param int delay is the time between each round of tack shooting
   *@param int rad is the radius
   */
-  public TackShooter(int xCord, int yCord, int money, int delay, int rad){
+  public TackShooter(int xCord, int yCord, int money, int delay, int rad, int hits){
     x = xCord;
     y = yCord;
     cost = money;
     sinceShot = 0;
     this.delay = delay;
     radius = rad;
+    upgrade = 0;
+    this.hits = hits;
   }
 
   /**A method to get the next time the game needs to reach before the TackShooter can shoot again
@@ -45,7 +49,8 @@ public class TackShooter extends Tower{
   *@param Screen s
   */
   public void draw(Screen s){
-    s.putString(x,y,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
+    if (upgrade == 0) s.putString(x,y,"t",Terminal.Color.WHITE,Terminal.Color.BLUE);
+    if (upgrade == 1) s.putString(x,y,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
   }
 
   /**A method to create tack objects
@@ -56,7 +61,7 @@ public class TackShooter extends Tower{
   public void spawnTacks(List<Tack> tacks, long timer, int delay){
     sinceShot = timer;
     for (int i = 0; i < 4; i++){ //creates four tacks with different directions
-      tacks.add(new Tack(x,y,i,delay));
+      tacks.add(new Tack(x,y,i,delay,hits));
     }
     sinceShot += this.delay; //the delay is added to reflect the new time the game needs to reach for the TackSHooter to shoot again
   }
@@ -73,6 +78,15 @@ public class TackShooter extends Tower{
       }
     }
     return false;
+  }
+
+  public void upgrade(){
+    hits++;
+    upgrade++;
+  }
+
+  public boolean canUpgrade(){
+    return (upgrade == 0);
   }
 
 }
