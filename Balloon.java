@@ -100,6 +100,7 @@ public class Balloon{
 
   /**A method to get the time it has been since the balloon last moved
   *it is used to check when a balloon can move again
+  *@return long sinceMoved
   */
   public long getSince(){
     return sinceMoved;
