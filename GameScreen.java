@@ -143,8 +143,12 @@ public class GameScreen{
     int SpikeTowerDelay = 8000; //delay time for SpikeTowers to place another spike
     int SpikeTowerRad = 3; //the radius of the SpikeTowers; spikes can only be placed on road tiles within the radius
     int SpikeTowerSinceTime = 0; //the time since the SpikeTowers last placed spikes
+<<<<<<< HEAD
     int SpikeTowerLives = 3; //the SpikeTowers spikes have 3 hits
     int UpgradePrice = 300;
+=======
+    int SpikeTowerLives = 3; //the spikes placed by the SpikeTowers only have three lives
+>>>>>>> 597c83be8b01ce3618db0a030a293e9412535622
 
     int lives = 25; //user variables
     int money = 300;
@@ -469,6 +473,25 @@ public class GameScreen{
           spike_toggled = false;
           factory_toggled = true;
           TowerToggled = "SpikeTower ";
+        }
+
+        //if the user wants to remove a tower
+        //checks if a tower does exist at the cursor and removes the tower from the game
+        if (toggle > 0 && key.getKind() == Key.Kind.Backspace){
+          for (int i = TackShooters.size()-1; i >= 0; i--){
+            TackShooter temp = TackShooters.get(i);
+            if (temp.getX() == cursorX && temp.getY() == cursorY) TackShooters.remove(i);
+          }
+
+          for (int i = SpikeTowers.size()-1; i >= 0; i--){
+            SpikeTower temp = SpikeTowers.get(i);
+            if (temp.getX() == cursorX && temp.getY() == cursorY) SpikeTowers.remove(i);
+          }
+
+          for (int i = spikes.size()-1; i >= 0; i--){
+            Spike temp = spikes.get(i);
+            if (temp.getX() == cursorX && temp.getY() == cursorY) spikes.remove(i);
+          }
         }
 
         //if the user wants to place a tower
