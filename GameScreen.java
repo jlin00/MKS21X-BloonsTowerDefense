@@ -142,7 +142,7 @@ public class GameScreen{
     int level = 1; //variables to be adjusted according to level
     int num_balloons = 15; //number of balloons to be initialized; this is default
     int balloons_made = 0; //number of balloons already initialized
-    int balloon_lives = 5; //number of lives each balloon will have; this is default
+    int balloon_lives = 1; //number of lives each balloon will have; this is default
     int balloon_delay = 600; //milliseconds between each balloon movement
     int balloon_spawnTime = 1200; //time for the balloons to spawn after the previous balloon
     boolean level_started = false;
@@ -198,11 +198,8 @@ public class GameScreen{
       if (level <= 11) balloon_delay = 150;
       if (level <= 7) balloon_delay = 200;
       if (level <= 3) balloon_delay = 300;
-      if (level == 16){ //after 16 levels, the game is won
-        s.stopScreen();
-        running = false;
-        System.out.println("\n\n\nYou won!\n\n\n");
-
+      if (level == 16){ //after 15 levels, the game is won
+        mode = 2;
       }
 
       if (toggle > 0){
@@ -351,6 +348,10 @@ public class GameScreen{
         if (toggle >= 1) s.putString(65,9,"Time: " + (timer / 1000),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       }
 
+      if (mode == 2){//win game mode
+        s.putString(10,1,"\t  You won! Press ESC to exit.\t",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
+      }
+
       Key key = s.readInput();
       if (key != null){ //what to start doing when a key is pressed
 
@@ -389,11 +390,11 @@ public class GameScreen{
         }
 
         if (mode == 1 && key.getCharacter() == 'b'){ //enter game mode
-          mode--;
+          mode=0;
         }
 
         if (mode == 0 && key.getCharacter() == 'a'){ //pause game
-          mode++;
+          mode=1;
         }
 
          //code for cursor movement
