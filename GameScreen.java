@@ -55,15 +55,18 @@ public class GameScreen{
   *@param List<Tile> road
   *@param List<TackShooter> TackShooters
   */
-  public static boolean isPlaceable(int xcor, int ycor, List<Tile> road, List<TackShooter> TackShooters){
-    for (Tile x: road){ //TackShooters cannot be placed on a road tile
+  public static boolean isPlaceable(int xcor, int ycor, List<Tile> road, List<TackShooter> TackShooters, List<SpikeTower> SpikeTowers){
+    for (Tile x: road){ //towers cannot be placed on a road tile
       if (x.getX() == xcor && x.getY() == ycor) return false;
     }
 
-    for (TackShooter x: TackShooters){ //TackShooters cannot be placed on top of each other
+    for (TackShooter x: TackShooters){ //towers cannot be placed on top of each other
       if (x.getX() == xcor && x.getY() == ycor) return false;
     }
 
+    for (SpikeTower x: SpikeTowers){ //towers cannot be placed on top of each other
+      if (x.getX() == xcor && x.getY() == ycor) return false;
+    }
     return true;
   }
 
@@ -346,6 +349,9 @@ public class GameScreen{
               s.putString(x,y," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
             }
           }
+
+          s.putString(65,11,"Money: "+money+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+          s.refresh();
         }
 
 
@@ -366,28 +372,28 @@ public class GameScreen{
         if (toggle > 0 && key.getKind() == Key.Kind.ArrowUp){
           if (isWalkable(cursorX, cursorY-1)){
             cursorY--;
-              if (isPlaceable(cursorX,cursorY+1,road,TackShooters)) s.putString(cursorX,cursorY+1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+              if (isPlaceable(cursorX,cursorY+1,road,TackShooters,SpikeTowers)) s.putString(cursorX,cursorY+1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
         if (toggle > 0 && key.getKind() == Key.Kind.ArrowDown){
           if (isWalkable(cursorX, cursorY+1)){
             cursorY++;
-            if (isPlaceable(cursorX,cursorY-1,road,TackShooters)) s.putString(cursorX,cursorY-1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+            if (isPlaceable(cursorX,cursorY-1,road,TackShooters,SpikeTowers)) s.putString(cursorX,cursorY-1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
         if (toggle > 0 && key.getKind() == Key.Kind.ArrowLeft){
           if (isWalkable(cursorX-1, cursorY)){
             cursorX--;
-            if (isPlaceable(cursorX+1,cursorY,road,TackShooters)) s.putString(cursorX+1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+            if (isPlaceable(cursorX+1,cursorY,road,TackShooters,SpikeTowers)) s.putString(cursorX+1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
         if (toggle > 0 && key.getKind() == Key.Kind.ArrowRight){
           if (isWalkable(cursorX+1, cursorY)){
             cursorX++;
-            if (isPlaceable(cursorX-1,cursorY,road,TackShooters)) s.putString(cursorX-1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
+            if (isPlaceable(cursorX-1,cursorY,road,TackShooters,SpikeTowers)) s.putString(cursorX-1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
           }
         }
 
@@ -414,7 +420,7 @@ public class GameScreen{
         //if the user wants to place a tower
         if (toggle >= 1 && key.getKind() == Key.Kind.Enter){
           if (tack_toggled){ //if the tower chosen is a TackShooter
-            if (isPlaceable(cursorX,cursorY,road,TackShooters) && (money - TackShooterPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
+            if (isPlaceable(cursorX,cursorY,road,TackShooters,SpikeTowers) && (money - TackShooterPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
               TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterDelay,TackShooterRad)); //a new TackShooter is created on the map
               money -= TackShooterPrice; //take away money
               if (cursorX == 59) cursorX--;
@@ -432,7 +438,7 @@ public class GameScreen{
           }
 
           if (factory_toggled){ //if the tower chosen is a SpikeTower
-            if (isPlaceable(cursorX,cursorY,road,TackShooters) && (money - SpikeTowerPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
+            if (isPlaceable(cursorX,cursorY,road,TackShooters,SpikeTowers) && (money - SpikeTowerPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
               SpikeTowers.add(new SpikeTower(cursorX,cursorY,SpikeTowerPrice,SpikeTowerDelay,SpikeTowerRad)); //a new SpikeTower is created on the map
               money -= SpikeTowerPrice; //take away money
               if (cursorX == 59) cursorX--;
