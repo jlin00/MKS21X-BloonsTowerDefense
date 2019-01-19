@@ -240,7 +240,7 @@ public class GameScreen{
         sinceTime += (currentTime - lastTime); //adds the amount of time since the last frame
         if (sinceTime >= 10000 && timer != 0){ //if the time since the last income gain is greater than 10 seconds, income is gained
           money += income;
-          sinceTime = 0; //the income timer is set to 0 again for the next time 
+          sinceTime = 0; //the income timer is set to 0 again for the next time
         }
 
         balloonSinceTime += (currentTime - lastTime); //adds the amount of time since the last frame
@@ -432,7 +432,7 @@ public class GameScreen{
           }
 
           if (factory_toggled){ //if the tower chosen is a SpikeTower
-            if (SpikeTowerIsPlaceable(cursorX,cursorY,road,SpikeTowers) && (money - SpikeTowerPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
+            if (sPlaceable(cursorX,cursorY,road,TackShooters) && (money - SpikeTowerPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
               SpikeTowers.add(new SpikeTower(cursorX,cursorY,SpikeTowerPrice,SpikeTowerDelay,SpikeTowerRad)); //a new SpikeTower is created on the map
               money -= SpikeTowerPrice; //take away money
               if (cursorX == 59) cursorX--;
