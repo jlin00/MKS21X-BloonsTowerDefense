@@ -49,11 +49,12 @@ public class GameScreen{
     return true;
   }
 
-  /**A method that checks if a TackShooter can be placed at a given coordinate on the map
+  /**A method that checks if a tower can be placed at a given coordinate on the map
   *@param int xcor
   *@param int ycor
   *@param List<Tile> road
   *@param List<TackShooter> TackShooters
+  *@param List<SpikeTower> SpikeTowers
   */
   public static boolean isPlaceable(int xcor, int ycor, List<Tile> road, List<TackShooter> TackShooters, List<SpikeTower> SpikeTowers){
     for (Tile x: road){ //towers cannot be placed on a road tile
