@@ -38,34 +38,69 @@ public class GameScreen{
     }
   }
 
+  /**A method to check that a coordinate is within range of the game map
+  *this method ensures that the cursor will always stay within the map
+  *@param int xcor
+  *@param int ycor
+  */
   public static boolean isWalkable(int xcor, int ycor){
     if ((xcor == 1 || xcor == 60) && (ycor >= 3 && ycor <= 33)) return false;
     if ((ycor == 3 || ycor == 33) && (xcor >= 1 && xcor <= 60)) return false;
     return true;
   }
 
+  /**A method that checks if a TackShooter can be placed at a given coordinate on the map
+  *@param int xcor
+  *@param int ycor
+  *@param List<Tile> road
+  *@param List<TackShooter> TackShooters
+  */
   public static boolean isPlaceable(int xcor, int ycor, List<Tile> road, List<TackShooter> TackShooters){
-    for (Tile x: road){
+    for (Tile x: road){ //TackShooters cannot be placed on a road tile
       if (x.getX() == xcor && x.getY() == ycor) return false;
     }
 
-    for (TackShooter x: TackShooters){
+    for (TackShooter x: TackShooters){ //TackShooters cannot be placed on top of each other
       if (x.getX() == xcor && x.getY() == ycor) return false;
     }
 
     return true;
   }
 
-  public static boolean spikeIsPlaceable(int xcor, int ycor, List<Tile> road, List<Spike> spikes){
-    for (Spike x: spikes){
+  /**A method that checks if a TackShooter can be placed at a given coordinate on the map
+  *@param int xcor
+  *@param int ycor
+  *@param List<Tile> road
+  *@param List<SpikeTower> SpikeTowers
+  */
+  public static boolean SpikeTowerIsPlaceable(int xcor, int ycor, List<Tile> road, List<SpikeTower> SpikeTowers){
+    for (Tile x: road){ //SpikeTowers cannot be placed on a road tile
       if (x.getX() == xcor && x.getY() == ycor) return false;
     }
 
-    for (Tile x: road){
-      if (x.getX() == xcor && x.getY() == ycor) return true;
+    for (SpikeTower x: SpikeTowers){ //SpikeTowers cannot be placed on top of each other
+      if (x.getX() == xcor && x.getY() == ycor) return false;
     }
 
-    return false;
+    return true;
+  }
+
+  /**A method that checks if a spike object can be placed at a given coordinate on the map
+  *@param int xcor
+  *@param int ycor
+  *@param List<Tile> road
+  *@param List<Spike> spikes
+  */
+  public static boolean spikeIsPlaceable(int xcor, int ycor, List<Tile> road, List<Spike> spikes){
+    for (Spike x: spikes){ //Spikes cannot be placed on a road tile
+      if (x.getX() == xcor && x.getY() == ycor) return false;
+    }
+
+    for (Tile x: road){ //Spikes cannot be placed on top of each other
+      if (x.getX() == xcor && x.getY() == ycor) return false;
+    }
+
+    return true;
   }
 
   public static void main(String[] args) throws FileNotFoundException {
@@ -75,7 +110,7 @@ public class GameScreen{
     TerminalSize size = terminal.getTerminalSize();
     terminal.setCursorVisible(false);
 
-    int cursorX = 30;
+    int cursorX = 30; //initial cursor coordinates
     int cursorY = 18;
 
     boolean running = true;
@@ -89,46 +124,46 @@ public class GameScreen{
     int sinceTime = 0; //keep track of income
 
     List<Tile> road = new ArrayList<Tile>(); //stores the coordinates from map files for the road
-    List<Tile> border = new ArrayList<Tile>();
+    List<Tile> border = new ArrayList<Tile>(); //stores the coordinates of the border tiles around the map
 
-    List<TackShooter> TackShooters = new ArrayList<TackShooter>(); //stores towers that have been placed on the map
-    int TackShooterPrice = 250; //price for tackShooters
-    int TackShooterDelay = 400; //delay between each tackshooter shot
-    int TackShooterRad = 4;
-    int TackShooterSinceTime = 0;
+    List<TackShooter> TackShooters = new ArrayList<TackShooter>(); //stores TackShooters that have been placed on the map
+    int TackShooterPrice = 250; //price for TackShooters
+    int TackShooterDelay = 400; //delay between each TackShooter shot
+    int TackShooterRad = 4; //radius of the TackShooters
+    int TackShooterSinceTime = 0; //the time since the TackShooters last shot tacks
 
-    List<Tack> tacks = new ArrayList<Tack>();
-    int tackSinceTime = 0;
-    int tackDelay = 75;
+    List<Tack> tacks = new ArrayList<Tack>(); //stores tacks owned by the TackShooters that have been placed
+    int tackSinceTime = 0; //time since the tacks last moved
+    int tackDelay = 75; //delay time of tacks between each movement
 
-    List<Spike> spikes = new ArrayList<Spike>();
-    int SpikePrice = 50;
-    int SpikeLives = 5;
+    List<Spike> spikes = new ArrayList<Spike>(); //stores spikes that have been placed on the map by the user or by SpikeTowers
+    int SpikePrice = 50; //price for spikes
+    int SpikeLives = 5; //each spike can be used 5 times
 
-    List<SpikeTower> SpikeTowers = new ArrayList<SpikeTower>();
-    int SpikeTowerPrice = 200;
-    int SpikeTowerDelay = 8000;
-    int SpikeTowerRad = 3;
-    int SpikeTowerSinceTime = 0;
-    int SpikeTowerLives = 3;
+    List<SpikeTower> SpikeTowers = new ArrayList<SpikeTower>(); //stores SpikeTowers that have been placed on the map
+    int SpikeTowerPrice = 200; //price for SpikeTowers
+    int SpikeTowerDelay = 8000; //delay time for SpikeTowers to place another spike
+    int SpikeTowerRad = 3; //the radius of the SpikeTowers; spikes can only be placed on road tiles within the radius
+    int SpikeTowerSinceTime = 0; //the time since the SpikeTowers last placed spikes
+    int SpikeTowerLives = 3; //the SpikeTowers can only place three spikes
 
     int lives = 50; //user variables
     int money = 300;
     int income = 50;
 
-    List<Balloon> balloons = new ArrayList<Balloon>();
+    List<Balloon> balloons = new ArrayList<Balloon>(); //stores the
     int balloonSinceTime = 0; //used to spawn a balloon every second
     int balloonMoveTime = 0; //used to move all balloons every two seconds
     int level = 1; //variables to be adjusted according to level
-    int num_balloons = 15; //number of balloons to be initialized
+    int num_balloons = 15; //number of balloons to be initialized; this is default
     int balloons_made = 0; //number of balloons already initialized
-    int balloon_lives = 1; //number of lives each balloon will have
+    int balloon_lives = 1; //number of lives each balloon will have; this is default
     int balloon_delay = 600; //milliseconds between each balloon movement
-    int balloon_spawnTime = 1200;
+    int balloon_spawnTime = 1200; //time for the balloons to spawn after the previous balloon
     boolean level_started = false;
     boolean all_spawned = false;
 
-    //which tower is being placed down
+    //checks which tower is being placed down
     boolean tack_toggled = false;
     boolean spike_toggled = false;
     boolean factory_toggled = false;
@@ -151,8 +186,7 @@ public class GameScreen{
 
     while (running){
 
-    //  s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
-
+    //drawing onto the screen all the towers and roads
       for (Tile x: road){
         x.draw(s);
       }
@@ -173,11 +207,12 @@ public class GameScreen{
         x.draw(s);
       }
 
+      //changes the delay time of the balloon movements according to the level; the higher the level, the faster the balloons
       if (level <= 15) balloon_delay = 100;
       if (level <= 11) balloon_delay = 150;
       if (level <= 7) balloon_delay = 200;
       if (level <= 3) balloon_delay = 300;
-      if (level == 16){
+      if (level == 16){ //after 16 levels, the game is won
         s.stopScreen();
         running = false;
         System.out.println("\n\n\nYou won!\n\n\n");
@@ -186,7 +221,7 @@ public class GameScreen{
 
       if (toggle > 0) s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
 
-      balloonMoveTime += (currentTime - lastTime); //move balloons
+      balloonMoveTime += (currentTime - lastTime); //adds the amount of time since the last frame
       for(int i = balloons.size()-1; i >= 0; i--){
         Balloon x = balloons.get(i);
         x.draw(s);
@@ -206,10 +241,10 @@ public class GameScreen{
       s.refresh();
 
       s.putString(10,size.getRows()-2,"[To exit the game, press the escape key.]",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-      if (mode == 0){
+      if (mode == 0){ //if the game has started
         lastTime = currentTime;
         currentTime = System.currentTimeMillis();
-        timer += (currentTime - lastTime);//add the amount of time since the last frame
+        timer += (currentTime - lastTime); //adds the amount of time since the last frame
         s.putString(65,9,"Time: "+(timer /1000)+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,10,"Lives Left: "+lives+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,11,"Money: "+money+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -220,28 +255,29 @@ public class GameScreen{
         s.putString(65,18,"Spike:       key *, Price  "+SpikePrice+", Hits "+SpikeLives,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.refresh();
 
-        sinceTime += (currentTime - lastTime); //add the amount of time since the last frame
-        if (sinceTime >= 10000 && timer != 0){
+        sinceTime += (currentTime - lastTime); //adds the amount of time since the last frame
+        if (sinceTime >= 10000 && timer != 0){ //if sinceTime is greater than 10 seconds, income is gained
           money += income;
           sinceTime = 0;
         }
 
-        balloonSinceTime += (currentTime - lastTime); //spawn in balloons
-        if (balloonSinceTime >= balloon_spawnTime && balloons_made < num_balloons){
-          level_started = true;
-          balloons.add(new Balloon(balloon_lives, balloon_delay, road.get(0).getX(), road.get(0).getY()));
+        balloonSinceTime += (currentTime - lastTime); //adds the amount of time since the last frame
+        if (balloonSinceTime >= balloon_spawnTime && balloons_made < num_balloons){ //if the time passed is greater than the balloon_spwanTime
+                                                                                    //and all the balloons haven't spawned yet
+          level_started = true; //start the level
+          balloons.add(new Balloon(balloon_lives, balloon_delay, road.get(0).getX(), road.get(0).getY())); //create and spawn in balloon at the first road tile
           balloons_made++;
-          if (balloons_made == num_balloons) all_spawned = true;
-          balloonSinceTime = 0;
+          if (balloons_made == num_balloons) all_spawned = true; //checks if all balloons have been spawned
+          balloonSinceTime = 0; //balloon timer is set to 0 again for the next round of spawning
         }
 
-        if (balloons.size() == 0 && level_started && all_spawned){
-          level++;
-          num_balloons+=10;
+        if (balloons.size() == 0 && level_started && all_spawned){ //if all the balloons have been spawned and defeated
+          level++; //increase the level
+          num_balloons+=10; //increases the number of balloons per level
           balloons_made=0;
-          if (level % 2 == 0) balloon_lives++;
+          if (level % 2 == 0) balloon_lives++; //balloon lives increaseevery two levels
           for (Tack x: tacks) x.setSteps(4); //reset tacks
-          mode=1;
+          mode = 1;//the game is paused to tell the user a new level is to be started
           level_started = false;
           all_spawned = false;
           s.putString(10,1,"Now commencing level "+level+". Press b to begin.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
@@ -256,62 +292,62 @@ public class GameScreen{
         */
         s.refresh();
 
-        TackShooterSinceTime  += (currentTime - lastTime); //create new tacks
+        TackShooterSinceTime  += (currentTime - lastTime); //adds the amount of time since the last frame
         for (TackShooter x: TackShooters){
-          if (TackShooterSinceTime >= x.getSince() && x.inRadius(balloons)){
-            x.spawnTacks(tacks, TackShooterSinceTime, tackDelay);
+          if (TackShooterSinceTime >= x.getSince() && x.inRadius(balloons)){ //checks the time since the last tacks were created and that balloons are in radius
+            x.spawnTacks(tacks, TackShooterSinceTime, tackDelay); //create new round of tacks
           }
         }
         //s.putString(65,20,"Tack#: "+tacks.size(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
 
-        tackSinceTime += (currentTime - lastTime); //fire tacks
+        tackSinceTime += (currentTime - lastTime); //adds the amount of time since the last frame
         for (int i = tacks.size()-1; i>=0; i--){
           Tack x = tacks.get(i);
-          if (tackSinceTime >= x.getSince()){ //creates delay between tacks shot
-            x.undraw(s, x.getX(), x.getY(), road);
-            x.move(tackSinceTime);
-            x.hitTarget(balloons);
-            if (x.getSteps() >= TackShooterRad){
-              tacks.remove(i);
+          if (tackSinceTime >= x.getSince()){ //creates delay between tacks shots
+            x.undraw(s, x.getX(), x.getY(), road); //undraw tacks between movements
+            x.move(tackSinceTime); //tacks move
+            x.hitTarget(balloons); //check if tacks have hit a balloon and takes a life from the balloon hit
+            if (x.getSteps() >= TackShooterRad){ //if the tacks have reached the radius of their movements
+              tacks.remove(i); //they "die" and are removed from the list of tacks
             }
           }
         }
 
-        SpikeTowerSinceTime += (currentTime - lastTime); //create new spikes
+        SpikeTowerSinceTime += (currentTime - lastTime); //adds the amount of time since the last frame
         for (SpikeTower x: SpikeTowers){
-          if (SpikeTowerSinceTime >= x.getSince()){
-            x.spawnSpikes(spikes,road,SpikeTowerSinceTime,SpikeTowerDelay,SpikePrice,SpikeTowerLives);
+          if (SpikeTowerSinceTime >= x.getSince()){ //checks that a spike can be placed again by checking the time a spike was last placed
+            x.spawnSpikes(spikes,road,SpikeTowerSinceTime,SpikeTowerDelay,SpikePrice,SpikeTowerLives); //spawns a spike
           }
         }
 
-        for (int i = spikes.size()-1; i>=0; i--){ //see if spikes hit anything
+        for (int i = spikes.size()-1; i>=0; i--){
           Spike x = spikes.get(i);
-          if (x.getLives() == 0) spikes.remove(i);
-          x.hitTarget(balloons);
+          if (x.getLives() == 0) spikes.remove(i); //the spikes are removed from the list after 5 uses
+          x.hitTarget(balloons); //checks if spikes hit anything and takes a life from the balloon they hit
         }
 
         s.refresh();
       }
 
-      if (mode == 1){ //pause timer
+      if (mode == 1){ //pause timer when the game is paused
         lastTime = System.currentTimeMillis();
         currentTime = System.currentTimeMillis();
         if (toggle >= 1) s.putString(65,9,"Time: " + (timer / 1000),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       }
 
       Key key = s.readInput();
-      if (key != null){ //what to start doing when key is pressed
+      if (key != null){ //what to start doing when a key is pressed
 
         toggle++;
         if (toggle == 1){ //one-time execution
           s.clear();
 
           File f = new File("map0.txt");
-          if (map == 1) f = new File("map1.txt"); //different choices
+          if (map == 1) f = new File("map1.txt"); //different choices of maps
           if (map == 2) f = new File("map2.txt");
           if (map == 3) f = new File("map3.txt");
           Scanner in = new Scanner(f);
-          while (in.hasNext()){ //read in coordinates
+          while (in.hasNext()){ //read in coordinates of map file to draw the road
             String line = in.nextLine();
             String[] arr = line.split(" ");
             int xcor = Integer.parseInt(arr[0]);
@@ -344,7 +380,7 @@ public class GameScreen{
           mode++;
         }
 
-         //test code for moving around towers
+         //code for cursor movement
         if (toggle > 0 && key.getKind() == Key.Kind.ArrowUp){
           if (isWalkable(cursorX, cursorY-1)){
             cursorY--;
@@ -373,6 +409,7 @@ public class GameScreen{
           }
         }
 
+        //checks which tower is being selected by the user
         if (toggle > 0 && key.getCharacter() == 't'){
           tack_toggled = true;
           spike_toggled = false;
@@ -392,29 +429,30 @@ public class GameScreen{
         }
 
 
+        //if the user wants to place a tower
         if (toggle >= 1 && key.getKind() == Key.Kind.Enter){
-          if (tack_toggled){
-            if (isPlaceable(cursorX,cursorY,road,TackShooters) && (money - TackShooterPrice >= 0)){
-              TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterDelay,TackShooterRad));
-              money -= TackShooterPrice;
+          if (tack_toggled){ //if the tower chosen is a TackShooter
+            if (isPlaceable(cursorX,cursorY,road,TackShooters) && (money - TackShooterPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
+              TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterDelay,TackShooterRad)); //a new TackShooter is created on the map
+              money -= TackShooterPrice; //take away money
               if (cursorX == 59) cursorX--;
               else cursorX++;
             }
           }
 
-          if (spike_toggled){
-            if (spikeIsPlaceable(cursorX,cursorY,road,spikes) && (money - SpikePrice >= 0)){
-              spikes.add(new Spike(cursorX,cursorY,SpikePrice,SpikeLives));
-              money -= SpikePrice;
+          if (spike_toggled){ //if the tower chosen is a spike
+            if (spikeIsPlaceable(cursorX,cursorY,road,spikes) && (money - SpikePrice >= 0)){ //if the coordinate is placeable and the user has enough money...
+              spikes.add(new Spike(cursorX,cursorY,SpikePrice,SpikeLives)); //a new spike is created on the map
+              money -= SpikePrice; //take away money
               if (cursorX == 59) cursorX--;
               else cursorX++;
             }
           }
 
-          if (factory_toggled){
-            if (isPlaceable(cursorX,cursorY,road,TackShooters) && (money - SpikeTowerPrice >= 0)){
-              SpikeTowers.add(new SpikeTower(cursorX,cursorY,SpikeTowerPrice,SpikeTowerDelay,SpikeTowerRad));
-              money -= SpikeTowerPrice;
+          if (factory_toggled){ //if the tower chosen is a SpikeTower
+            if (SpikeTowerIsPlaceable(cursorX,cursorY,road,SpikeTowers) && (money - SpikeTowerPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
+              SpikeTowers.add(new SpikeTower(cursorX,cursorY,SpikeTowerPrice,SpikeTowerDelay,SpikeTowerRad)); //a new SpikeTower is created on the map
+              money -= SpikeTowerPrice; //take away money
               if (cursorX == 59) cursorX--;
               else cursorX++;
             }
