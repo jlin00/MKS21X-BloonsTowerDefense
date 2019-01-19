@@ -82,6 +82,7 @@ public class TackShooter extends Tower{
 
   public void upgrade(){
     hits++;
+    delay-=200;
     upgrade++;
   }
 

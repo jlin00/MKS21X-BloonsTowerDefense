@@ -126,7 +126,7 @@ public class GameScreen{
 
     List<TackShooter> TackShooters = new ArrayList<TackShooter>(); //stores TackShooters that have been placed on the map
     int TackShooterPrice = 250; //price for TackShooters
-    int TackShooterDelay = 400; //delay between each TackShooter shot
+    int TackShooterDelay = 600; //delay between each TackShooter shot
     int TackShooterRad = 4; //radius of the TackShooters
     int TackShooterSinceTime = 0; //the time since the TackShooters last shot tacks
 
@@ -143,7 +143,7 @@ public class GameScreen{
     int SpikeTowerDelay = 8000; //delay time for SpikeTowers to place another spike
     int SpikeTowerRad = 3; //the radius of the SpikeTowers; spikes can only be placed on road tiles within the radius
     int SpikeTowerSinceTime = 0; //the time since the SpikeTowers last placed spikes
-    int UpgradePrice = 300;
+    int UpgradePrice = 250;
     int SpikeTowerLives = 3; //the spikes placed by the SpikeTowers only have three lives
 
     int lives = 25; //user variables
@@ -417,7 +417,7 @@ public class GameScreen{
           if (isWalkable(cursorX, cursorY-1)){
             cursorY--;
               if (isPlaceable(cursorX,cursorY+1,road,TackShooters,SpikeTowers)) s.putString(cursorX,cursorY+1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
-              if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0) s.putString(65,30,"Upgrade for $300?",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+              if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0) s.putString(65,30,"Upgrade for $250?",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
               else s.putString(65,30,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
           }
         }
@@ -426,7 +426,7 @@ public class GameScreen{
           if (isWalkable(cursorX, cursorY+1)){
             cursorY++;
             if (isPlaceable(cursorX,cursorY-1,road,TackShooters,SpikeTowers)) s.putString(cursorX,cursorY-1," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
-            if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0) s.putString(65,30,"Upgrade for $300?",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+            if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0) s.putString(65,30,"Upgrade for $250?",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
             else s.putString(65,30,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
           }
         }
@@ -435,7 +435,7 @@ public class GameScreen{
           if (isWalkable(cursorX-1, cursorY)){
             cursorX--;
             if (isPlaceable(cursorX+1,cursorY,road,TackShooters,SpikeTowers)) s.putString(cursorX+1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
-            if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0) s.putString(65,30,"Upgrade for $300?",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+            if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0) s.putString(65,30,"Upgrade for $250?",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
             else s.putString(65,30,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
           }
         }
@@ -444,7 +444,7 @@ public class GameScreen{
           if (isWalkable(cursorX+1, cursorY)){
             cursorX++;
             if (isPlaceable(cursorX-1,cursorY,road,TackShooters,SpikeTowers)) s.putString(cursorX-1,cursorY," ",Terminal.Color.DEFAULT,Terminal.Color.GREEN);
-            if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0) s.putString(65,30,"Upgrade for $300?",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+            if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0) s.putString(65,30,"Upgrade for $250?",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
             else s.putString(65,30,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
           }
         }
