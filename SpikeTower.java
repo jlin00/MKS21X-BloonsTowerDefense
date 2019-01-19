@@ -51,7 +51,9 @@ public class SpikeTower extends Tower{
   *@param Screen s
   */
   public void draw(Screen s){
-    s.putString(x,y,"S",Terminal.Color.WHITE,Terminal.Color.RED);
+    if (upgrade == 0) s.putString(x,y,"*",Terminal.Color.WHITE,Terminal.Color.RED);
+    if (upgrade == 1) s.putString(x,y,"s",Terminal.Color.WHITE,Terminal.Color.RED);
+    if (upgrade == 2) s.putString(x,y,"S",Terminal.Color.WHITE,Terminal.Color.RED);
   }
 
   /**A method to create spike objects to be placed onto a road tile on the screen
