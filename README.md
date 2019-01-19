@@ -99,4 +99,8 @@ Once GameScreen.java is compiled, a terminal screen will appear, displaying the 
   <td>Today we finished implementing the SpikeTower class in the terminal and wrote methods to randomly generate spikes onto a road tile. We also updated graphics for balloons (they are now color coded based on the amount of lives they have). We manually set up fifteen levels, which increase in difficulty. We are considering adding more levels and will be adding more instructions to the starting screen in the near future. 
   </td>
 </tr>
+<tr>
+  <td>1/19/19</td>
+  <td>Today we revised and added some comments to all of the files. We also fixed a method in the GameScreen class to improve the SpikeTower class.
+  </td>
 </table>
