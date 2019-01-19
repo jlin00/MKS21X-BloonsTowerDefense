@@ -49,7 +49,7 @@ public class GameScreen{
     return true;
   }
 
-  /**A method that checks if a TackShooter can be placed at a given coordinate on the map
+  /**A method that checks if a tower can be placed at a given coordinate on the map
   *@param int xcor
   *@param int ycor
   *@param List<Tile> road
