@@ -41,7 +41,7 @@ public class Tack{
   }
 
   /**A method that will make the tack move according to its direction
-  *@param timer is how long the game has been going on
+  *@param timer is how long the game has been going on for
   */
   public void move(long timer){
     sinceTime = timer;
@@ -123,7 +123,7 @@ public class Tack{
     return steps;
   }
 
-  /**A method to get the time the game needs to reach before the tack can move again
+  /**A method to get the next time the game needs to reach before the tack can move again
   *@return long sinceTime
   */
   public long getSince(){

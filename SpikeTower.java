@@ -20,7 +20,7 @@ public class SpikeTower extends Tower{
   private long sinceShot; //time needed for the next spike placement
   private int radius; //range in which the SpikeTower can place spikes
 
-  /**A Tower constructor
+  /**A SpikeTower constructor
   *@param int xCord is the SpikeTower's x-coordinate on the screen
   *@param int yCord is the SpikeTower's y-coordinate on the screen
   *@param int money is the cost
@@ -36,14 +36,14 @@ public class SpikeTower extends Tower{
     radius = rad;
   }
 
-  /**A method that returns when the spike tower last placed a spike on a road
+  /**A method to get the next time the game needs to reach before the SpikeTower can place a spike again
   *@return long sinceShot
   */
   public long getSince(){
     return sinceShot;
   }
 
-  /**A method that draws the spike tower onto the screen using the letter S to represent it
+  /**A method that draws the SpikeTower onto the screen using the letter S to represent it
   *@param Screen s
   */
   public void draw(Screen s){
@@ -53,7 +53,7 @@ public class SpikeTower extends Tower{
   /**A method to create spike objects to be placed onto a road tile on the screen
   *@param List<Spike> spikes
   *@param List<Tile> road
-  *@param long timer is how long the game has been going on
+  *@param long timer is how long the game has been going on for
   *@param int delay is the time in between spike placement
   *@param int money is the cost of the spikes
   *@param int lives is the amount of lives the spikes will have
@@ -65,7 +65,7 @@ public class SpikeTower extends Tower{
     sinceShot += this.delay; //the delay is added to reflect the new time the game needs to reach for the SpikeTower to place another spike
   }
 
-  /**A method that checks if a road tile is within the radius of the Spike Tower based on coordinates
+  /**A method that checks if a road tile is within the radius of the SpikeTower based on coordinates
   *@param Tile road
   *@return boolean
   */
@@ -74,7 +74,7 @@ public class SpikeTower extends Tower{
     return false;
   }
 
-  /**A method that puts all the road tiles within the radius of the Spike Tower into a list and randomly chooses a road tile from that List
+  /**A method that puts all the road tiles within the radius of the SpikeTower into a list and randomly chooses a road tile from that List
   *@param List<Tile> road
   *@return Tile (a randomly chosen road tile within radius)
   */

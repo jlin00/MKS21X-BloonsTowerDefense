@@ -134,7 +134,7 @@ public class Balloon{
 
   /**A method to move the balloon in the terminal to the next road tile using the coordinates of that tile
   *@param Tile t is the next road tile
-  *@param long timer is how long the game has been going on
+  *@param long timer is how long the game has been going on for
   */
   public void move(Tile t, long timer){
     sinceMoved = timer;

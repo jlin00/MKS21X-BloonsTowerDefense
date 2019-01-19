@@ -16,13 +16,14 @@ import com.googlecode.lanterna.screen.*;
 
 public class TackShooter extends Tower{
 
-  private int delay;
-  private long sinceShot;
+  private int delay; //the time between each round of tack shooting
+  private long sinceShot; //the time needed for the next round of tack shooting
 
-  /**A Tower constructor
-  *@param int xCord is the x position of the tower, also its row in the array
-  *@param int yCord is the y position of the tower, also its column in the array
+  /**A TackShooter constructor
+  *@param int xCord is the TackShooter's x-coordinate on the screen
+  *@param int yCord is the TackShooter's y-coordinate on the screen
   *@param int money is the cost
+  *@param int delay is the time between each round of tack shooting
   *@param int rad is the radius
   */
   public TackShooter(int xCord, int yCord, int money, int delay, int rad){
@@ -34,22 +35,36 @@ public class TackShooter extends Tower{
     radius = rad;
   }
 
+  /**A method to get the next time the game needs to reach before the TackShooter can shoot again
+  *@return long sinceShot
+  */
   public long getSince(){
     return sinceShot;
   }
-
+  /**A method that draws the TackShooter onto the screen using the letter T to represent it
+  *@param Screen s
+  */
   public void draw(Screen s){
     s.putString(x,y,"T",Terminal.Color.WHITE,Terminal.Color.BLUE);
   }
 
+  /**A method to create tack objects
+  *@param List<Tack> tacks
+  *@param long timer is how long the game has been going on for
+  *@param int delay is the time in between tack movements
+  */
   public void spawnTacks(List<Tack> tacks, long timer, int delay){
     sinceShot = timer;
-    for (int i = 0; i < 4; i++){
+    for (int i = 0; i < 4; i++){ //creates four tacks with different directions
       tacks.add(new Tack(x,y,i,delay));
     }
-    sinceShot += this.delay;
+    sinceShot += this.delay; //the delay is added to reflect the new time the game needs to reach for the TackSHooter to shoot again
   }
 
+  /**A method that checks if a balloon is within the radius of the TackShooter based on coordinates before it shoots
+  *@param List<Balloon> balloons
+  *@return boolean
+  */
   public boolean inRadius(List<Balloon> balloons){
     for (int i = balloons.size() - 1; i >= 0; i--){
       Balloon temp = balloons.get(i);
