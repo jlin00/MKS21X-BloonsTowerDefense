@@ -143,12 +143,9 @@ public class GameScreen{
     int SpikeTowerDelay = 8000; //delay time for SpikeTowers to place another spike
     int SpikeTowerRad = 3; //the radius of the SpikeTowers; spikes can only be placed on road tiles within the radius
     int SpikeTowerSinceTime = 0; //the time since the SpikeTowers last placed spikes
-<<<<<<< HEAD
     int SpikeTowerLives = 3; //the SpikeTowers spikes have 3 hits
     int UpgradePrice = 300;
-=======
     int SpikeTowerLives = 3; //the spikes placed by the SpikeTowers only have three lives
->>>>>>> 597c83be8b01ce3618db0a030a293e9412535622
 
     int lives = 25; //user variables
     int money = 300;
