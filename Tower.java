@@ -14,10 +14,10 @@ import com.googlecode.lanterna.input.KeyMappingProfile;
 import java.util.*;
 
 public abstract class Tower{
-  int x, y;
+  int x, y; //x and y coordinates
   int cost;
-  int radius;
-  Balloon target;
+  int radius; //range of the tower's attacks
+  Balloon target; //target of the tower
 
   /**A Tower constructor
   *@param int xCord is the x position of the tower, also its row in the array
@@ -90,6 +90,11 @@ public abstract class Tower{
   }
   */
 
+//THIS METHOD IS NOT USED
+  /**A method that draws the tower onto the terminal
+  **this is only used when a terminal is used for displaying the game; if a screen is used, this method is not needed
+  *@param Terminal t
+  */
   public void draw(Terminal t){
     t.moveCursor(x, y);
     t.applyBackgroundColor(Terminal.Color.BLACK);

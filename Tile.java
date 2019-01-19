@@ -15,13 +15,12 @@ import java.util.*;
 import com.googlecode.lanterna.screen.*;
 
 public class Tile{
-  private int x, y;
-  private boolean isRoad, isStart, isEnd, hasTower, hasBalloon;
-  private List<Balloon> onTile = new ArrayList<Balloon>();
+  private int x, y; //x and y coordinates
+  private boolean isRoad, isStart, isEnd, hasTower, hasBalloon; //checks the status of the tile
+  private List<Balloon> onTile = new ArrayList<Balloon>(); //list of balloons on the tile
 
   /**A tile constructor
-  *@param integers xCord and yCord are the x and y coordinates on the tile
-  *they represent the tile's place on the 2D Tile array of the map
+  *@param integers xCord and yCord are the x and y coordinates of the tile on the screen
   */
   public Tile(int xCord, int yCord){
     x = xCord;
@@ -29,49 +28,47 @@ public class Tile{
   }
 
   /**A method to get the x coordinate of a tile
-  *it is also the row of the array map that the tile is in
   */
   public int getX(){
     return x;
   }
 
   /**A method to get the y coordinate of a tile
-  *it is also the column of the array map that the tile is in
   */
   public int getY(){
     return y;
   }
 
   /**A method that returns whether the tile is a road tile (true) or a grass tile (false)
-  *@return a boolean
+  *@return boolean
   */
   public boolean getIsRoad(){
     return isRoad;
   }
 
   /**A method that returns whether a tile is the starting tile of the road (true)
-  *@return a boolean
+  *@return boolean
   */
   public boolean getIsStart(){
     return isStart;
   }
 
   /**A method that returns whether a tile is the ending tile of the road (true)
-  *@return a boolean
+  *@return boolean
   */
   public boolean getIsEnd(){
     return isEnd;
   }
 
-  /**A method that returns whether a tile has a tower on it or not (true)
-  *@return a boolean
+  /**A method that returns whether a tile has a tower on it or not
+  *@return boolean
   */
   public boolean getHasTower(){
     return hasTower;
   }
 
-  /**A method that returns whether a tile has a balloon on it or not (true)
-  *@return a boolean
+  /**A method that returns whether a tile has a balloon on it or not
+  *@return boolean
   */
   public boolean getHasBalloon(){
     return hasBalloon;
@@ -90,8 +87,8 @@ public class Tile{
   }
 
   /**A method that makes a road tile the starting tile where balloons will spawn
-  **Precondition: the tile must be a road tile in order to be the starting tile
-                  the tile must not be the ending road tile
+  *the tile must be a road tile in order to be the starting tile
+   the tile must not be the ending road tile
   *@return boolean depending on if setting the tile as the start was successful
   */
   public boolean makeStart(){
@@ -104,8 +101,8 @@ public class Tile{
   }
 
   /**A method that makes a road tile the ending tile where balloons will exit
-  **Precondition: the tile must be a road tile in order to be the ending tile
-                  the tile must not be the starting road tile
+  *the tile must be a road tile in order to be the ending tile
+   the tile must not be the starting road tile
   *@return boolean depending on if setting the tile as the end was successful
   */
   public boolean makeEnd(){
@@ -117,13 +114,17 @@ public class Tile{
     }
   }
 
-  /**A method to get the list of balloons on a tile
+  /**A method to get the list of balloons on the tile
   *@return List<Balloon>
   */
   public List<Balloon> getBalloons(){
     return onTile;
   }
 
+  /**A method that draws the tile onto the terminal
+  **this is only used when a terminal is used for displaying the game; if a screen is used, this method is not needed
+  *@param Terminal t
+  */
   public void draw(Terminal t){
     t.moveCursor(x, y);
     t.applyBackgroundColor(Terminal.Color.WHITE);
@@ -132,6 +133,9 @@ public class Tile{
     t.applyForegroundColor(Terminal.Color.DEFAULT);
   }
 
+  /**A method that draws the tile onto the screen
+  *@param Screen s
+  */
   public void draw(Screen s){
     s.putString(x,y," ",Terminal.Color.DEFAULT,Terminal.Color.WHITE);
   }
