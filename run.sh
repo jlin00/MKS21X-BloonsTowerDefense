@@ -1,5 +1,5 @@
 #!/bin/bash
-resize -s 105 40
+resize -s 50 110
 
 javac -cp lanterna.jar:. Balloon.java
 javac -cp lanterna.jar:. Tile.java
