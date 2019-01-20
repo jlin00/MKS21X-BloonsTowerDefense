@@ -194,7 +194,7 @@ public class GameScreen{
     s.putString(0,0,"Welcome to Bloons Tower Defense!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
     s.putString(0,2,"To begin the game, press b. Once you have begun, press a to pause and b to resume the game.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,4,"Balloons will start spawning immediately and travel down the road. To defeat them, place down towers by",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,5,"typing the letter  of the tower you want to buy and using the arrow keys to give it a location",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,5,"typing the letter of the tower you want to buy and using the arrow keys to give it a location",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,6,"on the grass, which are the green tiles. Press the enter key to place the tower down. ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,7,"You can also upgrade towers by placing the cursor over the tower and pressing enter again. ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,8, "You will receive $50 every 10 seconds. Use your income wisely to purchase towers! If any balloons reach the end ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
