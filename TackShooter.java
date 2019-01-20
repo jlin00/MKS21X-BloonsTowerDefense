@@ -18,8 +18,8 @@ public class TackShooter extends Tower{
 
   private int delay; //the time between each round of tack shooting
   private long sinceShot; //the time needed for the next round of tack shooting
-  private int upgrade;
-  private int hits;
+  private int upgrade; //tkeeps track of upgrade number
+  private int hits; //how many lives a tack can take from a balloon with one hit
 
   /**A TackShooter constructor
   *@param int xCord is the TackShooter's x-coordinate on the screen
@@ -27,6 +27,7 @@ public class TackShooter extends Tower{
   *@param int money is the cost
   *@param int delay is the time between each round of tack shooting
   *@param int rad is the radius
+  *@param int hits is how many lives a tack can take from a balloon with one hit
   */
   public TackShooter(int xCord, int yCord, int money, int delay, int rad, int hits){
     x = xCord;
@@ -46,14 +47,23 @@ public class TackShooter extends Tower{
     return sinceShot;
   }
 
+  /**A method to get the number of times the TackShooter has been upgraded
+  *@return int upgrade
+  */
   public int getUpgrade(){
     return upgrade + 1;
   }
 
+  /**A method that gets the number of lives a tack takes from a balloon with one hit
+  *@return int hits
+  */
   public int getHits(){
     return hits;
   }
 
+  /**A method to get the delay of the TackShooter, in terms of when the TackShooter can shoot out tacks again
+  *@return int delay
+  */
   public int getDelay(){
     return delay;
   }
@@ -93,12 +103,20 @@ public class TackShooter extends Tower{
     return false;
   }
 
+  /**A method that upgrades the TackShooter
+  *tacks shot by the upgraded can take more from a balloon in a single hit
+  *the delay time between tack shooting is decreased by 300 milliseconds
+  */
   public void upgrade(){
     hits++;
     delay-=300;
     upgrade++;
   }
 
+  /**A method that checks if the TackShooter can be upgraded
+  *TackShooters can only be upgraded once
+  *@return boolean
+  */
   public boolean canUpgrade(){
     return (upgrade == 0);
   }

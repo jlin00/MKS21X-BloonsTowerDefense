@@ -99,7 +99,7 @@ public class GameScreen{
     return false;
   }
 
-  /**A method that checks if the tower at the cursor can be upgraded
+  /**A method that checks if there is a tower at the cursor
   *@param int xcor of the cursor
   *@param int ycor of the cursor
   *@param List<TackShooter> TackShooters
@@ -107,11 +107,11 @@ public class GameScreen{
   *@return boolean
   */
   public static boolean isUpgradeable(int xcor, int ycor, List<TackShooter> TackShooters, List<SpikeTower> SpikeTowers){
-    for (TackShooter x: TackShooters){
+    for (TackShooter x: TackShooters){ //if a TackShooter is at the cursor
       if (x.getX() == xcor && x.getY() == ycor) return true;
     }
 
-    for (SpikeTower x: SpikeTowers){
+    for (SpikeTower x: SpikeTowers){ //if a SpikeTower is at the cursor 
       if (x.getX() == xcor && x.getY() == ycor) return true;
     }
 
@@ -198,7 +198,7 @@ public class GameScreen{
     s.putString(0,6,"on the grass, which are the green tiles. You can also place down spikes by pressing * and giving ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,7,"it a location on the road, which are the gray tiles, using the arrow keys.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,8,"Press the enter key to place the tower or spikes down. You can upgrade towers by placing",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,9,"the cursor over the tower and pressing enter. The upgraded stats of the tower will be show under",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,9,"the cursor over the tower and pressing enter. The upgraded stats of the tower will be shown under",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,10,"Tower Selected on the screen. TackShooters can be upgraded once and SpikeTowers can be upgraded twice.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,11,"If you manage to kill all the balloons in a level, you will advance to the next level. As you progress",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,12,"each level will have more balloons, which have more lives and are therefore harder to pop. ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -217,13 +217,13 @@ public class GameScreen{
 
       for (TackShooter x: TackShooters){
         x.draw(s);
-        if (x.getX() == cursorX && x.getY() == cursorY){
-          if (money >= UpgradePrice && x.canUpgrade()){
+        if (x.getX() == cursorX && x.getY() == cursorY){ //if there is a TackShooter at the cursor
+          if (money >= UpgradePrice && x.canUpgrade()){ //if the tower can be upgraded, the upgrade info is shown
             s.putString(65,33,"Upgrade for $250?",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
             s.putString(85,32," - 300 ms ",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
             s.putString(78,31," + 1",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
           }
-          s.putString(78,30,""+x.getUpgrade(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+          s.putString(78,30,""+x.getUpgrade(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT); //shows the status of the tower in terms of its upgrade model
           s.putString(77,31,""+x.getHits(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
           s.putString(78,32,""+x.getDelay()+" ms ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         }
@@ -239,13 +239,13 @@ public class GameScreen{
 
       for (SpikeTower x: SpikeTowers){
         x.draw(s);
-        if (x.getX() == cursorX && x.getY() == cursorY){
-          if (money >= UpgradePrice && x.canUpgrade()){
+        if (x.getX() == cursorX && x.getY() == cursorY){ //if there is a SpikeTower at the cursor
+          if (money >= UpgradePrice && x.canUpgrade()){ //if the tower can be upgraded, the upgrade info is shown
             s.putString(65,33,"Upgrade for $250?",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
             s.putString(85,32," - 1000 ms",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
             s.putString(78,31," + 1",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
           }
-          s.putString(78,30,""+x.getUpgrade(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+          s.putString(78,30,""+x.getUpgrade(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT); //shows the status of the tower in terms of its upgrade model
           s.putString(77,31,""+x.getLives(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
           s.putString(78,32,""+x.getDelay()+" ms ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         }
@@ -253,7 +253,7 @@ public class GameScreen{
         }
       }
 
-      if (!isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers)){ //game screen does not show upgrade info of the tower when the tower cannot be upgraded anymore
+      if (!isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers)){ //game screen does not show upgrade info when the cursor is not at a tower
         s.putString(65,33,"                   ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,30,"              ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,31,"                    ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -272,10 +272,10 @@ public class GameScreen{
       if (toggle > 0){
         s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
 
-        s.putString(65,9,"Time: "+(timer /1000)+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,9,"Time: "+(timer /1000)+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT); //shows the time and money on the screen
         s.putString(65,11,"Money: "+money+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
 
-        s.putString(65,20,"Tower Info",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline);
+        s.putString(65,20,"Tower Info",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline); //shows info of the tower
         s.putString(65,21,"Type of Tower:  "+TowerToggled,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,22,"Price: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,23,"Radius: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -419,12 +419,12 @@ public class GameScreen{
       }
 
       if (mode == 1){ //pause timer when the game is paused
-        lastTime = System.currentTimeMillis();
+        lastTime = System.currentTimeMillis(); //stops the time
         currentTime = System.currentTimeMillis();
         if (toggle >= 1) s.putString(65,9,"Time: " + (timer / 1000),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       }
 
-      if (mode == 2){//win game mode
+      if (mode == 2){ //win or lose game mode
         if (level == 16) s.putString(10,1,"\t  You won! Press ESC to exit.\t",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
         if (lives == 0) s.putString(10,1,"\t You lost! Press ESC to exit.\t",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
       }
@@ -459,6 +459,7 @@ public class GameScreen{
             }
           }
 
+          //shows on the map information about balloon lives and colors
           s.putString(65,35,"Balloon Key",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline);
           s.putString(65,36,"Red = 1 life",Terminal.Color.RED,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
           s.putString(65,37,"Yellow = 2 lives ",Terminal.Color.YELLOW,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
@@ -484,7 +485,7 @@ public class GameScreen{
           mode=1;
         }
 
-         //code for cursor movement
+        //code for cursor movement
         if (toggle > 0 && key.getKind() == Key.Kind.ArrowUp){
           if (isWalkable(cursorX, cursorY-1)){
             cursorY--;
@@ -583,12 +584,13 @@ public class GameScreen{
             }
           }
 
+          //f the user wants to upgrade a tower
           if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money >= UpgradePrice){ //if the tower is able to be upgraded
             for (SpikeTower x: SpikeTowers){ //checks which SpikeTower, if any, is being upgraded
               if (x.getX() == cursorX && x.getY() == cursorY && x.canUpgrade()){
                 x.upgrade();
                 money -= UpgradePrice; //takes away upgrade price
-                if (!x.canUpgrade() || money < UpgradePrice){ //game screen does not show upgrade info when the tower cannot be upgraded anymore
+                if (!x.canUpgrade() || money < UpgradePrice){ //game screen does not show upgrade info when the tower cannot be upgraded
                   s.putString(65,33,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                   s.putString(79,31,"    ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                   s.putString(86,32,"          ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -600,7 +602,7 @@ public class GameScreen{
               if (x.getX() == cursorX && x.getY() == cursorY && x.canUpgrade()){
                 x.upgrade();
                 money -= UpgradePrice; //takes away upgrade price
-                if (!x.canUpgrade()){ //game screen does not show upgrade info when the tower cannot be upgraded anymore
+                if (!x.canUpgrade()){ //game screen does not show upgrade info when the tower cannot be upgraded
                   s.putString(65,33,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                   s.putString(79,31,"    ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                   s.putString(86,32,"          ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);

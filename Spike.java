@@ -17,7 +17,7 @@ import java.util.*;
 
 public class Spike extends Tower{
 
-  private int lives;
+  private int lives; //the number of lives a spike has
 
   /**A Tower constructor
   *@param int xCord is the x position of the tower, also its row in the array

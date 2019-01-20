@@ -47,14 +47,23 @@ public class SpikeTower extends Tower{
     return sinceShot;
   }
 
+  /**A method to get the number of times the SpikeTower has been upgraded
+  *@return int upgrade
+  */
   public int getUpgrade(){
     return upgrade + 1;
   }
 
+  /**A method that returns the amount of lives the spikes placed by the SpikeTower has
+  *@return int lives
+  */
   public int getLives(){
     return lives;
   }
 
+  /**A method to get the delay of the SpikeTower, in terms of when the SpikeTower can place a spike again
+  *@return int delay
+  */
   public int getDelay(){
     return delay;
   }
@@ -94,6 +103,10 @@ public class SpikeTower extends Tower{
     return false;
   }
 
+  /**A method that checks if any road tile is in radius
+  *@param List<Tile> road
+  *@return boolean
+  */
   public boolean anyInRadius(List<Tile> road){
     for (Tile x: road){
       if (inRadius(x)) return true;
@@ -117,12 +130,20 @@ public class SpikeTower extends Tower{
     return eligible_tiles.get(rand);
   }
 
+  /**A method that upgrades the SpikeTower
+  *spikes placed by the upgraded tower have one more life
+  *the delay time between spike placement is decreased by 1 second
+  */
   public void upgrade(){
     lives++;
     delay-=1000;
     upgrade++;
   }
 
+  /**A method that checks if the SpikeTower can be upgraded
+  *SpikeTowers can only be upgraded 2 times
+  *@return boolean
+  */
   public boolean canUpgrade(){
     return (upgrade < 2);
   }

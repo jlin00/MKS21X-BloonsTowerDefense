@@ -20,7 +20,7 @@ public class Tack{
   private int steps; //number of steps the tack has taken
   private long sinceTime; //time needed for the next tack movement
   private int delay; //time in between tack movements
-  private int hits;
+  private int hits; ////how many lives a tack can take from a balloon with one hit
 
   /**A constructor of a tack owned by a tackShooter
   *@param int xCord is the x-coordinate
@@ -31,6 +31,7 @@ public class Tack{
                2 is down
                3 is left
   *@param int delay is the delay time between the tack's movements
+  *@param int hits is how many lives a tack can take from a balloon with one hit
   */
   public Tack(int xCord, int yCord, int direx, int delay, int hits){
     x = xCord;
@@ -75,7 +76,7 @@ public class Tack{
     for (int i = balloons.size()-1; i >= 0; i--){
       Balloon temp = balloons.get(i);
       if (temp.getX() == x && temp.getY() == y){ //if the balloon and tack are at the same coordinates
-        temp.setLives(temp.getLives() - hits); //takes a life from the balloon
+        temp.setLives(temp.getLives() - hits); //takes lives from the balloon
         if (temp.getLives() <= 0) balloons.remove(i); //if the balloon has no more lives, it is removed
       }
     }
