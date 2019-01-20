@@ -76,7 +76,7 @@ public class TackShooter extends Tower{
     for (int i = 0; i < 4; i++){ //creates four tacks with different directions
       tacks.add(new Tack(x,y,i,delay,hits));
     }
-    sinceShot += this.delay; //the delay is added to reflect the new time the game needs to reach for the TackSHooter to shoot again
+    sinceShot += this.delay; //the delay is added to reflect the new time the game needs to reach for the TackShooter to shoot again
   }
 
   /**A method that checks if a balloon is within the radius of the TackShooter based on coordinates before it shoots

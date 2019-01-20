@@ -20,6 +20,13 @@ import java.util.*;
 
 public class GameScreen{
 
+  /**A method that draws the border of the map
+  *@param int r
+  *@param int c
+  *@param int length
+  *@param Screen s
+  */
+
   public static void drawBorder(int r, int c, int length, Screen s){ //draws a border for the game, terminal must be at least 105 x 38
     for (int i = 0; i < length; i++){
       s.putString(r,c+i," ",Terminal.Color.DEFAULT,Terminal.Color.BLACK);
@@ -42,6 +49,7 @@ public class GameScreen{
   *this method ensures that the cursor will always stay within the map
   *@param int xcor
   *@param int ycor
+  *@return boolean
   */
   public static boolean isWalkable(int xcor, int ycor){
     if ((xcor == 1 || xcor == 60) && (ycor >= 3 && ycor <= 33)) return false;
@@ -55,6 +63,7 @@ public class GameScreen{
   *@param List<Tile> road
   *@param List<TackShooter> TackShooters
   *@param List<SpikeTower> SpikeTowers
+  *@return boolean
   */
   public static boolean isPlaceable(int xcor, int ycor, List<Tile> road, List<TackShooter> TackShooters, List<SpikeTower> SpikeTowers){
     for (Tile x: road){ //towers cannot be placed on a road tile
@@ -76,6 +85,7 @@ public class GameScreen{
   *@param int ycor
   *@param List<Tile> road
   *@param List<Spike> spikes
+  *@return boolean
   */
   public static boolean spikeIsPlaceable(int xcor, int ycor, List<Tile> road, List<Spike> spikes){
     for (Spike x: spikes){ //Spikes cannot be placed on each other
@@ -89,6 +99,13 @@ public class GameScreen{
     return false;
   }
 
+  /**A method that checks if the tower at the cursor can be upgraded
+  *@param int xcor of the cursor
+  *@param int ycor of the cursor
+  *@param List<TackShooter> TackShooters
+  *@param List<SpikeTower> SpikeTowers
+  *@return boolean
+  */
   public static boolean isUpgradeable(int xcor, int ycor, List<TackShooter> TackShooters, List<SpikeTower> SpikeTowers){
     for (TackShooter x: TackShooters){
       if (x.getX() == xcor && x.getY() == ycor) return true;
@@ -178,9 +195,10 @@ public class GameScreen{
     s.putString(0,2,"To begin the game, press b. Once you have begun, press a to pause and b to resume the game.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,4,"Balloons will start spawning immediately and travel down the road. To defeat them, place down towers by",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,5,"typing the letter  of the tower you want to buy and using the arrow keys to give it a location",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,6,"on the grass, which are the green tiles. Press the enter key to place the tower down. You will ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,7,"receive $50 every 10 seconds. Use your income wisely to purchase towers! If any balloons reach the end ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,8,"of the road, your lives will decrease. If your lives reach 0, you lose.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,6,"on the grass, which are the green tiles. Press the enter key to place the tower down. ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,7,"You can also upgrade towers by placing the cursor over the tower and pressing enter again. ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,8, "You will receive $50 every 10 seconds. Use your income wisely to purchase towers! If any balloons reach the end ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,9,"of the road, your lives will decrease. If your lives reach 0, you lose.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,12,"Best of luck!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
     s.refresh();
 
@@ -229,7 +247,7 @@ public class GameScreen{
         }
       }
 
-      if (!isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers)){ //game screen does not show upgrade info when the tower cannot be upgraded anymore
+      if (!isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers)){ //game screen does not show upgrade info of the tower when the tower cannot be upgraded anymore
         s.putString(65,33,"                   ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,30,"              ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,31,"                    ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
