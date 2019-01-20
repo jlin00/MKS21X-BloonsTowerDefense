@@ -157,7 +157,7 @@ public class GameScreen{
 
     List<SpikeTower> SpikeTowers = new ArrayList<SpikeTower>(); //stores SpikeTowers that have been placed on the map
     int SpikeTowerPrice = 200; //price for SpikeTowers
-    int SpikeTowerDelay = 6000; //delay time for SpikeTowers to place another spike
+    int SpikeTowerDelay = 7000; //delay time for SpikeTowers to place another spike
     int SpikeTowerRad = 3; //the radius of the SpikeTowers; spikes can only be placed on road tiles within the radius
     int SpikeTowerSinceTime = 0; //the time since the SpikeTowers last placed spikes
     int UpgradePrice = 250;
@@ -285,7 +285,7 @@ public class GameScreen{
         s.putString(65,30,"Tower Level: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,31,"Tower Hits: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,32,"Tower Delay: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(10,size.getRows()-2,"[To exit the game, press the escape key.]",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(2,0,"[Press a to pause. Press b to resume. Press ESC to exit.]",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       }
 
       balloonMoveTime += (currentTime - lastTime); //adds the amount of time since the last frame
@@ -369,10 +369,10 @@ public class GameScreen{
           mode = 1;//the game is paused to tell the user a new level is to be started
           level_started = false;
           all_spawned = false;
-          s.putString(10,1,"Now commencing level "+level+". Press b to begin.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
+          s.putString(10,2,"Now commencing level "+level+". Press b to begin.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
         }
 
-        if (level_started) s.putString(10,1,  "                                           ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        if (level_started) s.putString(10,2,  "                                           ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         /*
         s.putString(65,25,"balloons: "+num_balloons,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,26,"b_lives: "+balloon_lives,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
