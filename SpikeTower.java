@@ -47,6 +47,18 @@ public class SpikeTower extends Tower{
     return sinceShot;
   }
 
+  public int getUpgrade(){
+    return upgrade + 1;
+  }
+
+  public int getLives(){
+    return lives;
+  }
+
+  public int getDelay(){
+    return delay;
+  }
+
   /**A method that draws the SpikeTower onto the screen using the letter S to represent it
   *@param Screen s
   */
@@ -66,8 +78,10 @@ public class SpikeTower extends Tower{
   */
   public void spawnSpikes(List<Spike> spikes, List<Tile> road, long timer, int delay, int money){
     sinceShot = timer;
-    Tile toSpawn = pickRoad(road);
-    spikes.add(new Spike(toSpawn.getX(),toSpawn.getY(),money,lives));
+    if (anyInRadius(road)){
+      Tile toSpawn = pickRoad(road);
+      spikes.add(new Spike(toSpawn.getX(),toSpawn.getY(),money,lives));
+    }
     sinceShot += this.delay; //the delay is added to reflect the new time the game needs to reach for the SpikeTower to place another spike
   }
 
@@ -77,6 +91,13 @@ public class SpikeTower extends Tower{
   */
   public boolean inRadius(Tile road){
     if (road.getX() >= x - radius && road.getX() <= x + radius && road.getY() >= y - radius && road.getY() <= y + radius) return true;
+    return false;
+  }
+
+  public boolean anyInRadius(List<Tile> road){
+    for (Tile x: road){
+      if (inRadius(x)) return true;
+    }
     return false;
   }
 
@@ -98,7 +119,7 @@ public class SpikeTower extends Tower{
 
   public void upgrade(){
     lives++;
-    delay-=1500;
+    delay-=1000;
     upgrade++;
   }
 
