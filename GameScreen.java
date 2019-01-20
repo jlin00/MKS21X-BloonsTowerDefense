@@ -140,14 +140,14 @@ public class GameScreen{
 
     List<SpikeTower> SpikeTowers = new ArrayList<SpikeTower>(); //stores SpikeTowers that have been placed on the map
     int SpikeTowerPrice = 200; //price for SpikeTowers
-    int SpikeTowerDelay = 5000; //delay time for SpikeTowers to place another spike
+    int SpikeTowerDelay = 6000; //delay time for SpikeTowers to place another spike
     int SpikeTowerRad = 3; //the radius of the SpikeTowers; spikes can only be placed on road tiles within the radius
     int SpikeTowerSinceTime = 0; //the time since the SpikeTowers last placed spikes
     int UpgradePrice = 250;
     int SpikeTowerLives = 3; //the spikes placed by the SpikeTowers only have three lives
 
     int lives = 25; //user variables
-    int money = 3000;
+    int money = 300;
     int income = 50;
 
     List<Balloon> balloons = new ArrayList<Balloon>(); //stores the
