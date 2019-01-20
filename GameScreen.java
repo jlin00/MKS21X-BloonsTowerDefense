@@ -131,7 +131,6 @@ public class GameScreen{
     boolean running = true;
     int mode = 1; //start off in pause mode
     int map = 1; //default map is Map 1
-    if (args.length != 0) map = Integer.parseInt(args[0]); //choice to choose map 2 or 3
     long lastTime =  System.currentTimeMillis();
     long currentTime = lastTime; //timer syster
     long timer = 0;
@@ -142,7 +141,7 @@ public class GameScreen{
     List<Tile> border = new ArrayList<Tile>(); //stores the coordinates of the border tiles around the map
 
     List<TackShooter> TackShooters = new ArrayList<TackShooter>(); //stores TackShooters that have been placed on the map
-    int TackShooterPrice = 250; //price for TackShooters
+    int TackShooterPrice = 400; //price for TackShooters
     int TackShooterDelay = 1000; //delay between each TackShooter shot
     int TackShooterRad = 4; //radius of the TackShooters
     int TackShooterSinceTime = 0; //the time since the TackShooters last shot tacks
@@ -156,15 +155,15 @@ public class GameScreen{
     int SpikeLives = 5; //each spike can be used 5 times
 
     List<SpikeTower> SpikeTowers = new ArrayList<SpikeTower>(); //stores SpikeTowers that have been placed on the map
-    int SpikeTowerPrice = 200; //price for SpikeTowers
+    int SpikeTowerPrice = 300; //price for SpikeTowers
     int SpikeTowerDelay = 7000; //delay time for SpikeTowers to place another spike
     int SpikeTowerRad = 3; //the radius of the SpikeTowers; spikes can only be placed on road tiles within the radius
     int SpikeTowerSinceTime = 0; //the time since the SpikeTowers last placed spikes
-    int UpgradePrice = 250;
     int SpikeTowerLives = 3; //the spikes placed by the SpikeTowers only have three lives
+    int UpgradePrice = 400;
 
     int lives = 25; //user variables
-    int money = 300;
+    int money = 500;
     int income = 50;
 
     List<Balloon> balloons = new ArrayList<Balloon>(); //stores the
@@ -221,13 +220,13 @@ public class GameScreen{
         x.draw(s);
         if (x.getX() == cursorX && x.getY() == cursorY){ //if there is a TackShooter at the cursor
           if (money >= UpgradePrice && x.canUpgrade()){ //if the tower can be upgraded, the upgrade info is shown
-            s.putString(65,33,"Upgrade for $250?",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
-            s.putString(85,32," - 300 ms ",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
-            s.putString(78,31," + 1",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
+            s.putString(65,30,"Upgrade for $"+UpgradePrice+"?",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
+            s.putString(78,28," - 300 ms ",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
+            s.putString(85,29," + 1",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
           }
-          s.putString(78,30,""+x.getUpgrade(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT); //shows the status of the tower in terms of its upgrade model
-          s.putString(77,31,""+x.getHits(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-          s.putString(78,32,""+x.getDelay()+" ms ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+          s.putString(78,27,""+x.getUpgrade(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT); //shows the status of the tower in terms of its upgrade model
+          s.putString(77,28,""+x.getHits(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+          s.putString(78,29,""+x.getDelay()+" ms ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         }
       }
 
@@ -243,30 +242,30 @@ public class GameScreen{
         x.draw(s);
         if (x.getX() == cursorX && x.getY() == cursorY){ //if there is a SpikeTower at the cursor
           if (money >= UpgradePrice && x.canUpgrade()){ //if the tower can be upgraded, the upgrade info is shown
-            s.putString(65,33,"Upgrade for $250?",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
-            s.putString(85,32," - 1000 ms",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
-            s.putString(78,31," + 1",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
+            s.putString(65,30,"Upgrade for $"+UpgradePrice+"?",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
+            s.putString(85,29," - 1000 ms",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
+            s.putString(78,28," + 1",Terminal.Color.GREEN,Terminal.Color.DEFAULT);
           }
-          s.putString(78,30,""+x.getUpgrade(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT); //shows the status of the tower in terms of its upgrade model
-          s.putString(77,31,""+x.getLives(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-          s.putString(78,32,""+x.getDelay()+" ms ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+          s.putString(78,27,""+x.getUpgrade(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT); //shows the status of the tower in terms of its upgrade model
+          s.putString(77,28,""+x.getLives(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+          s.putString(78,29,""+x.getDelay()+" ms ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         }
         else{
         }
       }
 
       if (!isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers)){ //game screen does not show upgrade info when the cursor is not at a tower
-        s.putString(65,33,"                   ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,30,"              ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,31,"                    ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,32,"                              ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,30,"                      ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,27,"              ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,28,"                    ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,29,"                              ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       }
 
       //changes the delay time of the balloon movements according to the level; the higher the level, the faster the balloons
-      if (level <= 15) balloon_delay = 100;
-      if (level <= 11) balloon_delay = 150;
-      if (level <= 7) balloon_delay = 200;
-      if (level <= 3) balloon_delay = 300;
+      if (level <= 15) balloon_delay = 50;
+      if (level <= 11) balloon_delay = 100;
+      if (level <= 7) balloon_delay = 150;
+      if (level <= 3) balloon_delay = 200;
       if (level == 16 || lives == 0){ //after 15 levels, the game is won or if lives reach 0, game is over
         mode = 2;
       }
@@ -274,19 +273,20 @@ public class GameScreen{
       if (toggle > 0){
         s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
 
-        s.putString(65,9,"Time: "+(timer /1000)+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT); //shows the time and money on the screen
-        s.putString(65,11,"Money: "+money+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,5,"Time: "+(timer /1000)+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT); //shows the time and money on the screen
+        s.putString(65,7,"Money: "+money+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
 
-        s.putString(65,20,"Tower Info",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline); //shows info of the tower
-        s.putString(65,21,"Type of Tower:  "+TowerToggled,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,22,"Price: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,23,"Radius: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,24,"Hits: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,25,"Placement: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,29,"Tower Selected",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline);
-        s.putString(65,30,"Tower Level: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,31,"Tower Hits: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,32,"Tower Delay: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,16,"Tower Info",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline); //shows info of the tower
+        s.putString(65,17,"Type of Tower:  "+TowerToggled,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,18,"Price: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,19,"Radius: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,20,"Hits: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,21,"Placement: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,22,"Upgrade Price: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,26,"Tower Selected",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline);
+        s.putString(65,27,"Tower Level: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,28,"Tower Hits: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,29,"Tower Delay: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(2,0,"[Press a to pause. Press b to resume. Press ESC to exit.]",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       }
 
@@ -311,39 +311,42 @@ public class GameScreen{
 
       //shows information of the tower when its respective key is selected
       if (tack_toggled){
-        s.putString(74,22,""+TackShooterPrice,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(74,23,"  "+TackShooterRad,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(76,24,"1",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(76,25,"Grass Tiles (Green)",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,26,"Shoots out tacks in four directions  ",Terminal.Color.RED,Terminal.Color.DEFAULT);
+        s.putString(74,18,""+TackShooterPrice,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(74,19,"  "+TackShooterRad,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(76,20,"1",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(76,21,"Grass Tiles (Green)",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(81,22,""+UpgradePrice,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,23,"Shoots out tacks in four directions  ",Terminal.Color.RED,Terminal.Color.DEFAULT);
       }
 
       if (spike_toggled){
-        s.putString(74,22," "+SpikePrice,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(74,23,"N/A",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(76,24,"5",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(76,25,"Road Tiles (Gray)  ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,26,"Pops five balloons                   ",Terminal.Color.RED,Terminal.Color.DEFAULT);
+        s.putString(74,18," "+SpikePrice,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(74,19,"N/A",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(76,20,"5",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(76,21,"Road Tiles (Gray)  ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(81,22,"N/A",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,23,"Pops five balloons                   ",Terminal.Color.RED,Terminal.Color.DEFAULT);
       }
 
       if (factory_toggled){
-        s.putString(74,22,""+SpikeTowerPrice,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(74,23,"  "+SpikeTowerRad,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(76,24,"3",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(76,25,"Grass Tiles (Green)",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,26,"Spawns spikes that pop three balloons",Terminal.Color.RED,Terminal.Color.DEFAULT);
+        s.putString(74,18,""+SpikeTowerPrice,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(74,19,"  "+SpikeTowerRad,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(76,20,"3",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(76,21,"Grass Tiles (Green)",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(81,22,""+UpgradePrice,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,23,"Spawns spikes that pop three balloons",Terminal.Color.RED,Terminal.Color.DEFAULT);
       }
 
       if (mode == 0){ //if the game has started
         lastTime = currentTime;
         currentTime = System.currentTimeMillis();
         timer += (currentTime - lastTime); //adds the amount of time since the last frame
-        s.putString(65,10,"Lives Left: "+lives+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,5,"Level: "+level+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-        s.putString(65,14, "Tower Key", Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline);
-        s.putString(65,15,"TackShooter: key t",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,16,"SpikeTower:  key s",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,17,"RoadSpike:   key *",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,6,"Lives Left: "+lives+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,3,"Level: "+level+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+        s.putString(65,10, "Tower Key", Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline);
+        s.putString(65,11,"TackShooter: key t",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,12,"SpikeTower:  key s",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,13,"RoadSpike:   key *",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.refresh();
 
         sinceTime += (currentTime - lastTime); //adds the amount of time since the last frame
@@ -375,12 +378,6 @@ public class GameScreen{
         }
 
         if (level_started) s.putString(10,2,  "                                           ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        /*
-        s.putString(65,25,"balloons: "+num_balloons,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,26,"b_lives: "+balloon_lives,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,27,"b_delay: "+balloon_delay,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,28,"started: "+level_started,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        */
         s.refresh();
 
         TackShooterSinceTime  += (currentTime - lastTime); //adds the amount of time since the last frame
@@ -389,7 +386,6 @@ public class GameScreen{
             x.spawnTacks(tacks, TackShooterSinceTime, tackDelay); //create new round of tacks
           }
         }
-        //s.putString(65,20,"Tack#: "+tacks.size(),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
 
         tackSinceTime += (currentTime - lastTime); //adds the amount of time since the last frame
         for (int i = tacks.size()-1; i>=0; i--){
@@ -397,7 +393,7 @@ public class GameScreen{
           if (tackSinceTime >= x.getSince()){ //creates delay between tacks shots
             x.undraw(s, x.getX(), x.getY(), road); //undraw tacks if it's on a road tile
             x.move(tackSinceTime); //tacks move
-            x.hitTarget(balloons); //check if tacks have hit a balloon and takes a life from the balloon hit
+            money += x.hitTarget(balloons); //check if tacks have hit a balloon and takes a life from the balloon hit
             if (x.getSteps() >= TackShooterRad){ //if the tacks have reached the radius of their movements
               tacks.remove(i); //they "die" and are removed from the list of tacks
             }
@@ -414,7 +410,7 @@ public class GameScreen{
         for (int i = spikes.size()-1; i>=0; i--){
           Spike x = spikes.get(i);
           if (x.getLives() == 0) spikes.remove(i); //the spikes are removed from the list after 5 uses
-          x.hitTarget(balloons); //checks if spikes hit anything and takes a life from the balloon they hit
+          money += x.hitTarget(balloons); //checks if spikes hit anything and takes a life from the balloon they hit
         }
 
         s.refresh();
@@ -423,7 +419,7 @@ public class GameScreen{
       if (mode == 1){ //pause timer when the game is paused
         lastTime = System.currentTimeMillis(); //stops the time
         currentTime = System.currentTimeMillis();
-        if (toggle >= 1) s.putString(65,9,"Time: " + (timer / 1000),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        if (toggle >= 1) s.putString(65,5,"Time: " + (timer / 1000),Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       }
 
       if (mode == 2){ //win or lose game mode
@@ -462,14 +458,14 @@ public class GameScreen{
           }
 
           //shows on the map information about balloon lives and colors
-          s.putString(65,35,"Balloon Key",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline);
-          s.putString(65,36,"Red = 1 life",Terminal.Color.RED,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-          s.putString(65,37,"Yellow = 2 lives ",Terminal.Color.YELLOW,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-          s.putString(65,38,"Green = 3 lives",Terminal.Color.GREEN,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-          s.putString(65,39,"Cyan = 4 lives",Terminal.Color.CYAN,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-          s.putString(65,40,"Blue = 5 lives ",Terminal.Color.BLUE,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-          s.putString(65,41,"Magenta = 6 lives",Terminal.Color.MAGENTA,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-          s.putString(65,42,"Black = 7 lives ",Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+          s.putString(65,32,"Balloon Key",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline);
+          s.putString(65,33,"Red = 1 life",Terminal.Color.RED,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+          s.putString(65,34,"Yellow = 2 lives ",Terminal.Color.YELLOW,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+          s.putString(65,35,"Green = 3 lives",Terminal.Color.GREEN,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+          s.putString(65,36,"Cyan = 4 lives",Terminal.Color.CYAN,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+          s.putString(65,37,"Blue = 5 lives ",Terminal.Color.BLUE,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+          s.putString(65,38,"Magenta = 6 lives",Terminal.Color.MAGENTA,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+          s.putString(65,39,"Black = 7 lives ",Terminal.Color.BLACK,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
           s.refresh();
         }
 
@@ -563,6 +559,7 @@ public class GameScreen{
             if (isPlaceable(cursorX,cursorY,road,TackShooters,SpikeTowers) && (money - TackShooterPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
               TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterDelay,TackShooterRad,1)); //a new TackShooter is created on the map
               money -= TackShooterPrice; //take away money
+              TackShooterPrice += 50;
               if (cursorX == 59) cursorX--;
               else cursorX++;
             }
@@ -581,6 +578,7 @@ public class GameScreen{
             if (isPlaceable(cursorX,cursorY,road,TackShooters,SpikeTowers) && (money - SpikeTowerPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
               SpikeTowers.add(new SpikeTower(cursorX,cursorY,SpikeTowerPrice,SpikeTowerDelay,SpikeTowerRad,SpikeTowerLives)); //a new SpikeTower is created on the map
               money -= SpikeTowerPrice; //take away money
+              SpikeTowerPrice += 50;
               if (cursorX == 59) cursorX--;
               else cursorX++;
             }
@@ -593,9 +591,9 @@ public class GameScreen{
                 x.upgrade();
                 money -= UpgradePrice; //takes away upgrade price
                 if (!x.canUpgrade() || money < UpgradePrice){ //game screen does not show upgrade info when the tower cannot be upgraded
-                  s.putString(65,33,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-                  s.putString(79,31,"    ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-                  s.putString(86,32,"          ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+                  s.putString(65,30,"                     ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+                  s.putString(79,28,"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+                  s.putString(86,29,"          ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                 }
               }
             }
@@ -605,9 +603,9 @@ public class GameScreen{
                 x.upgrade();
                 money -= UpgradePrice; //takes away upgrade price
                 if (!x.canUpgrade()){ //game screen does not show upgrade info when the tower cannot be upgraded
-                  s.putString(65,33,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-                  s.putString(79,31,"    ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-                  s.putString(86,32,"          ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+                  s.putString(65,30,"                     ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+                  s.putString(79,28,"         ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+                  s.putString(86,29,"          ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                 }
               }
             }

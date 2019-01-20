@@ -72,14 +72,19 @@ public class Tack{
   /**A method that checks if the tack has hit any balloons based on coordinates
   *@param List<Balloon> balloons
   */
-  public void hitTarget(List<Balloon> balloons){
+  public int hitTarget(List<Balloon> balloons){
+    int earned = 0;
     for (int i = balloons.size()-1; i >= 0; i--){
       Balloon temp = balloons.get(i);
       if (temp.getX() == x && temp.getY() == y){ //if the balloon and tack are at the same coordinates
         temp.setLives(temp.getLives() - hits); //takes lives from the balloon
+        if (hits == 2 && temp.getLives() >= 0) earned += 10;
+        else if (hits == 2 && temp.getLives() < 0) earned += 5;
+        else if (hits == 1) earned += 5;
         if (temp.getLives() <= 0) balloons.remove(i); //if the balloon has no more lives, it is removed
       }
     }
+    return earned;
   }
 
   /**A method that draws the tack onto the screen according to its direction

@@ -46,20 +46,27 @@ public class Spike extends Tower{
     lives--;
   }
 
+  public boolean hasLife(){
+    return (lives > 0);
+  }
+
   /**A method that checks if a balloon is on the same road tile as the spike
   *a life is taken from the balloon
   *@param List<Balloon> balloons
   *the method reads through the list of balloons and checks their coordinates
   */
-  public void hitTarget(List<Balloon> balloons){
+  public int hitTarget(List<Balloon> balloons){
+    int earned = 0;
     for (int i = balloons.size()-1; i >= 0; i--){
       Balloon temp = balloons.get(i);
       if (temp.getX() == x && temp.getY() == y){ //if a balloon is on the same road tile
-        temp.setLives(temp.getLives() - 1);
-        lives--; //the spike loses a life
+        if (hasLife()) temp.setLives(temp.getLives() - 1);
+        loseLife(); //the spike loses a life
+        earned += 5;
         if (temp.getLives() == 0) balloons.remove(i); //if the balloon has no more lives, it is removed
       }
     }
+    return earned;
   }
 
   /**A method that draws the spike onto the screen
