@@ -197,6 +197,7 @@ public class GameScreen{
     s.putString(0,5,"typing the letter of the tower you want to buy and using the arrow keys to give it a location",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,6,"on the grass, which are the green tiles. You can also place down spikes by pressing * and giving ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,7,"it a location on the road, which are the gray tiles, using the arrow keys.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+<<<<<<< HEAD
     s.putString(0,8,"Press the enter key to place the tower or spikes down. You can upgrade towers by placing",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,9,"the cursor over the tower and pressing enter. The upgraded stats of the tower will be shown under",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,10,"Tower Selected on the screen. TackShooters can be upgraded once and SpikeTowers can be upgraded twice.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -206,6 +207,19 @@ public class GameScreen{
     s.putString(0,14,"You will receive $50 every 10 seconds. Use your income wisely to purchase towers! If any balloons reach the",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,15,"end of the road, your lives will decrease. If your lives reach 0, you lose.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,18,"Best of luck!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
+=======
+    s.putString(0,8,"Press the enter key to place the tower or spikes down.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,9,"Pressing backspace will delete that tower (no refunds)! You can upgrade towers by placing",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,10,"the cursor over the tower and pressing enter. The upgraded stats of the tower will be show under",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,11,"Tower Selected on the screen. TackShooters can be upgraded once and SpikeTowers can be upgraded twice.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,12,"If you manage to kill all the balloons in a level, you will advance to the next level. As you progress",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,13,"each level will have more balloons, which have more lives and are therefore harder to pop. ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,14,"If you manage to beat level 15, you will have won the game.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,15,"You will receive $50 every 10 seconds. Use your income wisely to purchase towers! If any balloons reach the",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,16,"end of the road, your lives will decrease. If your lives reach 0, you lose.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,18,"[For a more in-depth explanation, read the README.md file on GitHub.]",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,21,"Best of luck!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
+>>>>>>> df63863ab6ee6721b24c320ce2aad5a365c46017
     s.refresh();
 
     while (running){
