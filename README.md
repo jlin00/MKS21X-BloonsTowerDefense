@@ -101,6 +101,6 @@ Once GameScreen.java is compiled, a terminal screen will appear, displaying the 
 </tr>
 <tr>
   <td>1/19/19</td>
-  <td>Today we revised and added some comments to all of the files. We also fixed a method in the GameScreen class to improve the SpikeTower class.
+  <td>Today we revised and added some comments to all of the files. We also fixed a method in the GameScreen class to improve the SpikeTower class. We also added code so that towers (TackShooters and SpikeTowers) could be upgraded. We also updated the instructions for the game and added a option to delete towers. 
   </td>
 </table>
