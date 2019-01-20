@@ -156,7 +156,7 @@ public class GameScreen{
 
     List<SpikeTower> SpikeTowers = new ArrayList<SpikeTower>(); //stores SpikeTowers that have been placed on the map
     int SpikeTowerPrice = 300; //price for SpikeTowers
-    int SpikeTowerDelay = 7000; //delay time for SpikeTowers to place another spike
+    int SpikeTowerDelay = 7500; //delay time for SpikeTowers to place another spike
     int SpikeTowerRad = 3; //the radius of the SpikeTowers; spikes can only be placed on road tiles within the radius
     int SpikeTowerSinceTime = 0; //the time since the SpikeTowers last placed spikes
     int SpikeTowerLives = 3; //the spikes placed by the SpikeTowers only have three lives
@@ -203,10 +203,12 @@ public class GameScreen{
     s.putString(0,12,"If you manage to kill all the balloons in a level, you will advance to the next level. As you progress",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,13,"each level will have more balloons, which have more lives and are therefore harder to pop. ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,14,"If you manage to beat level 15, you will have won the game.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,15,"You will receive $50 every 10 seconds. Use your income wisely to purchase towers! If any balloons reach the",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,16,"end of the road, your lives will decrease. If your lives reach 0, you lose.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,18,"[For a more in-depth explanation, read the README.md file on GitHub.]",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,21,"Best of luck!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
+    s.putString(0,15,"You will receive $50 every 10 seconds. You will receive $5 for every balloon that you pop. Balloons will",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,16,"multiple lives will be worth more. Use your money wisely to purchase towers and upgrade them!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,17,"Upgrades cost $400, but the price of towers increases by $100 every time you buy one of them.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,18,"If any balloons reach the end of the road, your lives will decrease. If your lives reach 0, you lose.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,19,"[For a more in-depth explanation, read the README.md file on GitHub.]",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(0,22,"Best of luck!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
     s.refresh();
 
     while (running){
@@ -262,10 +264,22 @@ public class GameScreen{
       }
 
       //changes the delay time of the balloon movements according to the level; the higher the level, the faster the balloons
-      if (level <= 15) balloon_delay = 50;
-      if (level <= 11) balloon_delay = 100;
-      if (level <= 7) balloon_delay = 150;
-      if (level <= 3) balloon_delay = 200;
+      if (level <= 15){
+        balloon_delay = 50;
+        balloon_spawnTime = 600;
+      }
+      if (level <= 11){
+        balloon_delay = 100;
+        balloon_spawnTime = 800;
+      }
+      if (level <= 7){
+        balloon_delay = 150;
+        balloon_spawnTime = 1000;
+      }
+      if (level <= 3){
+        balloon_delay = 200;
+        balloon_spawnTime = 1200;
+      }
       if (level == 16 || lives == 0){ //after 15 levels, the game is won or if lives reach 0, game is over
         mode = 2;
       }
@@ -559,7 +573,7 @@ public class GameScreen{
             if (isPlaceable(cursorX,cursorY,road,TackShooters,SpikeTowers) && (money - TackShooterPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
               TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterDelay,TackShooterRad,1)); //a new TackShooter is created on the map
               money -= TackShooterPrice; //take away money
-              TackShooterPrice += 50;
+              TackShooterPrice += 100;
               if (cursorX == 59) cursorX--;
               else cursorX++;
             }
@@ -578,7 +592,7 @@ public class GameScreen{
             if (isPlaceable(cursorX,cursorY,road,TackShooters,SpikeTowers) && (money - SpikeTowerPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
               SpikeTowers.add(new SpikeTower(cursorX,cursorY,SpikeTowerPrice,SpikeTowerDelay,SpikeTowerRad,SpikeTowerLives)); //a new SpikeTower is created on the map
               money -= SpikeTowerPrice; //take away money
-              SpikeTowerPrice += 50;
+              SpikeTowerPrice += 100;
               if (cursorX == 59) cursorX--;
               else cursorX++;
             }
