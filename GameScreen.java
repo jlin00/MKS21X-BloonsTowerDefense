@@ -229,7 +229,7 @@ public class GameScreen{
         }
       }
 
-      if (!isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers)){
+      if (!isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers)){ //game screen does not show upgrade info when the tower cannot be upgraded anymore
         s.putString(65,33,"                   ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,30,"              ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,31,"                    ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -265,7 +265,7 @@ public class GameScreen{
       for(int i = balloons.size()-1; i >= 0; i--){
         Balloon x = balloons.get(i);
         x.draw(s);
-          if (balloonMoveTime >= x.getSince() && x.getIsAlive()){
+          if (balloonMoveTime >= x.getSince() && x.getIsAlive()){ //the balloon moves once the time needed is reached
             if (x.getTile() < road.size()){
               x.move(road.get(x.getTile()), balloonMoveTime);
 
@@ -280,6 +280,7 @@ public class GameScreen{
 
       s.refresh();
 
+      //shows information of the tower when its respective key is selected
       if (tack_toggled){
         s.putString(74,22,""+TackShooterPrice,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(74,23,"  "+TackShooterRad,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -545,28 +546,28 @@ public class GameScreen{
             }
           }
 
-          if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0){
-            for (SpikeTower x: SpikeTowers){
+          if (isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && money - UpgradePrice >= 0){ //if the tower is able to be upgraded
+            for (SpikeTower x: SpikeTowers){ //checks which SpikeTower, if any, is being upgraded
               if (x.getX() == cursorX && x.getY() == cursorY && x.canUpgrade()){
                 x.upgrade();
-                if (!x.canUpgrade()){
+                if (!x.canUpgrade()){ //game screen does not show upgrade info when the tower cannot be upgraded anymore
                   s.putString(65,33,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                   s.putString(79,31,"    ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                   s.putString(86,32,"          ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                 }
-                money -= UpgradePrice;
+                money -= UpgradePrice; //takes away upgrade price
               }
             }
 
-            for (TackShooter x: TackShooters){
+            for (TackShooter x: TackShooters){ //checks which TackShooter, if any, is being upgraded
               if (x.getX() == cursorX && x.getY() == cursorY && x.canUpgrade()){
                 x.upgrade();
-                if (!x.canUpgrade()){
+                if (!x.canUpgrade()){ //game screen does not show upgrade info when the tower cannot be upgraded anymore
                   s.putString(65,33,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                   s.putString(79,31,"    ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                   s.putString(86,32,"          ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                 }
-                money -= UpgradePrice;
+                money -= UpgradePrice; //takes away upgrade price
               }
             }
 
