@@ -143,13 +143,13 @@ public class GameScreen{
 
     List<TackShooter> TackShooters = new ArrayList<TackShooter>(); //stores TackShooters that have been placed on the map
     int TackShooterPrice = 400; //price for TackShooters
-    int TackShooterDelay = 1000; //delay between each TackShooter shot
+    int TackShooterDelay = 800; //delay between each TackShooter shot
     int TackShooterRad = 4; //radius of the TackShooters
     int TackShooterSinceTime = 0; //the time since the TackShooters last shot tacks
 
     List<Tack> tacks = new ArrayList<Tack>(); //stores tacks owned by the TackShooters that have been placed
     int tackSinceTime = 0; //time since the tacks last moved
-    int tackDelay = 75; //delay time of tacks between each movement
+    int tackDelay = 50; //delay time of tacks between each movement
 
     List<Spike> spikes = new ArrayList<Spike>(); //stores spikes that have been placed on the map by the user or by SpikeTowers
     int SpikePrice = 50; //price for spikes
@@ -157,7 +157,7 @@ public class GameScreen{
 
     List<SpikeTower> SpikeTowers = new ArrayList<SpikeTower>(); //stores SpikeTowers that have been placed on the map
     int SpikeTowerPrice = 300; //price for SpikeTowers
-    int SpikeTowerDelay = 7500; //delay time for SpikeTowers to place another spike
+    int SpikeTowerDelay = 7000; //delay time for SpikeTowers to place another spike
     int SpikeTowerRad = 3; //the radius of the SpikeTowers; spikes can only be placed on road tiles within the radius
     int SpikeTowerSinceTime = 0; //the time since the SpikeTowers last placed spikes
     int SpikeTowerLives = 3; //the spikes placed by the SpikeTowers only have three lives
@@ -266,19 +266,19 @@ public class GameScreen{
 
       //changes the delay time of the balloon movements according to the level; the higher the level, the faster the balloons
       if (level <= 15){
-        balloon_delay = 50;
-        balloon_spawnTime = 600;
-      }
-      if (level <= 11){
         balloon_delay = 100;
         balloon_spawnTime = 800;
       }
-      if (level <= 7){
+      if (level <= 11){
         balloon_delay = 150;
+        balloon_spawnTime = 900;
+      }
+      if (level <= 7){
+        balloon_delay = 200;
         balloon_spawnTime = 1000;
       }
       if (level <= 3){
-        balloon_delay = 200;
+        balloon_delay = 300;
         balloon_spawnTime = 1200;
       }
       if (level == 16 || lives == 0){ //after 15 levels, the game is won or if lives reach 0, game is over
@@ -326,7 +326,7 @@ public class GameScreen{
 
       //shows information of the tower when its respective key is selected
       if (tack_toggled){
-        s.putString(74,18,""+TackShooterPrice,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(74,18,""+TackShooterPrice+"   ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(74,19,"  "+TackShooterRad,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(76,20,"1",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(76,21,"Grass Tiles (Green)",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -335,7 +335,7 @@ public class GameScreen{
       }
 
       if (spike_toggled){
-        s.putString(74,18," "+SpikePrice,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(74,18," "+SpikePrice+"      ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(74,19,"N/A",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(76,20,"5",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(76,21,"Road Tiles (Gray)  ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -344,7 +344,7 @@ public class GameScreen{
       }
 
       if (factory_toggled){
-        s.putString(74,18,""+SpikeTowerPrice,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(74,18,""+SpikeTowerPrice+"  ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(74,19,"  "+SpikeTowerRad,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(76,20,"3",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(76,21,"Grass Tiles (Green)",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -389,7 +389,7 @@ public class GameScreen{
           mode = 1;//the game is paused to tell the user a new level is to be started
           level_started = false;
           all_spawned = false;
-          s.putString(10,2,"Now commencing level "+level+". Press b to begin.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
+          if (level < 16) s.putString(10,2,"Now commencing level "+level+". Press b to begin.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
         }
 
         if (level_started) s.putString(10,2,  "                                           ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
