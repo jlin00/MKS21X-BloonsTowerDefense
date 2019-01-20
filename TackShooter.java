@@ -45,6 +45,19 @@ public class TackShooter extends Tower{
   public long getSince(){
     return sinceShot;
   }
+
+  public int getUpgrade(){
+    return upgrade + 1;
+  }
+
+  public int getHits(){
+    return hits;
+  }
+
+  public int getDelay(){
+    return delay;
+  }
+
   /**A method that draws the TackShooter onto the screen using the letter T to represent it
   *@param Screen s
   */
@@ -82,7 +95,7 @@ public class TackShooter extends Tower{
 
   public void upgrade(){
     hits++;
-    delay-=200;
+    delay-=300;
     upgrade++;
   }
 
