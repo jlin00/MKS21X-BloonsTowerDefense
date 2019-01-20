@@ -131,6 +131,7 @@ public class GameScreen{
     boolean running = true;
     int mode = 1; //start off in pause mode
     int map = 1; //default map is Map 1
+    if (args.length != 0) map = Integer.parseInt(args[0]);
     long lastTime =  System.currentTimeMillis();
     long currentTime = lastTime; //timer syster
     long timer = 0;
