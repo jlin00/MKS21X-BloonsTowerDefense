@@ -20,7 +20,7 @@ public class Tack{
   private int steps; //number of steps the tack has taken
   private long sinceTime; //time needed for the next tack movement
   private int delay; //time in between tack movements
-  private int hits; ////how many lives a tack can take from a balloon with one hit
+  private int hits; //how many lives a tack can take from a balloon with one hit
 
   /**A constructor of a tack owned by a tackShooter
   *@param int xCord is the x-coordinate
@@ -44,10 +44,10 @@ public class Tack{
   }
 
   /**A method that will make the tack move according to its direction
-  *@param timer is how long the game has been going on for
+  *@param long timer is how long the game has been going on for
   */
   public void move(long timer){
-    sinceTime = timer;
+    sinceTime = timer; //time is updated
     if(direction == 0){
       y -= 1;
       steps++;
@@ -71,6 +71,7 @@ public class Tack{
 
   /**A method that checks if the tack has hit any balloons based on coordinates
   *@param List<Balloon> balloons
+  *@return int earned is the amount of money earned by the user for hitting a balloon
   */
   public int hitTarget(List<Balloon> balloons){
     int earned = 0;
@@ -80,11 +81,11 @@ public class Tack{
         temp.setLives(temp.getLives() - hits); //takes lives from the balloon
         if (hits == 2 && temp.getLives() >= 0) earned += 10;
         else if (hits == 2 && temp.getLives() < 0) earned += 5;
-        else if (hits == 1) earned += 5;
+        else if (hits == 1) earned += 5; //the user earns $5 for every hit or life the tack takes from the balloon
         if (temp.getLives() <= 0) balloons.remove(i); //if the balloon has no more lives, it is removed
       }
     }
-    return earned;
+    return earned; //the amount of money earned for taking lives from a balloon
   }
 
   /**A method that draws the tack onto the screen according to its direction

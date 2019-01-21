@@ -82,7 +82,7 @@ public class TackShooter extends Tower{
   *@param int delay is the time in between tack movements
   */
   public void spawnTacks(List<Tack> tacks, long timer, int delay){
-    sinceShot = timer;
+    sinceShot = timer; //time is updated
     for (int i = 0; i < 4; i++){ //creates four tacks with different directions
       tacks.add(new Tack(x,y,i,delay,hits));
     }

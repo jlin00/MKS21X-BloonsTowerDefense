@@ -34,14 +34,14 @@ public abstract class Tower{
   }
 */
 
-  /**A method to get the x value, or the row of the tower in the array
+  /**A method to get the x-coordinate of the tower on the map
   *@return int
   */
   public int getX(){
     return x;
   }
 
-  /**A method to get the y value, or the column of the tower in the array
+  /**A method to get the y-coordinate of the tower on the map
   *@return int
   */
   public int getY(){

@@ -46,27 +46,30 @@ public class Spike extends Tower{
     lives--;
   }
 
+  /**A method that checks if a spike still has lives left, as in the spike can still hit balloons
+  *@return boolean
+  */
   public boolean hasLife(){
     return (lives > 0);
   }
 
-  /**A method that checks if a balloon is on the same road tile as the spike
-  *a life is taken from the balloon
-  *@param List<Balloon> balloons
+  /**A method that checks if a balloon is on the same road tile as the spike and takes away a life from the balloon
   *the method reads through the list of balloons and checks their coordinates
+  *@param List<Balloon> balloons
+  *@return int earned is the amount of money earned by the user for hitting a balloon
   */
   public int hitTarget(List<Balloon> balloons){
     int earned = 0;
     for (int i = balloons.size()-1; i >= 0; i--){
       Balloon temp = balloons.get(i);
       if (temp.getX() == x && temp.getY() == y){ //if a balloon is on the same road tile
-        if (hasLife()) temp.setLives(temp.getLives() - 1);
+        if (hasLife()) temp.setLives(temp.getLives() - 1); //if the spike can still hit balloons
         loseLife(); //the spike loses a life
         earned += 5;
         if (temp.getLives() == 0) balloons.remove(i); //if the balloon has no more lives, it is removed
       }
     }
-    return earned;
+    return earned; //the amount of money earned for taking a life from a balloon
   }
 
   /**A method that draws the spike onto the screen

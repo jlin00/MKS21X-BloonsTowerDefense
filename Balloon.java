@@ -137,7 +137,7 @@ public class Balloon{
   *@param long timer is how long the game has been going on for
   */
   public void move(Tile t, long timer){
-    sinceMoved = timer;
+    sinceMoved = timer; //time is updated
     xcor = t.getX();
     ycor = t.getY();
     atTile++;

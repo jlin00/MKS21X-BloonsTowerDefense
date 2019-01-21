@@ -86,7 +86,7 @@ public class SpikeTower extends Tower{
   *@param int lives is the amount of lives the spikes will have
   */
   public void spawnSpikes(List<Spike> spikes, List<Tile> road, long timer, int delay, int money){
-    sinceShot = timer;
+    sinceShot = timer; //time is updated
     if (anyInRadius(road)){
       Tile toSpawn = pickRoad(road);
       spikes.add(new Spike(toSpawn.getX(),toSpawn.getY(),money,lives));

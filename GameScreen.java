@@ -131,7 +131,7 @@ public class GameScreen{
     boolean running = true;
     int mode = 1; //start off in pause mode
     int map = 1; //default map is Map 1
-    if (args.length != 0) map = Integer.parseInt(args[0]);
+    if (args.length != 0) map = Integer.parseInt(args[0]); //choose between maps
     long lastTime =  System.currentTimeMillis();
     long currentTime = lastTime; //timer syster
     long timer = 0;
@@ -287,11 +287,11 @@ public class GameScreen{
 
       if (toggle > 0){
         s.putString(cursorX,cursorY,"+",Terminal.Color.WHITE,Terminal.Color.BLACK);
-
-        s.putString(65,5,"Time: "+(timer /1000)+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT); //shows the time and money on the screen
+        //shows the time and money on the screen
+        s.putString(65,5,"Time: "+(timer /1000)+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,7,"Money: "+money+"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-
-        s.putString(65,16,"Tower Info",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline); //shows info of the tower
+        //shows info of the tower
+        s.putString(65,16,"Tower Info",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Underline);
         s.putString(65,17,"Type of Tower:  "+TowerToggled,Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,18,"Price: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,19,"Radius: ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -408,7 +408,7 @@ public class GameScreen{
           if (tackSinceTime >= x.getSince()){ //creates delay between tacks shots
             x.undraw(s, x.getX(), x.getY(), road); //undraw tacks if it's on a road tile
             x.move(tackSinceTime); //tacks move
-            money += x.hitTarget(balloons); //check if tacks have hit a balloon and takes a life from the balloon hit
+            money += x.hitTarget(balloons); //check if tacks have hit a balloon and takes a life from the balloon hit; money is also gained for each life taken
             if (x.getSteps() >= TackShooterRad){ //if the tacks have reached the radius of their movements
               tacks.remove(i); //they "die" and are removed from the list of tacks
             }
@@ -425,7 +425,7 @@ public class GameScreen{
         for (int i = spikes.size()-1; i>=0; i--){
           Spike x = spikes.get(i);
           if (x.getLives() == 0) spikes.remove(i); //the spikes are removed from the list after 5 uses
-          money += x.hitTarget(balloons); //checks if spikes hit anything and takes a life from the balloon they hit
+          money += x.hitTarget(balloons); //checks if spikes hit anything and takes a life from the balloon they hit; money is also gained for each life taken
         }
 
         s.refresh();
@@ -574,7 +574,7 @@ public class GameScreen{
             if (isPlaceable(cursorX,cursorY,road,TackShooters,SpikeTowers) && (money - TackShooterPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
               TackShooters.add(new TackShooter(cursorX,cursorY,TackShooterPrice,TackShooterDelay,TackShooterRad,1)); //a new TackShooter is created on the map
               money -= TackShooterPrice; //take away money
-              TackShooterPrice += 100;
+              TackShooterPrice += 100; //the cost of the tower increases with each purchase
               if (cursorX == 59) cursorX--;
               else cursorX++;
             }
@@ -593,7 +593,7 @@ public class GameScreen{
             if (isPlaceable(cursorX,cursorY,road,TackShooters,SpikeTowers) && (money - SpikeTowerPrice >= 0)){ //if the coordinate is placeable and the user has enough money...
               SpikeTowers.add(new SpikeTower(cursorX,cursorY,SpikeTowerPrice,SpikeTowerDelay,SpikeTowerRad,SpikeTowerLives)); //a new SpikeTower is created on the map
               money -= SpikeTowerPrice; //take away money
-              SpikeTowerPrice += 100;
+              SpikeTowerPrice += 100; //the cost of the tower increases with each purchase
               if (cursorX == 59) cursorX--;
               else cursorX++;
             }

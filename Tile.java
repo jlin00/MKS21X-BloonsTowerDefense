@@ -27,13 +27,15 @@ public class Tile{
     y = yCord;
   }
 
-  /**A method to get the x coordinate of a tile
+  /**A method to get the x-coordinate of a tile
+  *@return int x
   */
   public int getX(){
     return x;
   }
 
-  /**A method to get the y coordinate of a tile
+  /**A method to get the y-coordinate of a tile
+  *@return int x
   */
   public int getY(){
     return y;
@@ -115,7 +117,7 @@ public class Tile{
   }
 
   /**A method to get the list of balloons on the tile
-  *@return List<Balloon>
+  *@return List<Balloon> onTile
   */
   public List<Balloon> getBalloons(){
     return onTile;
