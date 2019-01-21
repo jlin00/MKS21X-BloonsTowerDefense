@@ -1,5 +1,5 @@
 # Bloons Tower Defense
-This project aims to recreate a game known as Bloons Tower Defense. The program will be interactive and act similarly to the original game. The user will be able to choose a map to play the game in. Each map will have a road for the balloons to pass through and surrounding grass to place the towers. Balloons will enter from one end of the road and continue traveling until they either reach the end of the road or are popped by surrounding towers. Each balloon that reaches the end of the road will decrease the lives of the user. When the user has no more lives and has passed all the levels, the game ends. The user will steadily earn income as time passes and can use it to purchase towers that pop the balloons.
+This project aims to recreate a game known as Bloons Tower Defense. The program will be interactive and act similarly to the original game. The user will be able to choose a map to play the game in. Each map will have a road for the balloons to pass through and surrounding grass to place the towers. Balloons will enter from one end of the road and continue traveling until they either reach the end of the road or are popped by surrounding towers. Each balloon that reaches the end of the road will decrease the lives of the user. When the user has no more lives and has passed all the levels, the game ends. The user will steadily earn income as time passes and can use it to purchase and upgrade towers that pop the balloons.
 
 ## Instructions
 (Make your terminal full screen for the best experience! Otherwise, make sure it is at least 110x50.)
@@ -58,7 +58,7 @@ TackShooters can be upgraded once and SpikeTowers can be upgraded twice.
 <br><br>
 If any of the balloon reaches the end of the road, the user's lives will decrease. The balloon key, which shows the amount of lives corresponding to different colored balloons, is shown on the bottom right corner of the screen (<b>Item 13</b>). Users have a limited amount of lives. If the number of lives reaches 0, the user loses the game. Successfully popping all the balloons means the user can advance to the next level (<b>Item 14</b>). As the user advances, the number of balloons spawned increases and the balloons also get faster and have more lives. If the user successfully passes level 14, they win the game. 
 <br><br>
-[Hint: As the game progresses, balloons get faster and faster and tackshooters become unlikely to hit them. In order to maximize the chances of a tackshooter hitting a balloon, place it right next to the road!] 
+<i>[Hint: As the game progresses, balloons get faster and faster and tackshooters become unlikely to hit them. In order to maximize the chances of a tackshooter hitting a balloon, place it right next to the road!] </i>
 
 ## Development Log
 <table>
