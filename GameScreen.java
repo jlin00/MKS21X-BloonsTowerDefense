@@ -287,7 +287,7 @@ public class GameScreen{
       if (!isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && toggle > 0){ //game screen does not show upgrade info when the cursor is not at a tower
         s.putString(65,30,"                      ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,27,"              ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-        s.putString(65,28,"                    ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+        s.putString(65,28,"                               ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,29,"                              ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
       }
 
@@ -634,7 +634,7 @@ public class GameScreen{
                 money -= UpgradePrice; //takes away upgrade price
                 if (!x.canUpgrade() || money < UpgradePrice){ //game screen does not show upgrade info when the tower cannot be upgraded
                   s.putString(65,30,"                     ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-                  s.putString(79,28,"            ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+                  s.putString(79,28,"                 ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                   s.putString(86,29,"          ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                 }
               }
@@ -646,7 +646,7 @@ public class GameScreen{
                 money -= UpgradePrice; //takes away upgrade price
                 if (!x.canUpgrade()){ //game screen does not show upgrade info when the tower cannot be upgraded
                   s.putString(65,30,"                     ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-                  s.putString(79,28,"         ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+                  s.putString(79,28,"              ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                   s.putString(86,29,"          ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
                 }
               }
