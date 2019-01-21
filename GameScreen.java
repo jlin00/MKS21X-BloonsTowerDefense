@@ -27,7 +27,7 @@ public class GameScreen{
   *@param Screen s
   */
 
-  public static void drawBorder(int r, int c, int length, Screen s){ //draws a border for the game, terminal must be at least 105 x 38
+  public static void drawBorder(int r, int c, int length, Screen s){ //draws a border for the game, terminal must be at least 104 x 45
     for (int i = 0; i < length; i++){
       s.putString(r,c+i," ",Terminal.Color.DEFAULT,Terminal.Color.BLACK);
     }
@@ -191,12 +191,38 @@ public class GameScreen{
     s.clear();
 
     //instructions to play game
-    s.putString(0,0,"Welcome to Bloons Tower Defense!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
-    s.putString(0,2,"To begin the game, press b. Once you have begun, press a to pause and b to resume the game.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,4,"Balloons will start spawning immediately and travel down the road. To defeat them, place down towers by",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,5,"typing the letter of the tower you want to buy and using the arrow keys to give it a location",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,6,"on the grass, which are the green tiles. You can also place down spikes by pressing * and giving ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
-    s.putString(0,7,"it a location on the road, which are the gray tiles, using the arrow keys.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(23,6,"Welcome to",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(23,8,"╔╗ ┬  ┌─┐┌─┐┌┐┌┌─┐  ╔╦╗┌─┐┬ ┬┌─┐┬─┐  ╔╦╗┌─┐┌─┐┌─┐┌┐┌┌─┐┌─┐",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(23,9,"╠╩╗│  │ ││ ││││└─┐   ║ │ ││││├┤ ├┬┘   ║║├┤ ├┤ ├┤ │││└─┐├┤┐",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(23,10,"╚═╝┴─┘└─┘└─┘┘└┘└─┘   ╩ └─┘└┴┘└─┘┴└─  ═╩╝└─┘└  └─┘┘└┘└─┘└─┘",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(23,11,"                        made by Jackie Lin and Tiffany Cao",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(26,14,"              +----------------------+",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(26,15,"              |                      |",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(26,16,"              |                      |",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(44,16,"Press b to begin.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
+    s.putString(26,17,"              |                      |",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(26,18,"              +----------------------+",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,21,"Once you  begin,  balloons  will  start  spawning and traveling",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,22,"down the road. To defeat them, you  need  to  select a tower by",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,23,"typing  the  key  of   the  tower  you want  to  buy and  using",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,24,"the  arrow  keys  to  give  it  a  location on  the  grass. You",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,25,"also  choose  to  put  down  Road Spikes on the  road.    Press",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,26,"enter  to place the item  down. Pressing backspace will  delete",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,27,"that  tower  (no  refunds)! You  can  upgrade towers by  moving",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,28,"the  cursor  over  it and p ressing  enter. Upgrades cost $400.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,29,"Tack Shooters  can  be  upgraded  once and  Spike Towers twice.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,30,"If you pop all the balloons  in  a  level, you  will advance to",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,31,"the next level. Each level will have  more balloons, which will",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,32,"be faster and have more lives. If you beat  level  15, you win!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,33,"If you  lose all  your  lives  before then, you lose.  You will",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,34,"receive $50 every 10 seconds.You earn money by popping balloons",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,35,"as well. Spend you money wisely, because  the price  of  towers",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,36,"increases by $100 every time you buy one.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
+    s.putString(21,38,"                         Best of Luck!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Bold);
+    s.refresh();
+
+    /*
+
     s.putString(0,8,"Press the enter key to place the tower or spikes down.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,9,"Pressing backspace will delete that tower (no refunds)! You can upgrade towers by placing",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,10,"the cursor over the tower and pressing enter. The upgraded stats of the tower will be show under",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
@@ -210,6 +236,7 @@ public class GameScreen{
     s.putString(0,18,"If any balloons reach the end of the road, your lives will decrease. If your lives reach 0, you lose.",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,19,"[For a more in-depth explanation, read the README.md file on GitHub.]",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
     s.putString(0,22,"Best of luck!",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT,ScreenCharacterStyle.Blinking);
+    */
     s.refresh();
 
     while (running){
@@ -257,7 +284,7 @@ public class GameScreen{
         }
       }
 
-      if (!isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers)){ //game screen does not show upgrade info when the cursor is not at a tower
+      if (!isUpgradeable(cursorX,cursorY,TackShooters,SpikeTowers) && toggle > 0){ //game screen does not show upgrade info when the cursor is not at a tower
         s.putString(65,30,"                      ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,27,"              ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
         s.putString(65,28,"                    ",Terminal.Color.DEFAULT,Terminal.Color.DEFAULT);
