@@ -34,7 +34,7 @@ java -cp lanterna.jar:. GameScreen 3
 
 <b>1. To start the game, press 'b' once. To pause, press 'a'. To resume, press 'b'.</b>
 <br><br>
-Balloons (<b>Item 11</b>)will start spawning at the starting tile (<b>Item 1</b>). In order to keep them from reaching the end of the road (<b>Item 12</b>), you must buy towers with the money you have. This information is displayed on the right hand side of the screen (<b>Item 2</b>). You will earn $50 every 10 seconds. Money will also be earned by popping balloons. 
+Balloons (<b>Item 11</b>) will start spawning at the starting tile (<b>Item 1</b>). In order to keep them from reaching the end of the road (<b>Item 12</b>), you must buy towers with the money you have. This information is displayed on the right hand side of the screen (<b>Item 2</b>). You will earn $50 every 10 seconds. Money will also be earned by popping balloons. 
 <br><br>
 <b>2. In order to buy a tower, press the key of the tower you want to buy.</b>
 <br><br>
@@ -44,11 +44,11 @@ The keys can be seen on the right hand side of the screen (<b>Item 3</b>). The i
 <br><br>
 <b>4. Press enter to place down the tower.</b>
 <br><br>
-You can still place down towers when the game is paused. The price of TackShooters (<b>Item 5</b>) and SpikeTowers (<b>Item 4</b>) will increase by $100 every time you purchase one of them. The price of the RoadSpikes (<b>Item 6</b>) do not change. When the game is paused, no income is earned. To delete a tower, move your cursor over it and press backspace (no refunds!)
+You can still place down towers when the game is paused. The price of TackShooters (<b>Item 5</b>) and SpikeTowers (<b>Item 4</b>) will increase by $100 every time you purchase one of them. The price of the RoadSpikes (<b>Item 6</b>) do not change. When the game is paused, no income is earned. To delete a tower, move your cursor over it and press backspace (no refunds!).
 <br><br>
 <b>5. In order to ugprade the towers, move the cursor directly over the tower you want to upgrade. </b>
 <br> <br>
-The stats of the tower you want to upgrade are displayed when you move your cursor over it (<b>Item 9</b>). If an upgrade is available, the screen will display the upgraded stats in green (<b>Item 10</b>)
+The stats of the tower you want to upgrade are displayed when you move your cursor over it (<b>Item 9</b>). If an upgrade is available, the screen will display the upgraded stats in green (<b>Item 10</b>).
 <br><br>
 <b>6. Press enter to complete the upgrade. </b>
 <br><br>
