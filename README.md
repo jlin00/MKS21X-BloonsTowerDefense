@@ -8,7 +8,7 @@ This project aims to recreate a game known as Bloons Tower Defense. The program 
 After cloning the repo, run the command "bash run.sh" on the terminal. 
 If this command does not work, run the following sequence: 
 ```
-resize -s 50 110
+resize -s 45 104
 javac -cp lanterna.jar:. Balloon.java
 javac -cp lanterna.jar:. Tile.java
 javac -cp lanterna.jar:. SpikeTower.java
@@ -159,4 +159,12 @@ If any of the balloon reaches the end of the road, the user's lives will decreas
   <td>1/20/19</td>
   <td>Today we updated the instructions to the game and finalized the game. We also added a feature so that the user can earn money by popping balloons. The difficulty of the game was also modified so that it was possible to win the game relatively easily. We might continue to update the graphics of the game, but we are pretty much done. </td>
 </tr>
+<tr>
+  <td>1/21/19</td>
+  <td>We finished the game and updated the starting screen and instructions on GitHub to improve readability. We also tested the game many times to see if there were any bugs or adjustments needed, and everything was working as expected.</td>
+</tr>
 </table>
+
+<b> We finally finished the project! Hooray!!</b> 
+
+<img src="https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjLnJ3l4__fAhUwSN8KHRSHB2QQjRx6BAgBEAU&url=https%3A%2F%2Fgiphy.com%2Fgifs%2Fhappy-spongebob-squarepants-patrick-TdfyKrN7HGTIY&psig=AOvVaw1WH851Ib6jWvyfO5h7zYXJ&ust=1548191190639883">
