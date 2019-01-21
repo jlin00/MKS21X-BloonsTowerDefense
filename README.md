@@ -32,31 +32,32 @@ java -cp lanterna.jar:. GameScreen 3
 <br>
 <img src="Diagram 1.png" alt="Diagram 1" align="middle"/>
 
-1. To start the game, press 'b' once. To pause, press 'a'. To resume, press 'b'.
-<br>
+<b>1. To start the game, press 'b' once. To pause, press 'a'. To resume, press 'b'.</b>
+<br><br>
 Balloons will start spawning at the starting tile (<b>Item 1</b>). In order to keep them from reaching the end of the road (<b>Item 12</b>), you must buy towers with the money you have. This information is displayed on the right hand side of the screen (<b>Item 2</b>). You will earn $50 every 10 seconds. Money will also be earned by popping balloons. 
-<br>
-2. In order to buy a tower, press the key of the tower you want to buy.
-<br>
+<br><br>
+<b>2. In order to buy a tower, press the key of the tower you want to buy.</b>
+<br><br>
 The keys can be seen on the right hand side of the screen (<b>Item 3</b>). The information for the tower you selected, such as price and radius, is also displayed (<b>Item 7</b>).
-<br>
-3. Move the cursor (<b>Item 8</b>) using the arrow keys to choose where you want to place down your tower. 
-<br>
-4. Press enter to place down the tower. 
-<br>
+<br><br>
+<b>3. Move the cursor (<b>Item 8</b>) using the arrow keys to choose where you want to place down your tower. </b>
+<br><br>
+<b>4. Press enter to place down the tower.</b>
+<br><br>
 You can still place down towers when the game is paused. The price of TackShooters (<b>Item 5</b>) and SpikeTowers (<b>Item 4</b>) will increase by $100 every time you purchase one of them. The price of the RoadSpikes do not change. When the game is paused, no income is earned. To delete a tower, move your cursor over it and press backspace (no refunds!)
-<br>
-5. In order to ugprade the towers, move the cursor directly over the tower you want to upgrade. 
-<br> 
+<br><br>
+<b>5. In order to ugprade the towers, move the cursor directly over the tower you want to upgrade. </b>
+<br> <br>
 The stats of the tower you want to upgrade are displayed when you move your cursor over it (<b>Item 9</b>). If an upgrade is available, the screen will display the upgraded stats in green. 
-6. Press enter to complete the upgrade. 
-<br>
+<br><br>
+<b>6. Press enter to complete the upgrade. </b>
+<br><br>
 TackShooters can be upgraded once and SpikeTowers can be upgraded twice.
-<br>
-7. Have fun playing!
-<br>
+<br><br>
+<b>7. Have fun playing!</b>
+<br><br>
 If any of the balloon reaches the end of the road, the user's lives will decrease. The balloon key, which shows the amount of lives corresponding to different colored balloons, is shown on the bottom right corner of the screen (<b>Item 13</b>). Users have a limited amount of lives. If the number of lives reaches 0, the user loses the game. Successfully popping all the balloons means the user can advance to the next level (<b>Item 14</b>). As the user advances, the number of balloons spawned increases and the balloons also get faster and have more lives. If the user successfully passes level 14, they win the game. 
-<br>
+<br><br>
 [Hint: As the game progresses, balloons get faster and faster and tackshooters become unlikely to hit them. In order to maximize the chances of a tackshooter hitting a balloon, place it right next to the road!] 
 
 ## Development Log
