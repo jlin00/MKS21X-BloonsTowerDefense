@@ -167,4 +167,4 @@ If any of the balloon reaches the end of the road, the user's lives will decreas
 
 <b> We finally finished the project! Hooray!!</b> 
 
-<img src="https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjLnJ3l4__fAhUwSN8KHRSHB2QQjRx6BAgBEAU&url=https%3A%2F%2Fgiphy.com%2Fgifs%2Fhappy-spongebob-squarepants-patrick-TdfyKrN7HGTIY&psig=AOvVaw1WH851Ib6jWvyfO5h7zYXJ&ust=1548191190639883">
+<img src="https://media.giphy.com/media/TdfyKrN7HGTIY/giphy.gif">
